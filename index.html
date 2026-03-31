@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cristopher Reyes — Backend Developer | NestJS, Oracle, Keycloak | Guatemala</title>
+<meta name="description" content="Desarrollador backend especializado en NestJS, Oracle, OpenShift y Keycloak. Experiencia en integraciones bancarias, migración de infraestructura crítica y arquitecturas distribuidas. Disponible para freelance y consultoría remota.">
+<meta name="keywords" content="desarrollador backend Guatemala, NestJS developer, Oracle PL/SQL, Keycloak migration, OpenShift, freelance backend developer, integraciones bancarias, software engineer Guatemala, API development, microservicios">
+<meta name="author" content="Cristopher Reyes">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cristopherreyes.dev">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%230a0a0f'/%3E%3Ctext x='12' y='72' font-family='system-ui' font-weight='800' font-size='62' fill='%2300e5a0'%3ECR%3C/text%3E%3Ccircle cx='88' cy='22' r='5' fill='%2300e5a0'/%3E%3C/svg%3E">
+
+<!-- Open Graph -->
+<meta property="og:image" content="https://cristopherreyes.dev/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cristopher Reyes — Backend Developer | NestJS, Oracle, Keycloak">
+<meta property="og:description" content="Desarrollador backend con experiencia en arquitecturas distribuidas, integraciones financieras y migración de infraestructura crítica. Guatemala.">
+<meta property="og:url" content="https://cristopherreyes.dev">
+<meta property="og:locale" content="es_GT">
+<meta property="og:site_name" content="Cristopher Reyes Portfolio">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cristopher Reyes — Backend Developer">
+<meta name="twitter:description" content="Backend developer especializado en NestJS, Oracle y Keycloak. Integraciones bancarias y arquitecturas distribuidas.">
+<meta name="twitter:image" content="https://cristopherreyes.dev/og-image.png">
+
+<!-- Structured Data / JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Cristopher Reyes",
+  "jobTitle": "Backend Software Engineer",
+  "url": "https://cristopherreyes.dev",
+  "sameAs": [
+    "https://www.linkedin.com/in/cristopherrp",
+    "https://github.com/CristopherReyesP"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "GT",
+    "addressLocality": "Guatemala"
+  },
+  "knowsAbout": ["NestJS", ".NET", "C#", "Oracle Database", "PL/SQL", "SQL Server", "Keycloak", "OpenShift", "Kubernetes", "Docker", "Node.js", "TypeScript", "React", "Microservices", "RESTful APIs", "Banking Integrations", "OAuth 2.0", "CI/CD", "Jenkins", "DDD", "Godot 4"],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "BANTRAB - Banco de los Trabajadores"
+  },
+  "hasOccupation": {
+    "@type": "Occupation",
+    "name": "Backend Software Engineer",
+    "skills": "C#, .NET, NestJS, Oracle, PL/SQL, SQL Server, Keycloak, OpenShift, Kubernetes, Docker, TypeScript, CI/CD, DDD"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAV -->
+<header>
+<nav role="navigation" aria-label="Navegación principal">
+  <div class="nav-logo">CR<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+    <li><a href="#projects" data-i18n="nav_projects">Proyectos</a></li>
+    <li><a href="#why" data-i18n="nav_why">Por qué yo</a></li>
+    <li><a href="#services" data-i18n="nav_services">Servicios</a></li>
+    <li><a href="#experience" data-i18n="nav_exp">Experiencia</a></li>
+    <li><a href="#contact" class="nav-cta" data-i18n="nav_cta">Contratar</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+</nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" aria-label="Presentación">
+  <div class="hero-content">
+    <h1 class="hero-name">
+      Cristopher<br>
+      <span class="line2">Reyes.</span>
+    </h1>
+    <p class="hero-title" data-i18n-html="hero_title">Construyo el backend que <span>no puede fallar</span></p>
+    <p class="hero-desc" data-i18n="hero_desc">
+      Mis sistemas procesan transacciones bancarias reales, todos los días. Si algo falla, se pierde dinero. Entrego sistemas que funcionan en producción, no solo en demos.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary" data-i18n="hero_btn1">Ver resultados</a>
+      <a href="#contact" class="btn-secondary" data-i18n="hero_btn2">Hablemos de tu proyecto</a>
+    </div>
+  </div>
+  <div class="hero-terminal" id="terminal">
+    <div class="terminal-bar">
+      <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+      <span class="terminal-title">cristopher.sh</span>
+    </div>
+    <div class="terminal-body" id="terminalBody">
+      <span class="t-comment">// Backend Engineer · Guatemala</span><br>
+      <span class="t-comment">// Type <span style="color:var(--accent)">help</span> to see available commands</span><br><br>
+      <div id="terminalOutput"></div>
+      <div class="terminal-input-line">
+        <span class="terminal-prompt">~$</span>
+        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="help">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-bar" aria-label="Estadísticas clave">
+  <h2 class="sr-only">Métricas profesionales</h2>
+  <div class="stat-item reveal">
+    <span class="stat-num"><span class="counter" data-target="5">0</span><span class="accent">+</span></span>
+    <span class="stat-label" data-i18n="stat1">Años en sistemas de producción</span>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.1s">
+    <span class="stat-num"><span class="counter" data-target="18">0</span><span class="accent">+</span></span>
+    <span class="stat-label" data-i18n="stat2">Microservicios bancarios activos</span>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.2s">
+    <span class="stat-num"><span class="counter" data-target="50" data-suffix="k">0</span><span class="accent">k</span></span>
+    <span class="stat-label" data-i18n="stat3">Registros migrados sin pérdida</span>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.3s">
+    <span class="stat-num"><span class="counter" data-target="0" data-is-zero="true">0</span></span>
+    <span class="stat-label" data-i18n="stat4">Downtime en migraciones críticas</span>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" aria-label="Stack técnico">
+  <div class="section-tag" data-i18n="skills_tag">Stack técnico</div>
+  <h2 class="section-title reveal" data-i18n="skills_title">Herramientas que uso en producción</h2>
+  <div class="skills-grid reveal-scale">
+    <div class="skill-group">
+      <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+      <div class="skill-group-name">Backend</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">NestJS</span>
+        <span class="skill-tag hot">Node.js</span>
+        <span class="skill-tag hot">C# / .NET</span>
+        <span class="skill-tag">Express</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">GraphQL</span>
+        <span class="skill-tag">WebSockets</span>
+        <span class="skill-tag" data-i18n="skill_microservices">Microservicios</span>
+        <span class="skill-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+      <div class="skill-group-name">Frontend</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">React</span>
+        <span class="skill-tag hot">TypeScript</span>
+        <span class="skill-tag">Vite</span>
+        <span class="skill-tag">Zustand</span>
+        <span class="skill-tag">Socket.io</span>
+        <span class="skill-tag">WebRTC</span>
+        <span class="skill-tag">CSS / HTML</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+      <div class="skill-group-name" data-i18n="skill_db">Base de datos</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">Oracle DB</span>
+        <span class="skill-tag hot">PL/SQL</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Stored Procedures</span>
+        <span class="skill-tag">Oracle Scheduler</span>
+        <span class="skill-tag">Query Optimization</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+      <div class="skill-group-name">DevOps & Infra</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">OpenShift</span>
+        <span class="skill-tag hot">Keycloak</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">HAProxy</span>
+        <span class="skill-tag">OAuth 2.0</span>
+        <span class="skill-tag">Azure AD</span>
+        <span class="skill-tag">CI/CD</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      <div class="skill-group-name" data-i18n="skill_integrations">Integraciones</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">MuleSoft</span>
+        <span class="skill-tag" data-i18n="skill_banking_apis">APIs Bancarias</span>
+        <span class="skill-tag">Nakama</span>
+        <span class="skill-tag">Webhooks</span>
+        <span class="skill-tag">SOAP / REST</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"/><polyline points="14,2 14,8 20,8"/><path d="M8 13h2m-2 4h2m4-4h2m-2 4h2"/></svg>
+      <div class="skill-group-name">Game Dev</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">Godot 4</span>
+        <span class="skill-tag">GDScript</span>
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">Blender</span>
+        <span class="skill-tag">Nakama</span>
+        <span class="skill-tag">Multiplayer</span>
+        <span class="skill-tag">Game Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag" data-i18n="proj_tag">Proyectos</div>
+  <h2 class="section-title reveal" data-i18n="proj_title">Problemas reales que resolví</h2>
+  <div class="projects-grid">
+
+    <!-- Keycloak -->
+    <div class="project-card reveal">
+      <div class="card-border-glow"></div><div class="card-border-inner"></div>
+      <div class="project-type"><span class="project-type-dot"></span><span data-i18n="proj1_type">Producción · Infraestructura bancaria</span></div>
+      <h3 class="project-name" data-i18n="proj1_name">Migración Keycloak v11 → v19</h3>
+      <p class="project-desc" data-i18n="proj1_desc">Migración completa de WildFly a Quarkus en OpenShift para un banco con miles de usuarios activos. Redirects de URLs legacy, guías de rollback y documentación ADS. Resultado: cero downtime, cero tickets.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Keycloak v19</span><span class="stack-tag">OpenShift</span>
+        <span class="stack-tag">HAProxy</span><span class="stack-tag">OAuth 2.0</span><span class="stack-tag">Quarkus</span>
+      </div>
+    </div>
+
+    <!-- Saga -->
+    <div class="project-card reveal">
+      <div class="card-border-glow"></div><div class="card-border-inner"></div>
+      <div class="project-type"><span class="project-type-dot red"></span><span data-i18n="proj2_type">Producción · Arquitectura financiera</span></div>
+      <h3 class="project-name" data-i18n="proj2_name">Saga Pattern — Reversas Bancarias</h3>
+      <p class="project-desc" data-i18n="proj2_desc">Bug crítico de doble reversa en transacciones reales. Diagnostiqué la cadena NestJS → MuleSoft → Oracle, implementé arquitectura Saga con orquestador y reconciliación automática. Resuelto sin pérdida de datos.</p>
+      <div class="project-stack">
+        <span class="stack-tag">NestJS</span><span class="stack-tag">MuleSoft</span>
+        <span class="stack-tag">Oracle</span><span class="stack-tag">Saga Pattern</span>
+      </div>
+    </div>
+
+    <!-- Monolith to Microservices -->
+    <div class="project-card featured reveal">
+      <div class="card-border-glow"></div><div class="card-border-inner"></div>
+      <div>
+        <div class="project-type"><span class="project-type-dot purple"></span><span data-i18n="proj3_type">Producción · Modernización de arquitectura</span></div>
+        <h3 class="project-name" data-i18n="proj3_name">Monolito PL/SQL → 18+ Microservicios</h3>
+        <p class="project-desc" data-i18n="proj3_desc">El core transaccional dependía de stored procedures PL/SQL acoplados, imposibles de escalar o testear. Migración progresiva a 18+ microservicios NestJS y .NET con DDD, API Gateway y CI/CD en OpenShift.</p>
+        <div class="project-stack">
+          <span class="stack-tag">NestJS</span><span class="stack-tag">.NET / C#</span><span class="stack-tag">Oracle PL/SQL</span>
+          <span class="stack-tag">OpenShift</span><span class="stack-tag">Docker</span><span class="stack-tag">API Gateway</span>
+          <span class="stack-tag">DDD</span><span class="stack-tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="project-visual">
+        <div class="pv-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <span data-i18n="proj3_pv_title">Resultado de la migración</span>
+        </div>
+        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="proj3_pv1">18+ microservicios independientes en producción</span></div>
+        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="proj3_pv2">Despliegue individual por servicio sin afectar el resto</span></div>
+        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="proj3_pv3">Pipelines CI/CD automatizados en OpenShift</span></div>
+        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="proj3_pv4">Dominios organizados con DDD + API Gateway</span></div>
+        <div class="pv-item"><span class="pv-dot r"></span><span data-i18n="proj3_pv5">Testeable y mantenible vs. monolito PL/SQL original</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-tag" style="margin-top:72px" data-i18n="personal_tag">Proyectos personales</div>
+  <p class="section-subtitle reveal" style="margin-bottom:32px" data-i18n="personal_sub">Fuera del banco, diseño y construyo productos propios de principio a fin.</p>
+  <div class="projects-grid">
+
+    <!-- XYRA -->
+    <div class="project-card featured reveal">
+      <div class="card-border-glow"></div><div class="card-border-inner"></div>
+      <div>
+        <div class="project-type"><span class="project-type-dot purple"></span><span data-i18n="xyra_type">Indie Game Dev · En desarrollo</span></div>
+        <h3 class="project-name">XYRA — Survival MMO</h3>
+        <p class="project-desc" data-i18n="xyra_desc">Survival MMO 3D Low Poly en un planeta alienígena. GDD de 17 secciones: combate, criaturas, economía y mundo abierto. Backend multiplayer con Nakama.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Godot 4</span><span class="stack-tag">GDScript</span><span class="stack-tag">C#</span>
+          <span class="stack-tag">Nakama</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Blender</span>
+        </div>
+      </div>
+      <div class="project-visual">
+        <div class="pv-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <span data-i18n="xyra_pv_title">GDD — Sistemas diseñados</span>
+        </div>
+        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="xyra_pv1">Sistema de combate y habilidades</span></div>
+        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="xyra_pv2">Crianza y evolución de criaturas</span></div>
+        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="xyra_pv3">Economía in-game (crafting + mercado)</span></div>
+        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="xyra_pv4">Mundo abierto alien con biomas</span></div>
+        <div class="pv-item"><span class="pv-dot r"></span><span data-i18n="xyra_pv5">Backend MMO con Nakama + PostgreSQL</span></div>
+      </div>
+    </div>
+
+    <!-- Línea Muerta -->
+    <div class="project-card featured red-glow reveal" style="border-color:rgba(255,107,107,0.15);">
+      <div class="card-border-glow"></div><div class="card-border-inner"></div>
+      <div>
+        <div class="project-type"><span class="project-type-dot red"></span><span data-i18n="lm_type">Fullstack · Juego online multijugador</span></div>
+        <h3 class="project-name">Línea Muerta</h3>
+        <p class="project-desc" data-i18n="lm_desc">Mini-juegos multijugador en tiempo real. 5 juegos aleatorios por sesión, chat de voz con WebRTC y estado sincronizado con Socket.io.</p>
+        <div class="project-stack">
+          <span class="stack-tag">React</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Socket.io</span><span class="stack-tag">WebRTC</span><span class="stack-tag">Zustand</span>
+          <span class="stack-tag">Vite</span><span class="stack-tag">Express</span>
+        </div>
+      </div>
+      <div class="project-visual" style="border-color:rgba(255,107,107,0.2);background:linear-gradient(135deg,rgba(255,107,107,0.07),rgba(124,111,255,0.04));">
+        <div class="pv-title" style="color:var(--accent3);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h4m4 0h4M6 8h12M6 16h12M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg>
+          <span data-i18n="lm_pv_title">Mini-juegos incluidos</span>
+        </div>
+        <div class="pv-item"><span class="pv-dot r"></span><span data-i18n="lm_pv1">Cooperar o Traicionar (dilema del prisionero)</span></div>
+        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="lm_pv2">¿Quién Sobra? — votación por eliminación</span></div>
+        <div class="pv-item"><span class="pv-dot r"></span><span data-i18n="lm_pv3">Adivina la Línea — voz distorsionada</span></div>
+        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="lm_pv4">La Bomba — pasa o desactiva</span></div>
+        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="lm_pv5">Central de Emergencias — bajo presión</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section id="why" style="background:var(--bg2)">
+  <div class="section-tag" data-i18n="why_tag">Por qué trabajar conmigo</div>
+  <h2 class="section-title reveal" data-i18n="why_title">No busques al más barato. Busca al que te va a entregar.</h2>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-num" data-i18n="why1_num">01 — Contexto financiero real</div>
+      <div class="why-title" data-i18n="why1_title">Entiendo qué pasa cuando el código falla.</div>
+      <p class="why-text" data-i18n-html="why1_text">Cada endpoint que despliego procesa dinero real. <strong>No es lo mismo un TODO app que una reversa bancaria.</strong></p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num" data-i18n="why2_num">02 — Resultados comprobables</div>
+      <div class="why-title" data-i18n="why2_title">50k registros migrados. Cero downtime.</div>
+      <p class="why-text" data-i18n-html="why2_text">Keycloak migrado en banco activo. Bug de doble reversa resuelto en producción. <strong>No son tutoriales.</strong></p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num" data-i18n="why3_num">03 — Entrego completo</div>
+      <div class="why-title" data-i18n="why3_title">Código, docs, runbooks y transferencia.</div>
+      <p class="why-text" data-i18n-html="why3_text">Tu equipo puede mantener todo sin depender de mí. <strong>Tu inversión se queda contigo.</strong></p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num" data-i18n="why4_num">04 — Comunicación directa</div>
+      <div class="why-title" data-i18n="why4_title">Coordino con tu equipo como si fuera parte de él.</div>
+      <p class="why-text" data-i18n-html="why4_text">Traduzco requerimientos de negocio a soluciones técnicas. <strong>No vas a tener que perseguirme.</strong></p>
+    </div>
+    <div class="why-highlight reveal">
+      <p class="why-highlight-text" data-i18n-html="why_highlight">Contratar al developer más barato para un sistema crítico es como ahorrar en los frenos de un carro: <span>el costo real se paga después.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag" data-i18n="svc_tag">Servicios freelance</div>
+  <h2 class="section-title reveal" data-i18n="svc_title">Servicios que puedo entregarte</h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <div class="service-name" data-i18n="svc1_name">APIs & Microservicios</div>
+      <p class="service-desc" data-i18n="svc1_desc">APIs REST/GraphQL con NestJS o .NET. Microservicios, OAuth 2.0 y documentación Swagger incluida.</p>
+      <a href="#contact" class="service-cta" data-i18n-html="svc_cta">Solicitar cotización &rarr;</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+      </div>
+      <div class="service-name" data-i18n="svc2_name">Aplicaciones Web Fullstack</div>
+      <p class="service-desc" data-i18n="svc2_desc">React + TypeScript en frontend, NestJS o Node.js en backend. Dashboards, auth y despliegue incluido.</p>
+      <a href="#contact" class="service-cta" data-i18n-html="svc_cta">Solicitar cotización &rarr;</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+      </div>
+      <div class="service-name" data-i18n="svc3_name">Auth & Seguridad</div>
+      <p class="service-desc" data-i18n="svc3_desc">Migración e implementación de Keycloak, Azure AD, flujos OAuth 2.0 y RBAC empresarial.</p>
+      <a href="#contact" class="service-cta" data-i18n-html="svc_cta">Solicitar cotización &rarr;</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+      </div>
+      <div class="service-name">Oracle / PostgreSQL</div>
+      <p class="service-desc" data-i18n="svc4_desc">Optimización de queries, stored procedures, jobs programados y debugging de problemas críticos en producción.</p>
+      <a href="#contact" class="service-cta" data-i18n-html="svc_cta">Solicitar cotización &rarr;</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">05</div>
+      <div class="service-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11m16-11v11M8 14v3m4-3v3m4-3v3"/></svg>
+      </div>
+      <div class="service-name" data-i18n="svc5_name">Integraciones Bancarias</div>
+      <p class="service-desc" data-i18n="svc5_desc">Pasarelas de pago, APIs de core bancario y sistemas de agentes. Experiencia directa en el sector financiero.</p>
+      <a href="#contact" class="service-cta" data-i18n-html="svc_avail">Consultar disponibilidad &rarr;</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">06</div>
+      <div class="service-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 11h4M14 11h4M15 3l-1 2M9 3l1 2"/><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 18v2m12-2v2"/></svg>
+      </div>
+      <div class="service-name" data-i18n="svc6_name">Backend para Juegos</div>
+      <p class="service-desc" data-i18n="svc6_desc">Backend multiplayer con Nakama y PostgreSQL. Matchmaking, inventario, economía y sincronización en tiempo real.</p>
+      <a href="#contact" class="service-cta" data-i18n-html="svc_cta">Solicitar cotización &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-tag" data-i18n="exp_tag">Experiencia</div>
+  <h2 class="section-title reveal" data-i18n="exp_title">Trayectoria profesional</h2>
+  <div class="exp-timeline">
+    <div class="exp-item reveal-left">
+      <div class="exp-dot current"></div>
+      <div class="exp-date" data-i18n="exp1_date">Abril 2024 — Presente</div>
+      <div class="exp-role">Backend Software Engineer</div>
+      <div class="exp-company" data-i18n="exp1_company">BANTRAB — Banco de los Trabajadores · Guatemala</div>
+      <ul class="exp-points">
+        <li data-i18n="exp1_p1">18+ microservicios NestJS y .NET (C#) para transacciones bancarias en canales móvil y web</li>
+        <li data-i18n="exp1_p2">Migración de monolito PL/SQL a microservicios con DDD, API Gateway y CI/CD en OpenShift</li>
+        <li data-i18n="exp1_p3">Migración de Keycloak v11 a v19 (WildFly → Quarkus) sin downtime</li>
+        <li data-i18n="exp1_p4">Optimización de queries Oracle SQL y documentación técnica para entornos regulados</li>
+      </ul>
+    </div>
+    <div class="exp-item reveal-left">
+      <div class="exp-dot"></div>
+      <div class="exp-date" data-i18n="exp2_date">Mayo 2021 — Julio 2021</div>
+      <div class="exp-role">Software Developer</div>
+      <div class="exp-company">OneSolutions · Guatemala</div>
+      <ul class="exp-points">
+        <li data-i18n="exp2_p1">Desarrollo y mantenimiento de features para plataforma de gestión empresarial con SQL Server y .NET</li>
+        <li data-i18n="exp2_p2">Resolución de bugs en producción y optimización de queries en workflows de alto volumen transaccional</li>
+      </ul>
+    </div>
+    <div class="exp-item reveal-left">
+      <div class="exp-dot"></div>
+      <div class="exp-date" data-i18n="exp3_date">Enero 2019 — Febrero 2021</div>
+      <div class="exp-role">Freelance Backend Developer</div>
+      <div class="exp-company" data-i18n="exp3_company">Proyectos independientes · Clientes internacionales</div>
+      <ul class="exp-points">
+        <li data-i18n="exp3_p1">Diseño y entrega de APIs REST con .NET Core y Node.js para clientes internacionales</li>
+        <li data-i18n="exp3_p2">Gestión del ciclo completo de proyectos desde análisis de requerimientos hasta despliegue</li>
+        <li data-i18n="exp3_p3">Manejo de múltiples proyectos concurrentes con entrega a tiempo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-tag" style="justify-content:center" data-i18n="contact_tag">Contacto</div>
+    <h2 class="section-title reveal" style="text-align:center" data-i18n="contact_title">Cuéntame qué necesitas. Te respondo hoy.</h2>
+    <p class="section-subtitle reveal" style="margin:0 auto 0" data-i18n="contact_sub">Disponible para contratos B2B, freelance y trabajo remoto. Zona horaria CST (GMT-6). Sin compromiso en la primera conversación.</p>
+    <a href="mailto:reyescristop@gmail.com" class="contact-email reveal">reyescristop@gmail.com</a>
+    <div class="contact-links reveal">
+      <a href="https://www.linkedin.com/in/cristopherrp" target="_blank" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/CristopherReyesP" target="_blank" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:reyescristop@gmail.com" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <span data-i18n="contact_mail">Enviar correo</span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">&copy; 2026 <span>Cristopher Reyes</span> · <span data-i18n="footer_role">Desarrollador de Software</span> · Guatemala</div>
+  <a href="https://www.linkedin.com/in/cristopherrp" target="_blank" class="footer-link">linkedin.com/in/cristopherrp</a>
+</footer>
+
+<script src="js/i18n/translations.js"></script>
+<script src="js/i18n/i18n.js"></script>
+<script src="js/components/terminal.js"></script>
+<script src="js/components/cursor.js"></script>
+<script src="js/components/animations.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

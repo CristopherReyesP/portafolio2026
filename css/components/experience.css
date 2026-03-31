@@ -1,0 +1,13 @@
+.exp-timeline { position: relative; padding-left: 40px; }
+.exp-timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--border); }
+.exp-item { position: relative; padding-bottom: 52px; }
+.exp-item:last-child { padding-bottom: 0; }
+.exp-dot { position: absolute; left: -46px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 0 4px rgba(0,229,160,0.15); }
+.exp-dot.current { animation: glow 2s infinite; }
+@keyframes glow { 0%,100%{box-shadow:0 0 0 4px rgba(0,229,160,0.15)} 50%{box-shadow:0 0 0 8px rgba(0,229,160,0.05)} }
+.exp-date { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.exp-role { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.5px; margin-bottom: 4px; }
+.exp-company { color: var(--accent); font-size: 12px; letter-spacing: 0.5px; margin-bottom: 14px; }
+.exp-points { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.exp-points li { color: var(--muted); font-size: 13px; display: flex; gap: 10px; line-height: 1.6; }
+.exp-points li::before { content: '\2192'; color: var(--accent2); flex-shrink: 0; margin-top: 1px; }

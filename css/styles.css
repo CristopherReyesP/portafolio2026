@@ -1,0 +1,19 @@
+/* Base: variables, reset, body, sections */
+@import url('base.css');
+
+/* Utilities: animations, reveals, scroll progress */
+@import url('utilities.css');
+
+/* Components */
+@import url('components/cursor.css');
+@import url('components/nav.css');
+@import url('components/hero.css');
+@import url('components/terminal.css');
+@import url('components/stats.css');
+@import url('components/skills.css');
+@import url('components/projects.css');
+@import url('components/services.css');
+@import url('components/why.css');
+@import url('components/experience.css');
+@import url('components/contact.css');
+@import url('components/footer.css');

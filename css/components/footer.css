@@ -1,0 +1,9 @@
+footer { padding: 28px 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; }
+.footer-copy { font-size: 11px; color: var(--muted); }
+.footer-copy span { color: var(--accent); }
+.footer-link { font-size: 11px; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+.footer-link:hover { color: var(--accent); }
+
+@media (max-width: 900px) {
+  footer { flex-direction: column; gap: 12px; padding: 24px; text-align: center; }
+}

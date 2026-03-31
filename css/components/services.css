@@ -1,0 +1,31 @@
+#services { background: var(--bg2); }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.service-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 36px 28px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative; overflow: hidden;
+}
+.service-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,229,160,0.04), transparent 40%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.service-card:hover { border-color: rgba(0,229,160,0.2); transform: translateY(-4px); }
+.service-card:hover::after { opacity: 1; }
+.service-num { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; color: rgba(255,255,255,0.04); line-height: 1; margin-bottom: 16px; letter-spacing: -2px; }
+.service-icon-wrap { margin-bottom: 14px; color: var(--accent); opacity: 0.8; }
+.service-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 12px; position: relative; z-index: 1; }
+.service-desc { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 20px; position: relative; z-index: 1; }
+.service-price { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--accent); position: relative; z-index: 1; }
+.service-cta {
+  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+  color: var(--accent); text-decoration: none;
+  letter-spacing: 0.5px; position: relative; z-index: 1;
+  transition: all 0.3s; display: inline-block;
+}
+.service-cta:hover { color: var(--text); transform: translateX(4px); }
+
+@media (max-width: 900px) {
+  .services-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,30 @@
+.cursor {
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transition: transform 0.15s ease, width 0.2s, height 0.2s, border-color 0.2s, background 0.2s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+.cursor.hover {
+  width: 48px; height: 48px;
+  background: rgba(0,229,160,0.08);
+  border-color: var(--accent2);
+}
+.cursor-dot {
+  width: 4px; height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s;
+}
+@media (max-width: 900px) {
+  .cursor, .cursor-dot { display: none; }
+  body { cursor: auto; }
+}

@@ -1,0 +1,44 @@
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 60px;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transform: translateY(-100%);
+  animation: navSlide 0.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes navSlide { to { transform: translateY(0); } }
+.nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--accent); }
+.nav-links a.active::after { width: 100%; }
+.nav-cta { border: 1px solid var(--accent) !important; color: var(--accent) !important; padding: 8px 20px; border-radius: 2px; transition: all 0.3s !important; }
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--accent) !important; color: var(--bg) !important; }
+
+/* LANG TOGGLE */
+.lang-toggle {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: 2px; padding: 2px; margin-left: 20px;
+}
+.lang-btn {
+  background: none; border: none; color: var(--muted);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  padding: 4px 10px; cursor: none; letter-spacing: 0.5px;
+  transition: all 0.2s; border-radius: 1px;
+}
+.lang-btn.active { background: var(--accent); color: var(--bg); }
+.lang-btn:hover:not(.active) { color: var(--text); }
+
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .lang-toggle { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); margin: 0; }
+}

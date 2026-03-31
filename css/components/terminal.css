@@ -1,0 +1,41 @@
+.hero-terminal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+  opacity: 0; animation: terminalReveal 1s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,111,255,0.1);
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+@keyframes terminalReveal {
+  from { opacity: 0; transform: translateY(20px) rotateX(5deg); }
+  to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+.terminal-bar { background: rgba(255,255,255,0.04); padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+.t-dot { width: 10px; height: 10px; border-radius: 50%; }
+.t-dot.r { background: #ff5f57; } .t-dot.y { background: #febc2e; } .t-dot.g { background: #28c840; }
+.terminal-title { margin-left: 8px; font-size: 11px; color: var(--muted); }
+.terminal-body { padding: 24px; font-size: 13px; line-height: 2; max-height: 340px; overflow-y: auto; }
+.t-comment { color: #3d3d5a; } .t-key { color: var(--accent2); } .t-str { color: var(--accent); }
+.t-num { color: #ff9966; } .t-bool { color: var(--accent3); } .t-bracket { color: var(--muted); }
+.t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s infinite; vertical-align: middle; margin-left: 2px; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.terminal-input-line {
+  display: flex; align-items: center; gap: 6px; margin-top: 8px;
+}
+.terminal-prompt { color: var(--accent); font-size: 13px; }
+.terminal-input {
+  background: none; border: none; color: var(--text);
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  outline: none; width: 100%; caret-color: var(--accent);
+}
+.terminal-output { margin-top: 6px; font-size: 12px; line-height: 1.8; }
+.terminal-output .t-response { color: var(--muted); }
+.terminal-output .t-label { color: var(--accent2); }
+.terminal-hint { color: #2a2a40; font-size: 11px; margin-top: 12px; font-style: italic; }
+
+.terminal-line {
+  opacity: 0;
+  transform: translateX(-8px);
+  animation: typeLine 0.3s ease forwards;
+}
