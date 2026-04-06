@@ -1,7 +1,7 @@
-#services { background: var(--bg2); }
+#services { background: rgba(15, 15, 24, 0.35); backdrop-filter: blur(8px); }
 .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
 .service-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  background: rgba(17, 17, 32, 0.6); border: 1px solid var(--border); border-radius: 8px;
   padding: 36px 28px;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative; overflow: hidden;

@@ -1,4 +1,4 @@
-#contact { background: var(--bg2); text-align: center; }
+#contact { background: rgba(15, 15, 24, 0.35); backdrop-filter: blur(8px); text-align: center; }
 .contact-inner { max-width: 600px; margin: 0 auto; }
 .contact-email {
   font-family: 'Syne', sans-serif; font-weight: 800;

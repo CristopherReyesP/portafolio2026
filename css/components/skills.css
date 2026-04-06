@@ -1,13 +1,13 @@
-#skills { background: var(--bg2); }
+#skills { background: rgba(15, 15, 24, 0.35); backdrop-filter: blur(8px); }
 .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.skill-group { background: var(--card); padding: 32px; transition: background 0.3s; position: relative; }
+.skill-group { background: rgba(17, 17, 32, 0.6); padding: 32px; transition: background 0.3s; position: relative; }
 .skill-group::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   transform: scaleX(0); transform-origin: left;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.skill-group:hover { background: var(--surface); }
+.skill-group:hover { background: rgba(19, 19, 31, 0.7); }
 .skill-group:hover::after { transform: scaleX(1); }
 .skill-group-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 16px; }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
