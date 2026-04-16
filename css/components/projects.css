@@ -63,6 +63,20 @@
 .pv-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 .pv-dot.p { background: var(--accent2); } .pv-dot.r { background: var(--accent3); }
 
+.project-download {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 20px; padding: 10px 20px;
+  background: rgba(0,229,160,0.1); border: 1px solid rgba(0,229,160,0.3);
+  border-radius: 6px; color: var(--accent);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+  text-decoration: none; transition: all 0.3s;
+}
+.project-download:hover {
+  background: rgba(0,229,160,0.2); border-color: var(--accent);
+  transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,229,160,0.15);
+}
+.project-download svg { flex-shrink: 0; stroke: var(--accent); }
+
 @media (max-width: 900px) {
   .projects-grid { grid-template-columns: 1fr; }
   .project-card.featured { grid-column: 1; display: block; }

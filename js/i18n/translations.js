@@ -55,6 +55,15 @@ const translations = {
     lm_pv3: 'Adivina la Línea — voz distorsionada',
     lm_pv4: 'La Bomba — pasa o desactiva',
     lm_pv5: 'Central de Emergencias — bajo presión',
+    cobros_type: 'Fullstack · Aplicación de escritorio',
+    cobros_desc: 'Sistema de cobros local empaquetado en un solo .exe de 14MB. Gestión de clientes, registro de deudas, procesamiento de pagos y generación de reportes PDF/Excel. Arquitectura hexagonal en Go, frontend React embebido y SQLite — sin instalar nada, solo ejecutar.',
+    cobros_download: 'Descargar .exe (14MB)',
+    cobros_pv_title: 'Funcionalidades incluidas',
+    cobros_pv1: 'Dashboard con KPIs: clientes, deudas, montos cobrados',
+    cobros_pv2: 'CRUD completo de clientes con búsqueda',
+    cobros_pv3: 'Registro de deudas y pagos con cálculo automático',
+    cobros_pv4: 'Reportes PDF y Excel por deuda con historial',
+    cobros_pv5: 'Un solo .exe — sin instalación, sin dependencias',
 
     // Why me
     why_tag: 'Por qué trabajar conmigo',
@@ -168,6 +177,15 @@ const translations = {
     lm_pv3: 'Guess the Line — distorted voice',
     lm_pv4: 'The Bomb — pass or defuse',
     lm_pv5: 'Emergency Central — under pressure',
+    cobros_type: 'Fullstack · Desktop Application',
+    cobros_desc: 'Local billing system packaged as a single 14MB .exe. Client management, debt tracking, payment processing and PDF/Excel report generation. Hexagonal architecture in Go, embedded React frontend and SQLite — no installation, no dependencies, just run it.',
+    cobros_download: 'Download .exe (14MB)',
+    cobros_pv_title: 'Features included',
+    cobros_pv1: 'Dashboard with KPIs: clients, debts, collected amounts',
+    cobros_pv2: 'Full client CRUD with search',
+    cobros_pv3: 'Debt and payment tracking with auto-calculation',
+    cobros_pv4: 'PDF and Excel reports per debt with history',
+    cobros_pv5: 'Single .exe — no installation, no dependencies',
 
     // Why me
     why_tag: 'Why work with me',
