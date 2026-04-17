@@ -11,7 +11,7 @@
   --card: #111120;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -38,7 +38,7 @@ body::before {
 }
 
 /* SECTIONS */
-section { padding: 100px 60px; position: relative; z-index: 2; scroll-snap-align: start; }
+section { padding: 100px 60px; position: relative; z-index: 2; }
 .section-tag { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
 .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
 .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(28px,4vw,44px); letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
