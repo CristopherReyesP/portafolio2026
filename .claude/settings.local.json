@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(dir:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(move:*)",
+      "Bash(move clientes.png imagescobrosclientes.png)",
+      "Bash(move deudas.png imagescobrosdeudas.png)"
     ]
   }
 }

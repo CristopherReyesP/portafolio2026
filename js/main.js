@@ -9,6 +9,7 @@ initCounters();
 initCardSpotlight();
 initActiveNav();
 initMagneticButtons();
+initGallery();
 
 // Initialize particles AFTER first paint (non-blocking)
 var initParticles = function() {
