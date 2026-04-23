@@ -217,6 +217,20 @@
   100% { opacity: 0; transform: translate(8px, -18px) scale(0.6); }
 }
 
+/* Fart emoji */
+.mascot-fart {
+  position: fixed;
+  font-size: 28px;
+  pointer-events: none;
+  animation: fartFloat 1s ease-out forwards;
+  z-index: 10000;
+}
+
+@keyframes fartFloat {
+  0% { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) translateX(25px) scale(0.6); }
+}
+
 /* Hide shadow on walls & ceiling */
 .mascot.on-right .mascot-shadow,
 .mascot.on-top .mascot-shadow,

@@ -127,6 +127,24 @@ function initMascot() {
     state.idleTimer = Date.now();
   };
   
+  // Random fart (like sleeping)
+  function checkFart() {
+    if (summoned && !state.sleeping && Math.random() < 0.001) {
+      createFart();
+    }
+  }
+  
+  function createFart() {
+    var fart = document.createElement('div');
+    fart.innerHTML = '💨';
+    fart.className = 'mascot-fart';
+    var rect = el.getBoundingClientRect();
+    fart.style.left = (rect.left + rect.width / 2 + (Math.random() - 0.5) * 20) + 'px';
+    fart.style.top = (rect.top + rect.height / 2) + 'px';
+    document.body.appendChild(fart);
+    setTimeout(function () { fart.remove(); }, 1000);
+  }
+  
   // Expose dance function for terminal command
   window.mascotDance = function () {
     summoned = true;
@@ -457,7 +475,10 @@ function initMascot() {
       }
       state.lastBlink = now;
     }
-
+    
+    // Random fart
+    checkFart();
+    
     // Sleep after 15s of no interaction
     if (!state.sleeping && now - state.lastAction > 15000 && state.idle) {
       state.sleeping = true;
