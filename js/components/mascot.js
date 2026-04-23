@@ -272,6 +272,113 @@ function initMascot() {
     }, 2000);
   };
   
+  // Expose rainbow function for terminal command
+  var rainbowTimer = null;
+  window.mascotRainbow = function () {
+    summoned = true;
+    state.sleeping = false;
+    if (el.classList.contains('hidden')) {
+      el.classList.remove('hidden');
+    }
+    el.classList.remove('sleeping');
+    // Toggle — if already rainbow, turn it off
+    if (el.classList.contains('rainbow')) {
+      el.classList.remove('rainbow');
+      clearTimeout(rainbowTimer);
+      rainbowTimer = null;
+      state.idleTimer = Date.now();
+      return 'off';
+    }
+    el.classList.add('rainbow');
+    state.lastAction = Date.now();
+    // Auto-off after 10s
+    rainbowTimer = setTimeout(function () {
+      el.classList.remove('rainbow');
+      rainbowTimer = null;
+      state.idleTimer = Date.now();
+    }, 10000);
+    return 'on';
+  };
+
+  // Expose melt function for terminal command
+  window.mascotMelt = function () {
+    summoned = true;
+    state.sleeping = false;
+    state.idle = true;
+    if (el.classList.contains('hidden')) {
+      el.classList.remove('hidden');
+    }
+    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead');
+    el.classList.add('melt');
+    state.lastAction = Date.now();
+    state.paused = true;
+    setTimeout(function () {
+      el.classList.remove('melt');
+      state.paused = false;
+      state.idleTimer = Date.now();
+    }, 2500);
+  };
+
+  // Expose clone function for terminal command (mitosis split)
+  window.mascotClone = function () {
+    summoned = true;
+    state.sleeping = false;
+    if (el.classList.contains('hidden')) el.classList.remove('hidden');
+    el.classList.remove('sleeping', 'walking');
+
+    // Remove existing clone if any
+    var existing = document.querySelector('.mascot-clone');
+    if (existing) existing.remove();
+
+    var rect = el.getBoundingClientRect();
+
+    // Create clone from original
+    var clone = el.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.className = 'mascot mascot-clone';
+
+    // Mirror direction for visual split
+    if (!el.classList.contains('face-left')) {
+      clone.classList.add('face-left');
+    }
+
+    // Start at same position as original
+    clone.style.transform = 'translate(' + rect.left + 'px,' + rect.top + 'px)';
+    document.body.appendChild(clone);
+
+    // Split outward — clone slides away from center
+    var offsetX = (rect.left > window.innerWidth / 2 ? -1 : 1) * 70;
+    var targetX = Math.max(0, Math.min(rect.left + offsetX, window.innerWidth - rect.width));
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        clone.style.transform = 'translate(' + targetX + 'px,' + rect.top + 'px)';
+      });
+    });
+
+    // Original jumps from the split
+    el.classList.remove('jump');
+    void el.offsetWidth;
+    el.classList.add('jump');
+    setTimeout(function () { el.classList.remove('jump'); }, 500);
+
+    state.lastAction = Date.now();
+    state.paused = true;
+
+    // After 4s, merge back and remove
+    setTimeout(function () {
+      var newRect = el.getBoundingClientRect();
+      clone.style.transform = 'translate(' + newRect.left + 'px,' + newRect.top + 'px)';
+      clone.style.opacity = '0';
+      setTimeout(function () {
+        clone.remove();
+        state.paused = false;
+        state.idleTimer = Date.now();
+      }, 600);
+    }, 4000);
+  };
+
   // Create floating hearts
   function createHeart() {
     var heart = document.createElement('div');
@@ -462,7 +569,7 @@ function initMascot() {
     var now = Date.now();
     
     // Skip movement updates while dancing
-    if (el.classList.contains('dance') || el.classList.contains('scare')) {
+    if (el.classList.contains('dance') || el.classList.contains('scare') || el.classList.contains('melt')) {
       requestAnimationFrame(tick);
       return;
     }

@@ -13,6 +13,9 @@ const commands = {
     <span class="t-str">wave</span> <span class="t-response">— says hello</span><br>
     <span class="t-str">angry</span> <span class="t-response">— makes the blob angry</span><br>
     <span class="t-str">pushhead</span> <span class="t-response">— nope nope nope</span><br>
+    <span class="t-str">melt</span> <span class="t-response">— melts into a puddle</span><br>
+    <span class="t-str">rainbow</span> <span class="t-response">— taste the rainbow</span><br>
+    <span class="t-str">clone</span> <span class="t-response">— mitosis!</span><br>
     <span class="t-str">secret</span> <span class="t-response">— ???</span><br>
     <span class="t-str">clear</span> <span class="t-response">— clear terminal</span>`,
   stack: () => `<span class="t-label">Production stack:</span><br>
@@ -138,6 +141,31 @@ const commands = {
     }
     if (window.mascotPushHead) window.mascotPushHead();
     return '<span class="t-label">*nope, nope, nope...*</span><br><span class="t-comment">// pushin\' head</span>';
+  },
+  rainbow: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    var result = window.mascotRainbow ? window.mascotRainbow() : null;
+    if (result === 'off') return '<span class="t-label">*rainbow fades...*</span><br><span class="t-comment">// back to normal</span>';
+    return '<span class="t-label">*✨ R A I N B O W ✨*</span><br><span class="t-comment">// type rainbow again to turn off</span>';
+  },
+  melt: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotMelt) window.mascotMelt();
+    return '<span class="t-label">*the blob melts into a puddle...*</span><br><span class="t-comment">// splooosh... *reforms*</span>';
+  },
+  clone: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotClone) window.mascotClone();
+    return '<span class="t-label">*the blob splits in two!*</span><br><span class="t-comment">// mitosis in progress...</span>';
   },
   clear: () => 'CLEAR'
 };

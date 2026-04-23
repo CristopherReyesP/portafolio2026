@@ -580,6 +580,83 @@
   100% { opacity: 0; transform: scale(2); }
 }
 
+/* Rainbow animation — cycles through all colors */
+.mascot.rainbow .mascot-body {
+  animation: mascotRainbow 2s linear infinite;
+}
+.mascot.rainbow .mascot-shadow {
+  animation: mascotRainbowShadow 2s linear infinite;
+}
+.mascot.rainbow .mascot-body::before,
+.mascot.rainbow .mascot-body::after { opacity: 1; animation: mascotRainbow 2s linear infinite; }
+
+@keyframes mascotRainbow {
+  0%   { filter: hue-rotate(0deg) brightness(1.1); }
+  100% { filter: hue-rotate(360deg) brightness(1.1); }
+}
+@keyframes mascotRainbowShadow {
+  0%   { filter: hue-rotate(0deg); opacity: 0.5; }
+  100% { filter: hue-rotate(360deg); opacity: 0.5; }
+}
+
+/* Melt animation — melts into a puddle and reforms */
+.mascot.melt .mascot-body {
+  animation: mascotMelt 2.5s ease-in-out forwards;
+  transform-origin: center bottom;
+}
+.mascot.melt .mascot-face {
+  animation: mascotMeltFace 2.5s ease-in-out forwards;
+}
+.mascot.melt .mascot-shadow {
+  animation: mascotMeltShadow 2.5s ease-in-out forwards;
+}
+.mascot.melt .mascot-body::before,
+.mascot.melt .mascot-body::after { opacity: 0; }
+.mascot.melt .mascot-zzz { display: none; }
+
+@keyframes mascotMelt {
+  0%   { transform: scaleY(1) scaleX(1); border-radius: 50% 50% 48% 52% / 60% 60% 40% 40%; }
+  10%  { transform: scaleY(0.85) scaleX(1.15); }
+  25%  { transform: scaleY(0.4) scaleX(1.7); border-radius: 50% 50% 45% 45% / 40% 40% 25% 25%; }
+  40%  { transform: scaleY(0.15) scaleX(2.2); border-radius: 50% 50% 48% 48% / 25% 25% 15% 15%; }
+  60%  { transform: scaleY(0.15) scaleX(2.2); border-radius: 50% 50% 48% 48% / 25% 25% 15% 15%; }
+  75%  { transform: scaleY(1.2) scaleX(0.8); border-radius: 50% 50% 48% 52% / 65% 65% 40% 40%; }
+  88%  { transform: scaleY(0.9) scaleX(1.08); border-radius: 50% 50% 48% 52% / 58% 58% 38% 38%; }
+  100% { transform: scaleY(1) scaleX(1); border-radius: 50% 50% 48% 52% / 60% 60% 40% 40%; }
+}
+@keyframes mascotMeltFace {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  20%  { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  70%  { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  85%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes mascotMeltShadow {
+  0%   { transform: scale(1); opacity: 0.3; }
+  25%  { transform: scaleX(2.2) scaleY(0.7); opacity: 0.5; }
+  60%  { transform: scaleX(2.4) scaleY(0.7); opacity: 0.5; }
+  75%  { transform: scaleX(0.7); opacity: 0.25; }
+  100% { transform: scale(1); opacity: 0.3; }
+}
+
+/* Clone animation — mitosis split */
+.mascot-clone {
+  pointer-events: none !important;
+  z-index: 9998;
+  filter: hue-rotate(140deg) brightness(1.1);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease, filter 0.5s ease;
+}
+.mascot-clone .mascot-body {
+  animation: mascotClonePulse 1.5s ease-in-out infinite !important;
+}
+.mascot-clone .mascot-shadow {
+  filter: hue-rotate(140deg);
+}
+@keyframes mascotClonePulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.95); }
+}
+
 @media (max-width: 768px) {
   .mascot { display: none; }
 }
