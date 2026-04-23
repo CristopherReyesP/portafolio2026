@@ -37,6 +37,13 @@ var initParticles = function() {
   });
 };
 
+// Defer non-critical to idle time
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initMascot);
+} else {
+  setTimeout(initMascot, 300);
+}
+
 // Defer particles to idle time — hero paints first
 if ('requestIdleCallback' in window) {
   requestIdleCallback(initParticles);

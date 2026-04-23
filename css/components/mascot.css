@@ -1,0 +1,571 @@
+.mascot {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  cursor: grab; user-select: none;
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+  transform-origin: center bottom;
+}
+.mascot.dragging { cursor: grabbing; transition: none; }
+.mascot.hidden { display: none; }
+.mascot.walking { transition: transform 0.18s ease-out; }
+.mascot.dance { transition: none; }
+
+/* Body */
+.mascot-body {
+  width: 48px; height: 40px;
+  background: var(--accent);
+  border-radius: 50% 50% 48% 52% / 60% 60% 40% 40%;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0,229,160,0.3), inset 0 -6px 12px rgba(0,0,0,0.15);
+  animation: mascotBreathe 3s ease-in-out infinite;
+  transition: transform 0.2s;
+}
+.mascot:hover .mascot-body { transform: scale(1.1); }
+.mascot.walking .mascot-body { animation: mascotWalk 0.4s ease-in-out infinite; }
+.mascot.jump .mascot-body { animation: mascotJump 0.5s ease-out; }
+.mascot.spin .mascot-body { animation: mascotSpin 0.6s ease-out; }
+
+/* Dragging — slime hanging from grab point */
+.mascot.dragging .mascot-body {
+  animation: mascotDangle 0.6s ease-in-out infinite;
+  border-radius: 40% 40% 50% 50% / 30% 30% 70% 70%;
+  box-shadow: 0 12px 30px rgba(0,229,160,0.35), inset 0 -10px 14px rgba(0,0,0,0.15);
+  transform-origin: top center;
+}
+/* Dizzy on drag — ojos cruzados */
+.mascot.dizzy .mascot-body { animation: mascotDizzy 0.15s ease-in-out infinite !important; }
+.mascot.dizzy .mascot-eye { overflow: visible !important; background: transparent !important; }
+.mascot.dizzy .mascot-pupil { display: none; }
+.mascot.dizzy .mascot-eye::before,
+.mascot.dizzy .mascot-eye::after {
+  content: '×'; position: absolute;
+  font-size: 14px; line-height: 10px;
+  color: #0a0a0f; font-weight: bold;
+  left: 0; display: block;
+}
+.mascot.dizzy .mascot-eye::before { top: -2px; transform: rotate(15deg); }
+.mascot.dizzy .mascot-eye::after { top: -2px; transform: rotate(-15deg); }
+.mascot.dizzy .mascot-face { top: 14px; }
+.mascot.dizzy .mascot-mouth {
+  width: 8px; height: 8px;
+  border: none; border-radius: 50%;
+  background: #0a0a0f; top: 15px;
+}
+.mascot.dizzy .mascot-body::before,
+.mascot.dizzy .mascot-body::after { opacity: 1; bottom: 4px; }
+.mascot.dizzy .mascot-shadow { opacity: 0; transform: scale(0.3); }
+
+@keyframes mascotDizzy {
+  0%, 100% { transform: rotate(-8deg) scaleX(1); }
+  50% { transform: rotate(8deg) scaleX(0.95); }
+}
+
+.mascot.dragging .mascot-face { top: 14px; }
+.mascot.dragging .mascot-body::before,
+.mascot.dragging .mascot-body::after { opacity: 1; bottom: 4px; }
+.mascot.dragging .mascot-shadow { opacity: 0; transform: scale(0.3); }
+.mascot.dragging .mascot-mouth {
+  width: 10px; height: 6px;
+  border-bottom: none; background: #0a0a0f;
+  border-radius: 50%; top: 16px;
+}
+
+/* Drop — squish landing */
+.mascot.dropping .mascot-body {
+  animation: mascotDrop 0.4s ease-out forwards;
+}
+.mascot.dropping {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Cheeks */
+.mascot-body::before, .mascot-body::after {
+  content: ''; position: absolute; bottom: 8px;
+  width: 10px; height: 6px; border-radius: 50%;
+  background: rgba(255,150,200,0.25);
+  opacity: 0; transition: opacity 0.3s;
+}
+.mascot-body::before { left: 4px; }
+.mascot-body::after { right: 4px; }
+.mascot:hover .mascot-body::before,
+.mascot:hover .mascot-body::after { opacity: 1; }
+
+/* Face */
+.mascot-face { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 28px; }
+
+/* Eyes */
+.mascot-eye {
+  position: absolute; top: 0;
+  width: 10px; height: 10px;
+  background: #0a0a0f; border-radius: 50%;
+  overflow: hidden;
+}
+.mascot-eye.left { left: 0; }
+.mascot-eye.right { right: 0; }
+.mascot-pupil {
+  width: 5px; height: 5px;
+  background: #fff; border-radius: 50%;
+  position: absolute; top: 2px; left: 2px;
+  transition: transform 0.15s ease-out;
+}
+
+/* Blink */
+.mascot.blink .mascot-eye {
+  height: 2px; top: 4px;
+  background: #0a0a0f;
+}
+.mascot.blink .mascot-pupil { opacity: 0; }
+
+/* Mouth */
+.mascot-mouth {
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+  width: 6px; height: 3px;
+  border-bottom: 2px solid #0a0a0f;
+  border-radius: 0 0 50% 50%;
+  transition: all 0.2s;
+}
+.mascot:hover .mascot-mouth {
+  width: 10px; height: 6px;
+  border-bottom: none;
+  background: #0a0a0f;
+  border-radius: 50%;
+  top: 13px;
+}
+
+/* Shadow on ground */
+.mascot-shadow {
+  width: 36px; height: 8px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  margin: 2px auto 0;
+  animation: mascotShadow 3s ease-in-out infinite;
+}
+.mascot.jump .mascot-shadow { animation: mascotShadowJump 0.5s ease-out; }
+
+.mascot.dizzy .mascot-body {
+  animation: mascotDizzy 0.15s ease-in-out infinite;
+}
+.mascot.dizzy .mascot-eye {
+  background: transparent;
+  overflow: visible;
+}
+.mascot.dizzy .mascot-pupil { display: none; }
+/* Flip when walking left */
+.mascot.face-left .mascot-body { transform: scaleX(-1); }
+.mascot.face-left:hover .mascot-body { transform: scaleX(-1) scale(1.1); }
+
+/* Z emoji on sleep */
+.mascot-zzz {
+  position: absolute; top: -8px; right: -4px;
+  font-size: 10px; opacity: 0;
+  animation: none;
+}
+.mascot.sleeping .mascot-zzz {
+  animation: mascotZzz 2s ease-in-out infinite;
+}
+.mascot.sleeping .mascot-eye { height: 2px; top: 4px; }
+.mascot.sleeping .mascot-pupil { opacity: 0; }
+
+/* Animations */
+@keyframes mascotBreathe {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.04); }
+}
+@keyframes mascotWalk {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(-4deg); }
+  75% { transform: translateY(-3px) rotate(4deg); }
+}
+@keyframes mascotJump {
+  0% { transform: scaleY(0.8) scaleX(1.1); }
+  30% { transform: translateY(-24px) scaleY(1.1) scaleX(0.9); }
+  50% { transform: translateY(-28px) scaleY(1.05); }
+  80% { transform: translateY(-4px) scaleY(0.9) scaleX(1.05); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+@keyframes mascotSpin {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(180deg) scaleY(0.9); }
+  50% { transform: rotate(360deg) scaleX(0.85); }
+  75% { transform: rotate(540deg) scaleY(1.1); }
+  100% { transform: rotate(720deg) scale(1); }
+}
+@keyframes mascotShadow {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(0.95); opacity: 0.25; }
+}
+@keyframes mascotShadowJump {
+  0% { transform: scale(1.1); opacity: 0.3; }
+  50% { transform: scale(0.5); opacity: 0.1; }
+  100% { transform: scale(1); opacity: 0.3; }
+}
+@keyframes mascotDangle {
+  0%, 100% { transform: scaleX(0.82) scaleY(1.3) rotate(0deg); }
+  25% { transform: scaleX(0.8) scaleY(1.32) rotate(3deg); }
+  75% { transform: scaleX(0.8) scaleY(1.32) rotate(-3deg); }
+}
+@keyframes mascotDrop {
+  0% { transform: scaleX(0.85) scaleY(1.25); }
+  30% { transform: scaleX(1.3) scaleY(0.7); }
+  50% { transform: scaleX(0.9) scaleY(1.1); }
+  70% { transform: scaleX(1.05) scaleY(0.95); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+@keyframes mascotZzz {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.8); }
+  50% { opacity: 0.6; transform: translate(4px, -10px) scale(1); }
+  100% { opacity: 0; transform: translate(8px, -18px) scale(0.6); }
+}
+
+/* Hide shadow on walls & ceiling */
+.mascot.on-right .mascot-shadow,
+.mascot.on-top .mascot-shadow,
+.mascot.on-left .mascot-shadow { opacity: 0; }
+
+/* Climbing - worm/snake crawling motion (ceiling) */
+.mascot.climbing .mascot-body {
+  animation: mascotSticky 0.5s ease-in-out infinite;
+  box-shadow: 0 4px 25px rgba(0,229,160,0.3);
+  border-radius: 45% 45% 40% 40% / 55% 55% 35% 35%;
+}
+.mascot.climbing .mascot-shadow { opacity: 0; }
+.mascot.climbing .mascot-face { top: 12px; }
+.mascot.climbing .mascot-eye { transform: scale(0.85); }
+.mascot.climbing .mascot-mouth { top: 15px; }
+
+@keyframes mascotSticky {
+  0%, 100% { transform: scaleY(1.2) scaleX(0.8) translateY(0); border-radius: 45% 45% 40% 40% / 55% 55% 35% 35%; }
+  25% { transform: scaleY(1.15) scaleX(0.85) translateY(-1px); border-radius: 42% 42% 42% 42% / 52% 52% 38% 38%; }
+  50% { transform: scaleY(1.25) scaleX(0.75) translateY(1px); border-radius: 48% 48% 38% 38% / 58% 58% 32% 32%; }
+  75% { transform: scaleY(1.18) scaleX(0.82) translateY(0); border-radius: 43% 43% 41% 41% / 53% 53% 37% 37%; }
+}
+
+/* Climbing - hanging drop on walls */
+.mascot.climbing-wall .mascot-body {
+  animation: mascotWallHang 0.5s ease-in-out infinite;
+  box-shadow: 0 12px 40px rgba(0,229,160,0.5);
+  border-radius: 50% 50% 40% 40% / 65% 65% 35% 35%;
+  transform-origin: top center;
+}
+.mascot.climbing-wall .mascot-shadow { opacity: 0; }
+.mascot.climbing-wall .mascot-face { top: 14px; }
+.mascot.climbing-wall .mascot-eye { transform: scale(0.75); }
+.mascot.climbing-wall .mascot-mouth { top: 22px; }
+
+@keyframes mascotWallHang {
+  0%, 100% { transform: scaleX(1.3) scaleY(0.8); }
+  50% { transform: scaleX(1.35) scaleY(0.75); }
+}
+
+/* Mouth scared - when running fast */
+.mascot.scared .mascot-mouth {
+  width: 12px; height: 10px;
+  border: none; border-radius: 50%;
+  background: #0a0a0f; top: 13px;
+  animation: mascotScaredMouth 0.15s ease-in-out infinite;
+}
+.mascot.scared .mascot-eye { transform: scale(1.1); }
+.mascot.scared .mascot-body::before,
+.mascot.scared .mascot-body::after { opacity: 1; }
+
+@keyframes mascotScaredMouth {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.2); }
+}
+
+/* Running fast */
+.mascot.running .mascot-body { animation: mascotBreathe 0.5s ease-in-out infinite; }
+.mascot.running .mascot-mouth {
+  width: 10px; height: 8px;
+  border: none; border-radius: 50%;
+  background: #0a0a0f; top: 13px;
+  animation: mascotScaredMouth 0.1s ease-in-out infinite;
+}
+.mascot.running .mascot-eye { transform: scale(1.1); }
+.mascot.running .mascot-body::before,
+.mascot.running .mascot-body::after { opacity: 1; }
+
+/* Dance animation - bouncy happy dance with jump */
+.mascot.dance .mascot-body {
+  animation: mascotDanceBody 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  box-shadow: 0 10px 40px rgba(0,229,160,0.6);
+}
+.mascot.dance .mascot-mouth {
+  width: 16px; height: 12px;
+  border: none; border-radius: 50%;
+  background: #0a0a0f; top: 10px;
+  animation: mascotDanceMouth 0.3s ease-in-out infinite;
+}
+.mascot.dance .mascot-eye {
+  width: 10px; height: 5px;
+  background: transparent;
+  border-radius: 0 0 50% 50%;
+  border: 2px solid #0a0a0f;
+  border-top: none;
+  animation: none;
+}
+.mascot.dance .mascot-pupil { display: none; }
+.mascot.dance .mascot-body::before,
+.mascot.dance .mascot-body::after { opacity: 1; }
+.mascot.dance .mascot-shadow { 
+  opacity: 0.5; 
+  animation: mascotDanceShadow 0.5s ease-in-out infinite;
+}
+
+@keyframes mascotDanceBody {
+  0%, 100% { transform: scaleX(0.75) scaleY(1.25) translateY(0); }
+  50% { transform: scaleX(1.25) scaleY(0.75) translateY(-10px); }
+}
+@keyframes mascotDanceMouth {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.5); }
+}
+@keyframes mascotDanceShadow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(0.5); opacity: 0.2; }
+}
+
+/* Scare animation - jumping scared */
+.mascot.scare .mascot-body {
+  animation: mascotScare 0.2s ease-in-out infinite;
+  box-shadow: 0 8px 35px rgba(0,229,160,0.6);
+}
+.mascot.scare .mascot-mouth {
+  width: 12px; height: 12px;
+  border: none; border-radius: 50%;
+  background: #0a0a0f; top: 11px;
+  animation: mascotScaredMouth 0.15s ease-in-out infinite;
+}
+.mascot.scare .mascot-eye { transform: scale(1.3); }
+.mascot.scare .mascot-body::before,
+.mascot.scare .mascot-body::after { opacity: 1; }
+.mascot.scare .mascot-shadow { opacity: 0; }
+
+@keyframes mascotScare {
+  0%, 100% { transform: scaleX(1) scaleY(1) rotate(0deg); }
+  25% { transform: scaleX(1.1) scaleY(0.9) rotate(-8deg); }
+  75% { transform: scaleX(1.1) scaleY(0.9) rotate(8deg); }
+}
+@keyframes mascotScaredMouth {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.4); }
+}
+
+/* Love animation - happy beating heart */
+.mascot.love .mascot-body {
+  animation: mascotLove 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  box-shadow: 0 8px 35px rgba(255,100,150,0.6);
+}
+.mascot.love .mascot-mouth {
+  width: 12px; height: 8px;
+  border: none; border-radius: 0 0 50% 50%;
+  background: #0a0a0f; top: 11px;
+  animation: mascotLoveMouth 0.4s ease-in-out infinite;
+}
+.mascot.love .mascot-eye {
+  background: #0a0a0f;
+  animation: none;
+}
+.mascot.love .mascot-pupil {
+  display: block;
+  width: 5px; height: 5px;
+  background: #fff;
+  border-radius: 50%;
+  animation: mascotLovePupil 0.3s ease-in-out infinite;
+}
+.mascot.love .mascot-body::before,
+.mascot.love .mascot-body::after { opacity: 1; background: rgba(255,100,150,0.4); }
+.mascot.love .mascot-shadow { 
+  opacity: 0.5; 
+  animation: mascotLoveShadow 0.3s ease-in-out infinite;
+}
+
+@keyframes mascotLove {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+@keyframes mascotLoveMouth {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  50% { transform: scaleX(1.5) scaleY(1.3); }
+}
+@keyframes mascotLovePupil {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, -1px); }
+  75% { transform: translate(1px, 1px); }
+}
+@keyframes mascotLoveShadow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.65; }
+}
+
+/* Puff animation - inflate slowly in stages, float, deflate */
+.mascot.puff {
+  animation: none;
+}
+.mascot.puff .mascot-body {
+  animation: mascotPuffInflate 3s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+  box-shadow: 0 15px 50px rgba(0,229,160,0.7);
+}
+.mascot.puff .mascot-eye {
+  transform: scale(1.2);
+}
+.mascot.puff .mascot-mouth {
+  width: 10px; height: 6px;
+  border: none; border-radius: 50%;
+  background: #0a0a0f; top: 14px;
+}
+.mascot.puff .mascot-body::before,
+.mascot.puff .mascot-body::after { opacity: 1; }
+.mascot.puff .mascot-shadow { 
+  opacity: 0.3; 
+  animation: mascotPuffShadow 3s ease-in-out forwards;
+}
+
+@keyframes mascotPuffInflate {
+  0% { transform: scale(1) translateY(0); }
+  15% { transform: scale(1.15) translateY(0); }
+  35% { transform: scale(1.35) translateY(-20px); }
+  50% { transform: scale(1.5) translateY(-50px); }
+  70% { transform: scale(1.5) translateY(-100px); }
+  85% { transform: scale(0.5) translateY(-130px); }
+  100% { transform: scale(0.1) translateY(-150px); opacity: 0; }
+}
+@keyframes mascotPuffShadow {
+  0% { transform: scale(1); opacity: 0.3; }
+  15% { transform: scale(1.1); opacity: 0.25; }
+  35% { transform: scale(1.3); opacity: 0.2; }
+  50% { transform: scale(1.5); opacity: 0.15; }
+  70% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(0.1); opacity: 0; }
+}
+
+/* Floating hearts */
+.mascot-heart {
+  position: fixed;
+  font-size: 20px;
+  color: #ff6b9d;
+  pointer-events: none;
+  animation: heartFloat 1.5s ease-out forwards;
+  z-index: 10000;
+}
+
+@keyframes heartFloat {
+  0% { opacity: 1; transform: translateY(0) scale(0.5); }
+  50% { opacity: 1; transform: translateY(-30px) scale(1); }
+  100% { opacity: 0; transform: translateY(-60px) scale(0.5); }
+}
+
+/* Wave animation - saying hello */
+.mascot.wave .mascot-body {
+  animation: mascotWave 0.4s ease-in-out infinite;
+  box-shadow: 0 6px 30px rgba(0,229,160,0.5);
+}
+.mascot.wave .mascot-eye {
+  background: #0a0a0f;
+}
+.mascot.wave .mascot-mouth {
+  width: 10px; height: 6px;
+  border: none; border-radius: 50%;
+  background: #0a0a0f; top: 14px;
+}
+.mascot.wave .mascot-body::before,
+.mascot.wave .mascot-body::after { opacity: 1; }
+.mascot.wave .mascot-shadow { 
+  opacity: 0.4; 
+}
+
+@keyframes mascotWave {
+  0%, 100% { transform: rotate(-15deg) scaleY(1); }
+  50% { transform: rotate(15deg) scaleY(1); }
+}
+
+/* Angry animation - red and shaking */
+.mascot.angry .mascot-body {
+  animation: mascotAngry 0.1s ease-in-out infinite;
+  box-shadow: 0 8px 35px rgba(255,80,80,0.7);
+  background: #ff5555;
+}
+.mascot.angry .mascot-eye {
+  background: #0a0a0f;
+  transform: scaleY(0.6);
+}
+.mascot.angry .mascot-eye::before,
+.mascot.angry .mascot-eye::after {
+  content: ''; position: absolute;
+  width: 12px; height: 3px;
+  background: #0a0a0f;
+  top: -3px;
+  transform: rotate(15deg);
+}
+.mascot.angry .mascot-eye.left::before { left: -2px; transform: rotate(-25deg); }
+.mascot.angry .mascot-eye.right::after { right: -2px; transform: rotate(25deg); }
+.mascot.angry .mascot-eye.left::after,
+.mascot.angry .mascot-eye.right::before { display: none; }
+.mascot.angry .mascot-mouth {
+  width: 12px; height: 4px;
+  border: none; border-radius: 0 0 50% 50%;
+  background: #0a0a0f; top: 15px;
+}
+.mascot.angry .mascot-body::before,
+.mascot.angry .mascot-body::after { opacity: 1; background: rgba(255,100,100,0.3); }
+.mascot.angry .mascot-shadow { 
+  opacity: 0.4; 
+  animation: mascotAngryShadow 0.1s ease-in-out infinite;
+}
+
+@keyframes mascotAngry {
+  0%, 100% { transform: translateX(-2px) scale(1); }
+  50% { transform: translateX(2px) scale(1.02); }
+}
+@keyframes mascotAngryShadow {
+  0%, 100% { transform: scale(1) translateX(-1px); }
+  50% { transform: scale(1.05) translateX(1px); }
+}
+
+/* Pushhead animation - pushing head like nope */
+.mascot.pushhead .mascot-body {
+  animation: mascotPushHead 0.4s ease-in-out infinite;
+  box-shadow: 0 6px 30px rgba(0,229,160,0.5);
+}
+.mascot.pushhead .mascot-eye {
+  background: #0a0a0f;
+  transform: scaleY(0.5);
+}
+.mascot.pushhead .mascot-mouth {
+  width: 12px; height: 4px;
+  border: none; border-radius: 0;
+  background: transparent;
+  border-top: 2px solid #0a0a0f;
+  top: 12px;
+}
+.mascot.pushhead .mascot-body::before,
+.mascot.pushhead .mascot-body::after { opacity: 1; }
+.mascot.pushhead .mascot-shadow { 
+  opacity: 0.4; 
+}
+
+@keyframes mascotPushHead {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  25% { transform: translateX(12px) scaleX(1.05); }
+  50% { transform: translateX(0) scaleX(1); }
+  75% { transform: translateX(-12px) scaleX(1.05); }
+}
+
+/* Speed trail/dust effect */
+.mascot-trail {
+  position: absolute;
+  width: 8px; height: 8px;
+  background: radial-gradient(circle, rgba(0,229,160,0.6) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: mascotTrailFade 0.3s ease-out forwards;
+}
+
+@keyframes mascotTrailFade {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2); }
+}
+
+@media (max-width: 768px) {
+  .mascot { display: none; }
+}

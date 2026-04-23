@@ -5,6 +5,14 @@ const commands = {
     <span class="t-str">contact</span> <span class="t-response">— how to reach me</span><br>
     <span class="t-str">projects</span> <span class="t-response">— what I've built</span><br>
     <span class="t-str">hire</span> <span class="t-response">— availability & rates</span><br>
+    <span class="t-str">pet</span> <span class="t-response">— summon the blob</span><br>
+    <span class="t-str">dance</span> <span class="t-response">— make the blob dance</span><br>
+    <span class="t-str">scare</span> <span class="t-response">— scare the blob</span><br>
+    <span class="t-str">love</span> <span class="t-response">— blob falls in love</span><br>
+    <span class="t-str">puff</span> <span class="t-response">— inflate like a balloon</span><br>
+    <span class="t-str">wave</span> <span class="t-response">— says hello</span><br>
+    <span class="t-str">angry</span> <span class="t-response">— makes the blob angry</span><br>
+    <span class="t-str">pushhead</span> <span class="t-response">— nope nope nope</span><br>
     <span class="t-str">secret</span> <span class="t-response">— ???</span><br>
     <span class="t-str">clear</span> <span class="t-response">— clear terminal</span>`,
   stack: () => `<span class="t-label">Production stack:</span><br>
@@ -38,7 +46,99 @@ const commands = {
     <span class="t-response">&nbsp;&nbsp;sleep(maybe);</span><br>
     <span class="t-response">&nbsp;&nbsp;repeat();</span><br>
     <span class="t-response">}</span><br>
-    <span class="t-comment">// Also building a game about alien planets 🛸</span>`,
+    <span class="t-comment">// Also building a game about alien planets 🛸</span><br>
+    <span class="t-comment">// psst... try typing "pet"</span>`,
+  pet: (args) => {
+    var mascot = document.getElementById('mascot');
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    var colors = { red: '#ff5f57', blue: '#5f9fff', green: '' };
+
+    // Color change
+    if (args && colors.hasOwnProperty(args)) {
+      if (mascot.classList.contains('hidden')) {
+        return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+      }
+      var body = mascot.querySelector('.mascot-body');
+      body.style.background = colors[args] || '';
+      body.style.boxShadow = colors[args]
+        ? '0 4px 20px ' + colors[args] + '80, inset 0 -6px 12px rgba(0,0,0,0.15)'
+        : '';
+      mascot.classList.add('jump');
+      setTimeout(function() { mascot.classList.remove('jump'); }, 500);
+      return '<span class="t-response">Blob color changed to <span style="color:' + (colors[args] || 'var(--accent)') + '">' + (args || 'green') + '</span>!</span>';
+    }
+
+    if (args) {
+      return '<span class="t-response">Unknown color. Try: <span style="color:#ff5f57">red</span>, <span style="color:#5f9fff">blue</span>, <span style="color:var(--accent)">green</span></span>';
+    }
+
+    // First summon
+    if (!mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob is already here! Try <span style="color:var(--accent)">pet red</span> or <span style="color:var(--accent)">pet blue</span> to change its color.</span>';
+    }
+    mascot.classList.remove('hidden');
+    mascot.classList.remove('sleeping');
+    mascot.classList.add('jump');
+    setTimeout(function() { mascot.classList.remove('jump'); }, 500);
+    if (window.mascotWake) window.mascotWake();
+    return '<span class="t-label">*a small blob appears*</span><br><span class="t-response">You found the pet! It now lives on your screen.</span><br><span class="t-comment">// click it, drag it, or type "pet red" / "pet blue"</span>';
+  },
+  dance: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotDance) window.mascotDance();
+    return '<span class="t-label">*the blob starts dancing!*</span><br><span class="t-comment">// boogie woogie</span>';
+  },
+  scare: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotScare) window.mascotScare();
+    return '<span class="t-label">*BOO!*</span><br><span class="t-comment">// got scared</span>';
+  },
+  love: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotLove) window.mascotLove();
+    return '<span class="t-label">*the blob is in love!*</span><br><span class="t-comment">// hearts everywhere</span>';
+  },
+  puff: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotPuff) window.mascotPuff();
+    return '<span class="t-label">*pfffffff!*</span><br><span class="t-comment">// inflating</span>';
+  },
+  wave: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotWave) window.mascotWave();
+    return '<span class="t-label">*hello!*</span><br><span class="t-comment">// waves hello</span>';
+  },
+  angry: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotAngry) window.mascotAngry();
+    return '<span class="t-label">*GRRRR!*</span><br><span class="t-comment">// angry blob</span>';
+  },
+  pushhead: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotPushHead) window.mascotPushHead();
+    return '<span class="t-label">*nope, nope, nope...*</span><br><span class="t-comment">// pushin\' head</span>';
+  },
   clear: () => 'CLEAR'
 };
 
@@ -50,17 +150,21 @@ function initTerminal() {
 
   terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const cmd = terminalInput.value.trim().toLowerCase();
+      const input = terminalInput.value.trim().toLowerCase();
       terminalInput.value = '';
-      if (!cmd) return;
+      if (!input) return;
+
+      const parts = input.split(/\s+/);
+      const cmd = parts[0];
+      const args = parts.slice(1).join(' ');
 
       const cmdLine = document.createElement('div');
-      cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${cmd}</span>`;
+      cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
       terminalOutput.appendChild(cmdLine);
 
       const response = commands[cmd];
       if (response) {
-        const result = response();
+        const result = response(args);
         if (result === 'CLEAR') {
           terminalOutput.innerHTML = '';
           return;
