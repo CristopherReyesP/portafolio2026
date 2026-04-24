@@ -2,6 +2,7 @@
 initI18n();
 initTerminal();
 initTerminalTilt();
+initTerminalFab();
 initCursor();
 initScrollProgress();
 initRevealOnScroll();

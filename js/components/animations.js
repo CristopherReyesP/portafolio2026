@@ -1,11 +1,13 @@
 function initScrollProgress() {
   var scrollTopBtn = document.getElementById('scrollTop');
+  var terminalFab = document.getElementById('terminalFab');
   window.addEventListener('scroll', () => {
     const scrollTop = document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (scrollTop / scrollHeight) * 100;
     document.getElementById('scrollProgress').style.width = progress + '%';
     scrollTopBtn.classList.toggle('visible', scrollTop > 400);
+    terminalFab.classList.toggle('visible', scrollTop > 400);
   });
   scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

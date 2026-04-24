@@ -232,3 +232,77 @@ function initTerminalTilt() {
     terminal.style.transform = 'perspective(800px) rotateY(0) rotateX(0)';
   });
 }
+
+function initTerminalFab() {
+  const fab = document.getElementById('terminalFab');
+  const floatTerminal = document.getElementById('terminalFloat');
+  if (!fab || !floatTerminal) return;
+
+  function closeTerminal() {
+    floatTerminal.classList.remove('open');
+    fab.classList.remove('active');
+  }
+
+  fab.addEventListener('click', () => {
+    floatTerminal.classList.toggle('open');
+    fab.classList.toggle('active');
+  });
+
+  floatTerminal.querySelector('.t-dot.r').addEventListener('click', closeTerminal);
+
+  floatTerminal.querySelector('.t-dot.g').addEventListener('click', () => {
+    floatTerminal.classList.toggle('maximized');
+  });
+
+  floatTerminal.querySelector('.t-dot.y').addEventListener('click', () => {
+    if (floatTerminal.classList.contains('maximized')) {
+      floatTerminal.classList.remove('maximized');
+    }
+  });
+
+  const floatInput = document.getElementById('terminalFloatInput');
+  const floatOutput = document.getElementById('terminalFloatOutput');
+
+  if (floatInput) {
+    floatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const input = floatInput.value.trim().toLowerCase();
+        floatInput.value = '';
+        if (!input) return;
+
+        const parts = input.split(/\s+/);
+        const cmd = parts[0];
+        const args = parts.slice(1).join(' ');
+
+        const cmdLine = document.createElement('div');
+        cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
+        floatOutput.appendChild(cmdLine);
+
+        const response = commands[cmd];
+        if (response) {
+          const result = response(args);
+          if (result === 'CLEAR') {
+            floatOutput.innerHTML = '';
+            return;
+          }
+          const respDiv = document.createElement('div');
+          respDiv.className = 'terminal-output';
+          respDiv.innerHTML = result;
+          floatOutput.appendChild(respDiv);
+        } else {
+          const errDiv = document.createElement('div');
+          errDiv.className = 'terminal-output';
+          errDiv.innerHTML = `<span class="t-response">Command not found. Type <span style="color:var(--accent)">help</span></span>`;
+          floatOutput.appendChild(errDiv);
+        }
+
+        const body = document.getElementById('terminalFloatBody');
+        body.scrollTop = body.scrollHeight;
+      }
+    });
+
+    document.getElementById('terminalFloatBody').addEventListener('click', () => {
+      floatInput.focus();
+    });
+  }
+}

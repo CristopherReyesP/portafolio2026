@@ -113,11 +113,76 @@ function initMascot() {
     lastAction: 0,
     paused: false,
     scaredTimer: 0,
-    runningTimer: 0
+    runningTimer: 0,
+    danceTimer: 0,
+    scareTimer: 0,
+    puffTimer: 0,
+    angryTimer: 0,
+    pushheadTimer: 0,
+    meltTimer: 0
   };
 
   applyPos(posToScreen(state.pos));
   el.classList.add('hidden', 'on-bottom');
+
+  // --- Contextual tips for Contact section ---
+  var contactTips = [
+    "Si llegaste hasta aquí, ya sabés lo que puedo hacer. Agendemos.",
+    "Conversemos sobre tu proyecto. Sin compromiso.",
+    "Tengo agenda disponible esta semana.",
+    "Respuesta en menos de 24 horas.",
+    "Hablemos. El tiempo de llamada corre por mi cuenta.",
+    "Tu proyecto no tiene que ser perfecto. Lo mejoramos juntos.",
+    "Cada línea de código tiene un objetivo de negocio. Hablemos del tuyo.",
+    "Si tenés dudas, preguntá. No custa nada.",
+    "Cero excusas, cero drama. Solo resultados.",
+    "Mi LinkedIn está abierto. También mis DMs.",
+    "Trabajo con equipos remotos. Zona horaria flexible.",
+    "No soy el más barato, pero tampoco el más caro. Soy el que entrega."
+  ];
+  var lastTipIndex = -1;
+  var tipVisible = false;
+  var tipTimeout = null;
+  var tipCooldown = 8000;
+  var lastTipTime = 0;
+
+  function showTip() {
+    if (tipVisible) return;
+    var now = Date.now();
+    if (now - lastTipTime < tipCooldown) return;
+
+    var elTip = document.getElementById('mascotTip');
+    if (!elTip) return;
+
+    var idx;
+    do {
+      idx = Math.floor(Math.random() * contactTips.length);
+    } while (idx === lastTipIndex && contactTips.length > 1);
+    lastTipIndex = idx;
+
+    elTip.textContent = contactTips[idx];
+    elTip.classList.add('visible');
+    tipVisible = true;
+    lastTipTime = now;
+
+    clearTimeout(tipTimeout);
+    tipTimeout = setTimeout(function () {
+      elTip.classList.remove('visible');
+      tipVisible = false;
+    }, 5000);
+  }
+
+  function checkContactSection() {
+    var contact = document.getElementById('contact');
+    if (!contact) return;
+    var rect = contact.getBoundingClientRect();
+    var inContact = rect.top <= window.innerHeight * 0.6 && rect.bottom >= 0;
+    if (inContact && summoned && !state.sleeping && !state.paused && !tipVisible) {
+      showTip();
+    }
+  }
+
+  window.addEventListener('scroll', checkContactSection);
 
   // Expose wake function for terminal command
   window.mascotWake = function () {
@@ -154,10 +219,11 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'scared', 'dizzy');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'scared', 'dizzy', 'dance', 'scare', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('dance');
     state.lastAction = Date.now();
-    setTimeout(function () {
+    clearTimeout(state.danceTimer);
+    state.danceTimer = setTimeout(function () {
       el.classList.remove('dance');
       state.idleTimer = Date.now();
     }, 3000);
@@ -169,10 +235,11 @@ function initMascot() {
     state.sleeping = false;
     state.idle = true;
     el.classList.remove('hidden', 'sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'dizzy');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'dizzy', 'scare', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('scare');
     state.lastAction = Date.now();
-    setTimeout(function () {
+    clearTimeout(state.scareTimer);
+    state.scareTimer = setTimeout(function () {
       el.classList.remove('scare');
       state.idleTimer = Date.now();
     }, 2000);
@@ -191,6 +258,7 @@ function initMascot() {
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy');
     el.classList.add('love');
     state.lastAction = Date.now();
+    clearInterval(loveInterval);
     loveInterval = setInterval(createHeart, 200);
     setTimeout(function () {
       el.classList.remove('love');
@@ -200,7 +268,7 @@ function initMascot() {
     }, 2500);
   };
   
-  // Expose puff function for terminal command
+// Expose puff function for terminal command
   window.mascotPuff = function () {
     summoned = true;
     state.sleeping = false;
@@ -212,13 +280,15 @@ function initMascot() {
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love');
     el.classList.add('puff');
     state.lastAction = Date.now();
-    setTimeout(function () {
+    clearTimeout(state.puffTimer);
+    state.puffTimer = setTimeout(function () {
       el.classList.remove('puff');
       state.idleTimer = Date.now();
     }, 3000);
   };
-  
+
   // Expose wave function for terminal command
+  var waveTimer = null;
   window.mascotWave = function () {
     summoned = true;
     state.sleeping = false;
@@ -227,10 +297,22 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave');
     el.classList.add('wave');
+
+    var elTip = document.getElementById('mascotTip');
+    if (elTip) {
+      elTip.textContent = '¡Hola!';
+      elTip.classList.add('visible');
+      clearTimeout(tipTimeout);
+      tipTimeout = setTimeout(function () {
+        elTip.classList.remove('visible');
+      }, 2000);
+    }
+
     state.lastAction = Date.now();
-    setTimeout(function () {
+    clearTimeout(waveTimer);
+    waveTimer = setTimeout(function () {
       el.classList.remove('wave');
       state.idleTimer = Date.now();
     }, 2500);
@@ -248,7 +330,8 @@ function initMascot() {
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave');
     el.classList.add('angry');
     state.lastAction = Date.now();
-    setTimeout(function () {
+    clearTimeout(state.angryTimer);
+    state.angryTimer = setTimeout(function () {
       el.classList.remove('angry');
       state.idleTimer = Date.now();
     }, 2000);
@@ -266,7 +349,8 @@ function initMascot() {
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry');
     el.classList.add('pushhead');
     state.lastAction = Date.now();
-    setTimeout(function () {
+    clearTimeout(state.pushheadTimer);
+    state.pushheadTimer = setTimeout(function () {
       el.classList.remove('pushhead');
       state.idleTimer = Date.now();
     }, 2000);
@@ -281,7 +365,6 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping');
-    // Toggle — if already rainbow, turn it off
     if (el.classList.contains('rainbow')) {
       el.classList.remove('rainbow');
       clearTimeout(rainbowTimer);
@@ -291,7 +374,7 @@ function initMascot() {
     }
     el.classList.add('rainbow');
     state.lastAction = Date.now();
-    // Auto-off after 10s
+    clearTimeout(rainbowTimer);
     rainbowTimer = setTimeout(function () {
       el.classList.remove('rainbow');
       rainbowTimer = null;
@@ -313,7 +396,8 @@ function initMascot() {
     el.classList.add('melt');
     state.lastAction = Date.now();
     state.paused = true;
-    setTimeout(function () {
+    clearTimeout(state.meltTimer);
+    state.meltTimer = setTimeout(function () {
       el.classList.remove('melt');
       state.paused = false;
       state.idleTimer = Date.now();
@@ -646,6 +730,8 @@ function initMascot() {
     if (state.idle && now - state.idleTimer > 3000 + Math.random() * 4000) {
       pickTarget();
     }
+
+    checkContactSection();
 
     requestAnimationFrame(tick);
   }

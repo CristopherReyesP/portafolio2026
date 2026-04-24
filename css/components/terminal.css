@@ -39,3 +39,88 @@
   transform: translateX(-8px);
   animation: typeLine 0.3s ease forwards;
 }
+
+/* Floating terminal button */
+.terminal-fab {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 900;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(15, 15, 24, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--accent);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  transition: opacity 0.3s, transform 0.3s, background 0.3s, border-color 0.3s;
+  box-shadow: none;
+}
+.terminal-fab.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.terminal-fab:hover {
+  background: rgba(0, 229, 160, 0.15);
+  border-color: var(--accent);
+}
+.terminal-fab svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .terminal-fab { display: none; }
+}
+
+/* Floating terminal window */
+.terminal-float {
+  position: fixed;
+  bottom: 90px;
+  left: 24px;
+  z-index: 9991;
+  width: 340px;
+  background: rgba(19, 19, 31, 0.95);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,160,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.terminal-float.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+.terminal-float .terminal-body {
+  padding: 16px;
+  font-size: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.terminal-float .terminal-input-line {
+  padding: 0 16px 12px;
+}
+.terminal-float .terminal-output {
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.terminal-float.maximized {
+  width: 560px;
+  bottom: 80px;
+}
+.terminal-float.maximized .terminal-body {
+  max-height: 480px;
+}

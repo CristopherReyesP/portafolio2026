@@ -88,6 +88,7 @@
 
 <!-- MASCOT -->
 <div class="mascot" id="mascot">
+  <div class="mascot-tip" id="mascotTip"></div>
   <div class="mascot-body">
     <div class="mascot-face">
       <div class="mascot-eye left"><div class="mascot-pupil"></div></div>
@@ -585,6 +586,28 @@
 <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
+
+<!-- FLOATING TERMINAL BUTTON -->
+<button class="terminal-fab" id="terminalFab" aria-label="Abrir terminal">
+  <svg id="terminalFabIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+  </svg>
+</button>
+
+<!-- FLOATING TERMINAL WINDOW -->
+<div class="terminal-float" id="terminalFloat">
+  <div class="terminal-bar">
+    <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+    <span class="terminal-title">cristopher.sh</span>
+  </div>
+  <div class="terminal-body" id="terminalFloatBody">
+    <div class="terminal-output" id="terminalFloatOutput"></div>
+    <div class="terminal-input-line">
+      <span class="terminal-prompt">~$</span>
+      <input type="text" class="terminal-input" id="terminalFloatInput" autocomplete="off" spellcheck="false" placeholder="help">
+    </div>
+  </div>
+</div>
 
 <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script defer src="js/i18n/translations.js"></script>
