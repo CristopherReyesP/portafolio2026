@@ -5,6 +5,11 @@ const commands = {
     <span class="t-str">contact</span> <span class="t-response">— how to reach me</span><br>
     <span class="t-str">projects</span> <span class="t-response">— what I've built</span><br>
     <span class="t-str">hire</span> <span class="t-response">— availability & rates</span><br>
+    <span class="t-str">resume</span> <span class="t-response">— download my CV</span><br>
+    <span class="t-str">github</span> <span class="t-response">— open GitHub profile</span><br>
+    <span class="t-str">linkedin</span> <span class="t-response">— open LinkedIn profile</span><br>
+    <span class="t-str">email</span> <span class="t-response">— open email client</span><br>
+    <span class="t-str">matrix</span> <span class="t-response">— ???</span><br>
     <span class="t-str">pet</span> <span class="t-response">— summon the blob</span><br>
     <span class="t-str">dance</span> <span class="t-response">— make the blob dance</span><br>
     <span class="t-str">scare</span> <span class="t-response">— scare the blob</span><br>
@@ -43,6 +48,23 @@ const commands = {
     <span class="t-str">Mode:</span> <span class="t-response">B2B, freelance, remote</span><br>
     <span class="t-str">Includes:</span> <span class="t-response">code + docs + runbooks + support</span><br>
     <span class="t-str">→</span> <a href="#contact" style="color:var(--accent)">Get in touch</a>`,
+  resume: () => `<span class="t-label">Downloading CV...</span><br><span class="t-comment">// ${window.location.origin}/resume/CV_Cristopher_Reyes.pdf</span><br><span class="t-str">→</span> <a href="resume/CV_Cristopher_Reyes.pdf" download style="color:var(--accent)">Click here if download didn't start</a>`,
+  github: () => {
+    window.open('https://github.com/CristopherReyesP', '_blank');
+    return `<span class="t-label">Opening GitHub...</span><br><span class="t-comment">// github.com/CristopherReyesP</span>`;
+  },
+  linkedin: () => {
+    window.open('https://www.linkedin.com/in/cristopherrp', '_blank');
+    return `<span class="t-label">Opening LinkedIn...</span><br><span class="t-comment">// linkedin.com/in/cristopherrp</span>`;
+  },
+  email: () => {
+    window.open('mailto:reyescristop@gmail.com', '_blank');
+    return `<span class="t-label">Opening email client...</span><br><span class="t-comment">// reyescristop@gmail.com</span>`;
+  },
+  matrix: () => {
+    runMatrix();
+    return `<span class="t-label">Wake up, Neo...</span><br><span class="t-comment">// follow the white rabbit</span>`;
+  },
   secret: () => `<span class="t-response">while (alive) {</span><br>
     <span class="t-response">&nbsp;&nbsp;eat();</span><br>
     <span class="t-response">&nbsp;&nbsp;code();</span><br>
@@ -305,4 +327,39 @@ function initTerminalFab() {
       floatInput.focus();
     });
   }
+}
+
+function runMatrix() {
+  var canvas = document.createElement('canvas');
+  canvas.className = 'matrix-canvas';
+  document.body.appendChild(canvas);
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+  var fontSize = 14;
+  var columns = Math.floor(canvas.width / fontSize);
+  var drops = Array(columns).fill(1);
+
+  var interval = setInterval(function() {
+    ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00e5a0';
+    ctx.font = fontSize + 'px monospace';
+    for (var i = 0; i < drops.length; i++) {
+      var text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }, 33);
+
+  setTimeout(function() {
+    clearInterval(interval);
+    canvas.classList.add('fade');
+    setTimeout(function() { canvas.remove(); }, 1000);
+  }, 2500);
 }
