@@ -16,6 +16,7 @@ const commands = {
     <span class="t-str">love</span> <span class="t-response">— blob falls in love</span><br>
     <span class="t-str">puff</span> <span class="t-response">— inflate like a balloon</span><br>
     <span class="t-str">wave</span> <span class="t-response">— says hello</span><br>
+    <span class="t-str">extasis</span> <span class="t-response">— TURBO MODE</span><br>
     <span class="t-str">angry</span> <span class="t-response">— makes the blob angry</span><br>
     <span class="t-str">pushhead</span> <span class="t-response">— nope nope nope</span><br>
     <span class="t-str">melt</span> <span class="t-response">— melts into a puddle</span><br>
@@ -147,6 +148,21 @@ const commands = {
     }
     if (window.mascotWave) window.mascotWave();
     return '<span class="t-label">*hello!*</span><br><span class="t-comment">// waves hello</span>';
+  },
+  extasis: () => {
+    if (!mascot) return '<span class="t-response">No mascot found.</span>';
+    if (mascot.classList.contains('hidden')) {
+      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
+    }
+    if (window.mascotExtasis) {
+      var result = window.mascotExtasis();
+      if (result === 'on') {
+        return '<span class="t-label">*THE BLOB IS IN THE ZONE*</span><br><span class="t-comment">// turbo mode engaged</span>';
+      } else {
+        return '<span class="t-label">*back to normal*</span><br><span class="t-comment">// turbo mode off</span>';
+      }
+    }
+    return '<span class="t-response">Extasis not available.</span>';
   },
   angry: () => {
     if (!mascot) return '<span class="t-response">No mascot found.</span>';

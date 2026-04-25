@@ -16,13 +16,24 @@ function initMascot() {
   var currentRot = 0;
   var lastSurface = 'bottom';
   var mouseMoveCount = 0;
+  var running = true;
 
   // --- Perimeter system ---
   // The mascot walks along the viewport edges: bottom → right → top → left
   // pos = distance along the perimeter (0 = bottom-left corner)
-  function getPerimeter() {
+  var cachedPerimeter = null;
+  var lastPerimeterDims = null;
+
+  function getPerimeter(forceUpdate) {
     var vw = window.innerWidth;
     var vh = window.innerHeight;
+    var dims = vw + 'x' + vh;
+
+    if (!forceUpdate && lastPerimeterDims === dims && cachedPerimeter) {
+      return cachedPerimeter;
+    }
+
+    lastPerimeterDims = dims;
     var nav = document.querySelector('nav');
     var navH = nav ? nav.offsetHeight : 0;
     var leftCX = m + ew / 2;
@@ -31,13 +42,14 @@ function initMascot() {
     var bottomCY = vh - m - eh / 2;
     var hRange = Math.max(rightCX - leftCX, 1);
     var vRange = Math.max(bottomCY - topCY, 1);
-    return {
+    cachedPerimeter = {
       vw: vw, vh: vh,
       leftCX: leftCX, rightCX: rightCX,
       topCY: topCY, bottomCY: bottomCY,
       hRange: hRange, vRange: vRange,
       total: 2 * (hRange + vRange)
     };
+    return cachedPerimeter;
   }
 
   function posToScreen(pos) {
@@ -102,7 +114,7 @@ function initMascot() {
   }
 
   // --- State ---
-  var per = getPerimeter();
+  var per = getPerimeter(true);
   var state = {
     pos: per.hRange - 40,
     targetPos: 0,
@@ -119,7 +131,10 @@ function initMascot() {
     puffTimer: 0,
     angryTimer: 0,
     pushheadTimer: 0,
-    meltTimer: 0
+    meltTimer: 0,
+    danceTimeout: 0,
+    waveTimer: 0,
+    extasisTimer: 0
   };
 
   applyPos(posToScreen(state.pos));
@@ -223,6 +238,7 @@ function initMascot() {
     el.classList.add('dance');
     state.lastAction = Date.now();
     clearTimeout(state.danceTimer);
+    clearTimeout(state.danceTimeout);
     state.danceTimer = setTimeout(function () {
       el.classList.remove('dance');
       state.idleTimer = Date.now();
@@ -277,7 +293,7 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('puff');
     state.lastAction = Date.now();
     clearTimeout(state.puffTimer);
@@ -287,8 +303,7 @@ function initMascot() {
     }, 3000);
   };
 
-  // Expose wave function for terminal command
-  var waveTimer = null;
+// Expose wave function for terminal command
   window.mascotWave = function () {
     summoned = true;
     state.sleeping = false;
@@ -297,7 +312,7 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('wave');
 
     var elTip = document.getElementById('mascotTip');
@@ -311,8 +326,8 @@ function initMascot() {
     }
 
     state.lastAction = Date.now();
-    clearTimeout(waveTimer);
-    waveTimer = setTimeout(function () {
+    clearTimeout(state.waveTimer);
+    state.waveTimer = setTimeout(function () {
       el.classList.remove('wave');
       state.idleTimer = Date.now();
     }, 2500);
@@ -327,7 +342,7 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('angry');
     state.lastAction = Date.now();
     clearTimeout(state.angryTimer);
@@ -346,7 +361,7 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('pushhead');
     state.lastAction = Date.now();
     clearTimeout(state.pushheadTimer);
@@ -392,7 +407,7 @@ function initMascot() {
       el.classList.remove('hidden');
     }
     el.classList.remove('sleeping', 'walking');
-    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'extasis');
     el.classList.add('melt');
     state.lastAction = Date.now();
     state.paused = true;
@@ -402,6 +417,32 @@ function initMascot() {
       state.paused = false;
       state.idleTimer = Date.now();
     }, 2500);
+  };
+
+  // Expose extasis function for terminal command
+  window.mascotExtasis = function () {
+    summoned = true;
+    state.sleeping = false;
+    if (el.classList.contains('hidden')) {
+      el.classList.remove('hidden');
+    }
+    el.classList.remove('sleeping');
+    if (el.classList.contains('extasis')) {
+      el.classList.remove('extasis');
+      clearTimeout(state.extasisTimer);
+      state.extasisTimer = 0;
+      state.idleTimer = Date.now();
+      return 'off';
+    }
+    el.classList.add('extasis');
+    state.lastAction = Date.now();
+    clearTimeout(state.extasisTimer);
+    state.extasisTimer = setTimeout(function () {
+      el.classList.remove('extasis');
+      state.extasisTimer = 0;
+      state.idleTimer = Date.now();
+    }, 8000);
+    return 'on';
   };
 
   // Expose clone function for terminal command (mitosis split)
@@ -478,6 +519,8 @@ function initMascot() {
   // --- Eye tracking ---
   var pupils = el.querySelectorAll('.mascot-pupil');
   document.addEventListener('mousemove', function (e) {
+    if (el.classList.contains('hidden') || !running) return;
+    
     var rect = el.getBoundingClientRect();
     var cx = rect.left + rect.width / 2;
     var cy = rect.top + rect.height / 2;
@@ -512,6 +555,7 @@ function initMascot() {
 
   el.addEventListener('mousedown', function (e) {
     e.preventDefault();
+    if (el.classList.contains('hidden') || !running) return;
     if (state.sleeping) {
       state.sleeping = false;
       el.classList.remove('sleeping');
@@ -578,9 +622,16 @@ function initMascot() {
     if (!drag.active) return;
     drag.active = false;
     drag.speed = 0;
+    var hadDizzy = drag.dizzyStart;
     drag.dizzyStart = 0;
     el.classList.remove('dragging');
-    el.classList.remove('dizzy');
+    
+    // Clear dizzy after drag ends
+    if (hadDizzy) {
+      setTimeout(function () {
+        el.classList.remove('dizzy');
+      }, 150);
+    }
 
     // Fall back to floor at dropped X position
     var p = getPerimeter();
@@ -601,32 +652,33 @@ function initMascot() {
       state.lastAction = Date.now();
     }, 400);
   });
-
+  var clickTimer = 0;
   // --- Click to jump (or double click) ---
   var clickCount = 0;
   el.addEventListener('click', function () {
-    clickCount++;
+    clearTimeout(clickTimer);
+    clickCount = clickCount >= 2 ? 1 : clickCount + 1;
+    
     if (clickCount === 1) {
-      setTimeout(function () {
-        if (clickCount === 1) {
-          // Single click - jump
-          if (!drag.moved || drag.lastX === drag.prevX && drag.lastY === drag.prevY) {
-            el.classList.remove('jump');
-            void el.offsetWidth;
-            el.classList.add('jump');
-            state.lastAction = Date.now();
-            setTimeout(function () { el.classList.remove('jump'); }, 500);
-          }
-        } else if (clickCount === 2) {
-          // Double click - spin
-          el.classList.remove('spin');
+      clickTimer = setTimeout(function () {
+        // Single click - jump
+        if (!drag.moved || drag.lastX === drag.prevX && drag.lastY === drag.prevY) {
+          el.classList.remove('jump');
           void el.offsetWidth;
-          el.classList.add('spin');
+          el.classList.add('jump');
           state.lastAction = Date.now();
-          setTimeout(function () { el.classList.remove('spin'); }, 600);
+          setTimeout(function () { el.classList.remove('jump'); }, 500);
         }
         clickCount = 0;
       }, 250);
+    } else if (clickCount === 2) {
+      // Double click - spin
+      el.classList.remove('spin');
+      void el.offsetWidth;
+      el.classList.add('spin');
+      state.lastAction = Date.now();
+      setTimeout(function () { el.classList.remove('spin'); }, 600);
+      clickCount = 0;
     }
   });
   
@@ -651,7 +703,13 @@ function initMascot() {
   // --- Main loop ---
   function tick() {
     var now = Date.now();
-    
+
+    // Stop loop if element was removed
+    if (!running || !el.parentNode) {
+      running = false;
+      return;
+    }
+
     // Skip movement updates while dancing
     if (el.classList.contains('dance') || el.classList.contains('scare') || el.classList.contains('melt')) {
       requestAnimationFrame(tick);
@@ -676,6 +734,14 @@ function initMascot() {
       el.classList.add('sleeping');
     }
 
+    // Clear dizzy if dragging stopped moving
+    if (drag.active && drag.dizzyStart && drag.speed < 2200) {
+      if (now - drag.dizzyStart > 2000) {
+        el.classList.remove('dizzy');
+        drag.dizzyStart = 0;
+      }
+    }
+
     if (state.sleeping || state.paused) {
       requestAnimationFrame(tick);
       return;
@@ -697,7 +763,11 @@ function initMascot() {
       } else {
         var dir = diff > 0 ? 1 : -1;
         var speed = 1.2;
-        if (currentSurface === 'right' || currentSurface === 'left') {
+        var isExtasis = el.classList.contains('extasis');
+        
+        if (isExtasis) {
+          speed = 3.5;
+        } else if (currentSurface === 'right' || currentSurface === 'left') {
           speed = 0.6;
           el.classList.remove('climbing');
           el.classList.add('climbing-wall');
@@ -710,7 +780,7 @@ function initMascot() {
         }
         
         // Remove scared when slows down
-        if (speed < 1.0 && state.scaredTimer) {
+        if (!isExtasis && speed < 1.0 && state.scaredTimer) {
           el.classList.remove('scared');
           state.scaredTimer = 0;
         }
@@ -741,14 +811,32 @@ function initMascot() {
 
   // --- Resize ---
   window.addEventListener('resize', function () {
-    if (!summoned) return;
     if (window.innerWidth < 768) {
       el.classList.add('hidden');
+      summoned = false;
+      state.sleeping = true;
+      el.classList.add('sleeping');
     } else {
       el.classList.remove('hidden');
-      var p = getPerimeter();
+      var p = getPerimeter(true);
       state.pos = state.pos % p.total;
       applyPos(posToScreen(state.pos));
     }
   });
+
+  // --- Cleanup ---
+  window.mascotDestroy = function () {
+    running = false;
+    clearTimeout(state.danceTimer);
+    clearTimeout(state.danceTimeout);
+    clearTimeout(state.scareTimer);
+    clearTimeout(state.puffTimer);
+    clearTimeout(state.angryTimer);
+    clearTimeout(state.pushheadTimer);
+    clearTimeout(state.meltTimer);
+    clearTimeout(state.waveTimer);
+    clearTimeout(loveInterval);
+    clearTimeout(rainbowTimer);
+    clearTimeout(tipTimeout);
+  };
 }
