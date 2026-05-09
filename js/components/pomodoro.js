@@ -23,10 +23,12 @@ const Pomodoro = {
     this.modal = document.createElement('div');
     this.modal.className = 'pomo-overlay';
     this.modal.innerHTML = `
-<div class="pomo-win">
-  <div class="pomo-header">
-    <span>🍅 Pomodoro</span>
-    <button class="pomo-close">✕</button>
+<div class="pomo-win" id="pomoWin">
+  <div class="pomo-header" id="pomoHeader">
+    <span class="pomo-dot r" id="pomoClose"></span>
+    <span class="pomo-dot y"></span>
+    <span class="pomo-dot g"></span>
+    <span class="pomo-title">🍅 Pomodoro</span>
   </div>
   <div class="pomo-body">
     <div class="pomo-phase" id="pomoPhase">FOCUS</div>
@@ -54,7 +56,7 @@ const Pomodoro = {
 </div>`;
     document.body.appendChild(this.modal);
 
-    this.modal.querySelector('.pomo-close').addEventListener('click', () => this.close());
+    this.modal.querySelector('#pomoClose').addEventListener('click', () => this.close());
     this.modal.querySelector('#pomoMainBtn').addEventListener('click', () => this._toggle());
     this.modal.querySelector('#pomoResetBtn').addEventListener('click', () => this._reset());
     this.modal.querySelectorAll('.pomo-adjust-btn').forEach(btn => {
@@ -63,6 +65,33 @@ const Pomodoro = {
     this.modal.addEventListener('click', (e) => {
       if (e.target === this.modal) this.close();
     });
+    this._initDrag();
+  },
+
+  _initDrag() {
+    const win = this.modal.querySelector('#pomoWin');
+    const header = this.modal.querySelector('#pomoHeader');
+    let dragging = false, startX, startY;
+
+    header.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.pomo-dot')) return;
+      dragging = true;
+      const rect = win.getBoundingClientRect();
+      win.style.position = 'fixed';
+      win.style.left = rect.left + 'px';
+      win.style.top = rect.top + 'px';
+      win.style.margin = '0';
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      win.style.left = (e.clientX - startX) + 'px';
+      win.style.top = (e.clientY - startY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => { dragging = false; });
   },
 
   _adjust(target, dir) {
