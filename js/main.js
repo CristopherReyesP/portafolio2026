@@ -1,4 +1,5 @@
 // Initialize critical components first (visible immediately)
+initStars();
 initI18n();
 initTerminal();
 initTerminalTilt();
