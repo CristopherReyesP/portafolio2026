@@ -80,7 +80,7 @@ const translations = {
     why4_num: '04 — Comunicación directa',
     why4_title: 'Coordino con tu equipo como si fuera parte de él.',
     why4_text: 'Traduzco requerimientos de negocio a soluciones técnicas. <strong>No vas a tener que perseguirme.</strong>',
-    why_highlight: 'Contratar al developer más barato para un sistema crítico es como ahorrar en los frenos de un carro: <span>el costo real se paga después.</span>',
+    why_highlight: 'Contratar al developer más barato para un sistema crítico es como ahorrar en los frenos de un auto: <span>el costo real se paga después.</span>',
 
     // Services
     svc_tag: 'Servicios freelance', svc_title: 'Servicios que puedo entregarte',

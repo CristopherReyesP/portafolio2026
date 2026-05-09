@@ -1,16 +1,16 @@
 .cursor {
-  width: 6px; height: 6px;
+  width: 8px; height: 8px;
   background: #fff;
   border-radius: 50%;
   position: fixed;
   pointer-events: none;
   z-index: 10001;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 6px rgba(255,255,255,0.6), 0 0 14px rgba(255,255,255,0.2);
-  animation: twinkle 1.8s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(255,255,255,0.5), 0 0 12px rgba(255,255,255,0.15);
+  animation: twinkle 2s ease-in-out infinite;
 }
 .cursor.hover {
-  width: 9px; height: 9px;
+  width: 12px; height: 12px;
   box-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.3);
 }
 .cursor-dot { display: none; }

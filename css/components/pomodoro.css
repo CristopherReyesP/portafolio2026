@@ -1,0 +1,138 @@
+.pomo-overlay {
+  position: fixed; inset: 0; z-index: 9990;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+  opacity: 1; transition: opacity 0.25s;
+}
+.pomo-overlay.hidden {
+  opacity: 0; pointer-events: none;
+}
+.pomo-win {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 340px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  transition: box-shadow 0.5s;
+  overflow: hidden;
+}
+.pomo-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: var(--text);
+}
+.pomo-close {
+  background: none; border: none; color: var(--muted);
+  font-size: 16px; cursor: pointer; padding: 4px 8px;
+  border-radius: 4px; transition: all 0.2s;
+}
+.pomo-close:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+}
+.pomo-body {
+  padding: 32px 20px 24px;
+  text-align: center;
+}
+.pomo-phase {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.pomo-timer {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 56px; font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--text);
+  margin-bottom: 24px;
+  line-height: 1;
+}
+.pomo-controls {
+  display: flex; gap: 10px; justify-content: center;
+  margin-bottom: 20px;
+}
+.pomo-btn {
+  padding: 10px 28px; border: none; border-radius: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.pomo-btn.primary {
+  background: var(--accent); color: var(--bg);
+}
+.pomo-btn.primary:hover {
+  background: #00c98a;
+  box-shadow: 0 4px 20px rgba(0,229,160,0.3);
+}
+.pomo-btn.secondary {
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.pomo-btn.secondary:hover {
+  color: var(--text);
+  border-color: rgba(255,255,255,0.15);
+}
+.pomo-adjust {
+  display: flex; gap: 24px; justify-content: center;
+  margin-bottom: 24px;
+}
+.pomo-adjust-group {
+  display: flex; align-items: center; gap: 6px;
+}
+.pomo-adjust-btn {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  line-height: 1;
+}
+.pomo-adjust-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.2);
+}
+.pomo-adjust-btn:disabled {
+  opacity: 0.25; cursor: not-allowed;
+  pointer-events: none;
+}
+.pomo-adjust-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--text);
+  min-width: 32px; text-align: center;
+}
+.pomo-adjust-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-left: 4px;
+}
+.pomo-sessions {
+  display: flex; gap: 8px; justify-content: center;
+}
+.pomo-s-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.pomo-s-dot.done {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(0,229,160,0.3);
+}

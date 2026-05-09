@@ -23,6 +23,7 @@ const commands = {
     <span class="t-str">rainbow</span> <span class="t-response">— taste the rainbow</span><br>
     <span class="t-str">clone</span> <span class="t-response">— mitosis!</span><br>
     <span class="t-str">secret</span> <span class="t-response">— ???</span><br>
+    <span class="t-str">pomodoro</span> <span class="t-response">— open a Pomodoro timer</span><br>
     <span class="t-str">clear</span> <span class="t-response">— clear terminal</span>`,
   stack: () => `<span class="t-label">Production stack:</span><br>
     <span class="t-str">Backend:</span> <span class="t-response">NestJS, .NET/C#, Node.js, TypeScript</span><br>
@@ -205,7 +206,11 @@ const commands = {
     if (window.mascotClone) window.mascotClone();
     return '<span class="t-label">*the blob splits in two!*</span><br><span class="t-comment">// mitosis in progress...</span>';
   },
-  clear: () => 'CLEAR'
+  clear: () => 'CLEAR',
+  pomodoro: () => {
+    Pomodoro.open();
+    return '<span class="t-label">Opening Pomodoro...</span><br><span class="t-comment">// focus time 🍅</span>';
+  }
 };
 
 function initTerminal() {
