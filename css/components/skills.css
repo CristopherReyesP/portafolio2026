@@ -9,7 +9,7 @@
 }
 .skill-group:hover { background: rgba(19, 19, 31, 0.7); }
 .skill-group:hover::after { transform: scaleX(1); }
-.skill-group-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 16px; }
+.skill-group-name { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 16px; }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .skill-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 4px 10px; border-radius: 2px; letter-spacing: 0.5px; transition: all 0.3s; cursor: default; }
 .skill-tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,160,0.05); transform: translateY(-1px); }

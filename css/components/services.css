@@ -13,13 +13,13 @@
 }
 .service-card:hover { border-color: rgba(0,229,160,0.2); transform: translateY(-4px); }
 .service-card:hover::after { opacity: 1; }
-.service-num { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; color: rgba(255,255,255,0.04); line-height: 1; margin-bottom: 16px; letter-spacing: -2px; }
+.service-num { font-family: 'Orbitron', sans-serif; font-size: 48px; font-weight: 800; color: rgba(255,255,255,0.04); line-height: 1; margin-bottom: 16px; letter-spacing: -2px; }
 .service-icon-wrap { margin-bottom: 14px; color: var(--accent); opacity: 0.8; }
-.service-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 12px; position: relative; z-index: 1; }
+.service-name { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 12px; position: relative; z-index: 1; }
 .service-desc { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 20px; position: relative; z-index: 1; }
-.service-price { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--accent); position: relative; z-index: 1; }
+.service-price { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 13px; color: var(--accent); position: relative; z-index: 1; }
 .service-cta {
-  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+  font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 500;
   color: var(--accent); text-decoration: none;
   letter-spacing: 0.5px; position: relative; z-index: 1;
   transition: all 0.3s; display: inline-block;

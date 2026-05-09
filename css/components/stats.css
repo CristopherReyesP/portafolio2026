@@ -7,7 +7,7 @@
 .stat-item:last-child { border-right: none; }
 .stat-item:hover { background: rgba(19, 19, 31, 0.5); }
 .stat-num {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 36px;
+  font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 36px;
   letter-spacing: -1px; display: block;
 }
 .stat-num .accent { color: var(--accent); }

@@ -5,7 +5,7 @@ const translations = {
     nav_services: 'Servicios', nav_exp: 'Experiencia', nav_cta: 'Contratar',
 
     // Hero
-    hero_title: 'Construyo el backend que <span>no puede fallar</span>',
+    hero_title: 'Construyo backend <span>que no puede fallar</span>',
     hero_desc: 'Mis sistemas procesan transacciones bancarias reales, todos los días. Si algo falla, se pierde dinero. Entrego sistemas que funcionan en producción, no solo en demos.',
     hero_btn1: 'Ver resultados', hero_btn2: 'Hablemos de tu proyecto',
 

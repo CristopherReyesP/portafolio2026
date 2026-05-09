@@ -1,7 +1,7 @@
 #contact { background: rgba(15, 15, 24, 0.35); backdrop-filter: blur(8px); text-align: center; }
 .contact-inner { max-width: 600px; margin: 0 auto; }
 .contact-email {
-  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-family: 'Orbitron', sans-serif; font-weight: 800;
   font-size: clamp(20px,3vw,34px); letter-spacing: -1px;
   color: var(--text); text-decoration: none; display: block;
   margin: 32px auto; transition: all 0.3s;

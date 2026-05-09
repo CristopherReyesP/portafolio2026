@@ -9,7 +9,7 @@ nav {
   animation: navSlide 0.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes navSlide { to { transform: translateY(0); } }
-.nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+.nav-logo { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
 .nav-logo span { color: var(--accent); }
 .nav-links { display: flex; gap: 36px; list-style: none; }
 .nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s; position: relative; }
@@ -30,7 +30,7 @@ nav {
 }
 .lang-btn {
   background: none; border: none; color: var(--muted);
-  font-family: 'DM Mono', monospace; font-size: 11px;
+  font-family: 'Space Mono', monospace; font-size: 11px;
   padding: 4px 10px; cursor: none; letter-spacing: 0.5px;
   transition: all 0.2s; border-radius: 1px;
 }
