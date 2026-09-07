@@ -50,6 +50,10 @@
 .project-type-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
 .project-type-dot.purple { background: var(--accent2); }
 .project-type-dot.red { background: var(--accent3); }
+/* Bank work carries the Bantrab palette; the glow keeps a 5px dot readable. */
+.project-type-dot.bt-magenta { background: var(--bt-magenta); box-shadow: 0 0 6px rgba(216,12,96,0.6); }
+.project-type-dot.bt-cyan { background: var(--bt-cyan); box-shadow: 0 0 6px rgba(12,168,168,0.6); }
+.project-type-dot.bt-yellow { background: var(--bt-yellow); box-shadow: 0 0 6px rgba(252,204,0,0.6); }
 .project-name { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.5px; margin-bottom: 12px; }
 .project-desc { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 20px; }
 .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }

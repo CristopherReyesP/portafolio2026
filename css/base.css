@@ -9,6 +9,12 @@
   --text: #e8e8f0;
   --muted: #6b6b88;
   --card: #111120;
+
+  /* Bantrab palette, sampled from the logo. Marks bank work only —
+     personal projects keep the portfolio's own accents. */
+  --bt-magenta: #d80c60;
+  --bt-cyan: #0ca8a8;
+  --bt-yellow: #fccc00;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }

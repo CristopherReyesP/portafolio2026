@@ -1,0 +1,43 @@
+/* BRANDS STRIP — production context, sits between the hero and the stats bar */
+.brands {
+  padding: 56px 60px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.brands-tag {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+}
+.brands-tag::before {
+  content: ''; width: 24px; height: 1px; background: var(--accent);
+}
+.brands-row {
+  display: flex; align-items: center; gap: 36px; flex-wrap: wrap;
+}
+.brand-logo {
+  height: 30px; width: auto; opacity: 0.85;
+  transition: opacity 0.3s;
+}
+.brand-logo:hover { opacity: 1; }
+.brand-word {
+  font-family: 'Orbitron', sans-serif; font-weight: 700;
+  font-size: 20px; letter-spacing: 0.5px;
+  color: var(--text); opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.brand-word:hover { opacity: 1; }
+.brand-sep {
+  width: 1px; height: 22px; background: var(--border);
+}
+@media (max-width: 700px) {
+  .brands { padding: 40px 24px; }
+  .brands-row { gap: 24px; }
+  .brand-sep { display: none; }
+}
+
+/* Square marks read smaller than horizontal wordmarks at the same height. */
+.brand-logo-sq { height: 38px; }
+
+/* Two-line lockup: needs more height than a single-line mark to stay legible. */
+.brand-logo-stack { height: 48px; }

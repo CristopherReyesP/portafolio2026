@@ -15,6 +15,14 @@ function initScrollProgress() {
 }
 
 function initRevealOnScroll() {
+  const targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
+
+  // No observer support: reveal everything rather than leave the page blank.
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach((el) => el.classList.add('visible'));
+    return;
+  }
+
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -24,7 +32,7 @@ function initRevealOnScroll() {
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach((el) => {
+  targets.forEach((el) => {
     const parent = el.closest('.projects-grid, .services-grid, .skills-grid, .stats-bar, .exp-timeline, .why-grid');
     if (parent) {
       const siblings = parent.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
@@ -58,7 +66,12 @@ function initCounters() {
     });
   }, { threshold: 0.5 });
 
-  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+  document.querySelectorAll('.counter').forEach((el) => {
+    // The markup carries the real figure so it survives without JS; the
+    // count-up starts from zero only once JS is confirmed running.
+    el.textContent = '0';
+    counterObserver.observe(el);
+  });
 }
 
 function initCardSpotlight() {

@@ -64,6 +64,10 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
+<!-- Progressive enhancement flag: set before first paint so the reveal
+     animations only hide content when JavaScript can bring it back. -->
+<script>document.documentElement.classList.add('js');</script>
+
 <!-- CSS: parallel download (replaces @import waterfall) -->
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/utilities.css">
@@ -71,6 +75,7 @@
 <link rel="stylesheet" href="css/components/pomodoro.css">
 <link rel="stylesheet" href="css/components/nav.css">
 <link rel="stylesheet" href="css/components/hero.css">
+<link rel="stylesheet" href="css/components/brands.css">
 <link rel="stylesheet" href="css/components/terminal.css">
 <link rel="stylesheet" href="css/components/stats.css">
 <link rel="stylesheet" href="css/components/skills.css">
@@ -163,19 +168,31 @@
   </div>
 </section>
 
+<!-- BRANDS -->
+<section class="brands" id="brands" aria-label="Contextos de producción">
+  <div class="brands-tag" data-i18n="brands_tag">Sistemas en producción para</div>
+  <div class="brands-row">
+    <img class="brand-logo" src="images/brand/bantrab.png" alt="Bantrab" width="541" height="125" loading="lazy">
+    <span class="brand-sep" aria-hidden="true"></span>
+    <img class="brand-logo brand-logo-sq" src="images/brand/yolo.png" alt="YoLo" width="115" height="120" loading="lazy">
+    <span class="brand-sep" aria-hidden="true"></span>
+    <img class="brand-logo brand-logo-stack" src="images/brand/miagente.png" alt="Mi Agente Bantrab" width="113" height="73" loading="lazy">
+  </div>
+</section>
+
 <!-- STATS -->
 <section class="stats-bar" aria-label="Estadísticas clave">
   <h2 class="sr-only">Métricas profesionales</h2>
   <div class="stat-item reveal">
-    <span class="stat-num"><span class="counter" data-target="5">0</span><span class="accent">+</span></span>
+    <span class="stat-num"><span class="counter" data-target="5">5</span><span class="accent">+</span></span>
     <span class="stat-label" data-i18n="stat1">Años en sistemas de producción</span>
   </div>
   <div class="stat-item reveal" style="transition-delay:0.1s">
-    <span class="stat-num"><span class="counter" data-target="18">0</span><span class="accent">+</span></span>
+    <span class="stat-num"><span class="counter" data-target="18">18</span><span class="accent">+</span></span>
     <span class="stat-label" data-i18n="stat2">Microservicios bancarios activos</span>
   </div>
   <div class="stat-item reveal" style="transition-delay:0.2s">
-    <span class="stat-num"><span class="counter" data-target="50" data-suffix="k">0</span><span class="accent">k</span></span>
+    <span class="stat-num"><span class="counter" data-target="50" data-suffix="k">50</span><span class="accent">k</span></span>
     <span class="stat-label" data-i18n="stat3">Registros migrados sin pérdida</span>
   </div>
   <div class="stat-item reveal" style="transition-delay:0.3s">
@@ -269,6 +286,7 @@
   </div>
 </section>
 
+
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-tag" data-i18n="proj_tag">Proyectos</div>
@@ -278,7 +296,7 @@
     <!-- Keycloak -->
     <div class="project-card reveal">
       <div class="card-border-glow"></div><div class="card-border-inner"></div>
-      <div class="project-type"><span class="project-type-dot"></span><span data-i18n="proj1_type">Producción · Infraestructura bancaria</span></div>
+      <div class="project-type"><span class="project-type-dot bt-magenta"></span><span data-i18n="proj1_type">Producción · Infraestructura bancaria</span></div>
       <h3 class="project-name" data-i18n="proj1_name">Migración Keycloak v11 → v19</h3>
       <p class="project-desc" data-i18n="proj1_desc">Migración completa de WildFly a Quarkus en OpenShift para un banco con miles de usuarios activos. Redirects de URLs legacy, guías de rollback y documentación ADS. Resultado: cero downtime, cero tickets.</p>
       <div class="project-stack">
@@ -290,7 +308,7 @@
     <!-- Saga -->
     <div class="project-card reveal">
       <div class="card-border-glow"></div><div class="card-border-inner"></div>
-      <div class="project-type"><span class="project-type-dot red"></span><span data-i18n="proj2_type">Producción · Arquitectura financiera</span></div>
+      <div class="project-type"><span class="project-type-dot bt-cyan"></span><span data-i18n="proj2_type">Producción · Arquitectura financiera</span></div>
       <h3 class="project-name" data-i18n="proj2_name">Saga Pattern — Reversas Bancarias</h3>
       <p class="project-desc" data-i18n="proj2_desc">Bug crítico de doble reversa en transacciones reales. Diagnostiqué la cadena NestJS → MuleSoft → Oracle, implementé arquitectura Saga con orquestador y reconciliación automática. Resuelto sin pérdida de datos.</p>
       <div class="project-stack">
@@ -299,11 +317,36 @@
       </div>
     </div>
 
+    <!-- QR YAYO/YOLO -->
+    <div class="project-card reveal">
+      <div class="card-border-glow"></div><div class="card-border-inner"></div>
+      <div class="project-type"><span class="project-type-dot bt-yellow"></span><span data-i18n="proj4_type">En curso · Integración de pagos</span></div>
+      <h3 class="project-name" data-i18n="proj4_name">Cobros por QR — YAYO / YOLO</h3>
+      <p class="project-desc" data-i18n="proj4_desc">El endpoint generaba el QR sin dejar rastro y todos los afiliados cobran contra una cuenta bolsón compartida: el estado de cuenta no podía atribuir un depósito a su afiliado. Diseñé el modelo de datos y el endpoint de confirmación directa desde la billetera, separando cuenta de abono y cuenta de cargo. Cada cobro queda trazable a su origen.</p>
+      <div class="project-stack">
+        <span class="stack-tag">NestJS</span><span class="stack-tag">Oracle</span>
+        <span class="stack-tag">OpenShift</span><span class="stack-tag">TypeScript</span><span class="stack-tag">REST</span>
+      </div>
+    </div>
+
+    <!-- Canary release por usuario -->
+    <div class="project-card reveal">
+      <div class="card-border-glow"></div><div class="card-border-inner"></div>
+      <div class="project-type"><span class="project-type-dot bt-magenta"></span><span data-i18n="proj5_type">En curso · Migración progresiva</span></div>
+      <h3 class="project-name" data-i18n="proj5_name">Canary release por usuario — 38 rutas de gateway</h3>
+      <p class="project-desc" data-i18n="proj5_desc">Migrar 38 rutas de un gateway NGINX hacia servicios nuevos sin apagar el legacy ni exponer a todos los agentes a la vez. Construí un catálogo de rutas en base de datos y un panel donde cada ruta guarda destino legacy y destino nuevo, y la conmutación se habilita agente por agente. Sin asignación explícita el destino es legacy, siempre: el rollback es quitar la asignación.</p>
+      <div class="project-stack">
+        <span class="stack-tag">NestJS</span><span class="stack-tag">NGINX</span>
+        <span class="stack-tag">.NET / C#</span><span class="stack-tag">Oracle</span>
+        <span class="stack-tag">OpenShift</span><span class="stack-tag">Azure DevOps</span>
+      </div>
+    </div>
+
     <!-- Monolith to Microservices -->
     <div class="project-card featured reveal">
       <div class="card-border-glow"></div><div class="card-border-inner"></div>
       <div>
-        <div class="project-type"><span class="project-type-dot purple"></span><span data-i18n="proj3_type">Producción · Modernización de arquitectura</span></div>
+        <div class="project-type"><span class="project-type-dot bt-cyan"></span><span data-i18n="proj3_type">Producción · Modernización de arquitectura</span></div>
         <h3 class="project-name" data-i18n="proj3_name">Monolito PL/SQL → 18+ Microservicios</h3>
         <p class="project-desc" data-i18n="proj3_desc">El core transaccional dependía de stored procedures PL/SQL acoplados, imposibles de escalar o testear. Migración progresiva a 18+ microservicios NestJS y .NET con DDD, API Gateway y CI/CD en OpenShift.</p>
         <div class="project-stack">
@@ -331,54 +374,36 @@
   <p class="section-subtitle reveal" style="margin-bottom:32px" data-i18n="personal_sub">Fuera del banco, diseño y construyo productos propios de principio a fin.</p>
   <div class="projects-grid">
 
-    <!-- XYRA -->
+    <!-- Hormigas -->
     <div class="project-card featured reveal">
       <div class="card-border-glow"></div><div class="card-border-inner"></div>
       <div>
-        <div class="project-type"><span class="project-type-dot purple"></span><span data-i18n="xyra_type">Indie Game Dev · En desarrollo</span></div>
-        <h3 class="project-name">XYRA — Survival MMO</h3>
-        <p class="project-desc" data-i18n="xyra_desc">Survival MMO 3D Low Poly en un planeta alienígena. GDD de 17 secciones: combate, criaturas, economía y mundo abierto. Backend multiplayer con Nakama.</p>
+        <div class="project-type"><span class="project-type-dot purple"></span><span data-i18n="ants_type">Indie Game Dev · Jugable en el navegador</span></div>
+        <h3 class="project-name">Hormigas — Simulador de colonia</h3>
+        <p class="project-desc" data-i18n="ants_desc">Simulador de gestión de una colonia: las obreras recolectan, las exploradoras abren rutas y las soldados defienden el nido de las oleadas. Motor propio sobre canvas con arquitectura ECS, ciclo día/noche, excavación de túneles e IA distinta por rol. Sin librería de juego: el game loop, el renderer y el atlas de sprites son míos.</p>
         <div class="project-stack">
-          <span class="stack-tag">Godot 4</span><span class="stack-tag">GDScript</span><span class="stack-tag">C#</span>
-          <span class="stack-tag">Nakama</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Blender</span>
+          <span class="stack-tag">React 19</span><span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Vite</span><span class="stack-tag">Canvas 2D</span>
+          <span class="stack-tag">ECS</span><span class="stack-tag">GitHub Actions</span>
         </div>
+        <a href="https://cristopherreyesp.github.io/hormigas/" target="_blank" rel="noopener" class="project-download" data-i18n="ants_play">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Jugar ahora
+        </a>
+        <a href="https://github.com/CristopherReyesP/hormigas" target="_blank" rel="noopener" class="project-download" data-i18n="ants_code">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Ver el código
+        </a>
       </div>
-      <div class="project-visual">
-        <div class="pv-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-          <span data-i18n="xyra_pv_title">GDD — Sistemas diseñados</span>
+      <div class="project-gallery">
+        <div class="gallery-window">
+          <img class="gallery-main" src="images/hormigas/colonia.png" alt="Simulador de colonia de hormigas" loading="lazy">
         </div>
-        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="xyra_pv1">Sistema de combate y habilidades</span></div>
-        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="xyra_pv2">Crianza y evolución de criaturas</span></div>
-        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="xyra_pv3">Economía in-game (crafting + mercado)</span></div>
-        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="xyra_pv4">Mundo abierto alien con biomas</span></div>
-        <div class="pv-item"><span class="pv-dot r"></span><span data-i18n="xyra_pv5">Backend MMO con Nakama + PostgreSQL</span></div>
-      </div>
-    </div>
-
-    <!-- Línea Muerta -->
-    <div class="project-card featured red-glow reveal" style="border-color:rgba(255,107,107,0.15);">
-      <div class="card-border-glow"></div><div class="card-border-inner"></div>
-      <div>
-        <div class="project-type"><span class="project-type-dot red"></span><span data-i18n="lm_type">Fullstack · Juego online multijugador</span></div>
-        <h3 class="project-name">Línea Muerta</h3>
-        <p class="project-desc" data-i18n="lm_desc">Mini-juegos multijugador en tiempo real. 5 juegos aleatorios por sesión, chat de voz con WebRTC y estado sincronizado con Socket.io.</p>
-        <div class="project-stack">
-          <span class="stack-tag">React</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Node.js</span>
-          <span class="stack-tag">Socket.io</span><span class="stack-tag">WebRTC</span><span class="stack-tag">Zustand</span>
-          <span class="stack-tag">Vite</span><span class="stack-tag">Express</span>
+        <div class="gallery-thumbs">
+          <button class="gallery-thumb active" data-src="images/hormigas/colonia.png"><img src="images/hormigas/colonia.png" alt="Colonia" loading="lazy"></button>
+          <button class="gallery-thumb" data-src="images/hormigas/expansion.png"><img src="images/hormigas/expansion.png" alt="Expansión" loading="lazy"></button>
+          <button class="gallery-thumb" data-src="images/hormigas/oleada.png"><img src="images/hormigas/oleada.png" alt="Oleada" loading="lazy"></button>
         </div>
-      </div>
-      <div class="project-visual" style="border-color:rgba(255,107,107,0.2);background:linear-gradient(135deg,rgba(255,107,107,0.07),rgba(124,111,255,0.04));">
-        <div class="pv-title" style="color:var(--accent3);">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h4m4 0h4M6 8h12M6 16h12M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg>
-          <span data-i18n="lm_pv_title">Mini-juegos incluidos</span>
-        </div>
-        <div class="pv-item"><span class="pv-dot r"></span><span data-i18n="lm_pv1">Cooperar o Traicionar (dilema del prisionero)</span></div>
-        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="lm_pv2">¿Quién Sobra? — votación por eliminación</span></div>
-        <div class="pv-item"><span class="pv-dot r"></span><span data-i18n="lm_pv3">Adivina la Línea — voz distorsionada</span></div>
-        <div class="pv-item"><span class="pv-dot p"></span><span data-i18n="lm_pv4">La Bomba — pasa o desactiva</span></div>
-        <div class="pv-item"><span class="pv-dot"></span><span data-i18n="lm_pv5">Central de Emergencias — bajo presión</span></div>
       </div>
     </div>
 
