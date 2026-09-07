@@ -1,8 +1,9 @@
 /* BRANDS STRIP — production context, sits between the hero and the stats bar */
 .brands {
-  padding: 56px 60px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  /* No rules of its own: the hero flows straight into the strip, and the
+     stats bar below already draws the one intentional divider. Bordering
+     here doubled that line and put a hard seam under the hero. */
+  padding: 64px 60px 72px;
 }
 .brands-tag {
   font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
