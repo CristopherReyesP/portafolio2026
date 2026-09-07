@@ -15,6 +15,9 @@
   --bt-magenta: #d80c60;
   --bt-cyan: #0ca8a8;
   --bt-yellow: #fccc00;
+  /* Pure magenta only reaches 3.7:1 on the card — too low for 10px label
+     text. This tint keeps the hue and clears 4.5:1. Dots use the pure value. */
+  --bt-magenta-text: #df3c7f;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }

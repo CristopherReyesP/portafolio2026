@@ -47,13 +47,17 @@
   background: conic-gradient(from var(--border-angle), transparent 60%, var(--accent3) 78%, transparent 96%);
 }
 .project-type { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.project-type-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.project-type-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 .project-type-dot.purple { background: var(--accent2); }
 .project-type-dot.red { background: var(--accent3); }
 /* Bank work carries the Bantrab palette; the glow keeps a 5px dot readable. */
 .project-type-dot.bt-magenta { background: var(--bt-magenta); box-shadow: 0 0 6px rgba(216,12,96,0.6); }
 .project-type-dot.bt-cyan { background: var(--bt-cyan); box-shadow: 0 0 6px rgba(12,168,168,0.6); }
 .project-type-dot.bt-yellow { background: var(--bt-yellow); box-shadow: 0 0 6px rgba(252,204,0,0.6); }
+/* The label inherits the mark's colour so the tag reads as bank work at a glance. */
+.project-type-dot.bt-magenta ~ span { color: var(--bt-magenta-text); }
+.project-type-dot.bt-cyan ~ span { color: var(--bt-cyan); }
+.project-type-dot.bt-yellow ~ span { color: var(--bt-yellow); }
 .project-name { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.5px; margin-bottom: 12px; }
 .project-desc { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 20px; }
 .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
