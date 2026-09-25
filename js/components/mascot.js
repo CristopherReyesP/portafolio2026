@@ -880,9 +880,39 @@ function initMascot() {
 
   function autoSummon() {
     if (!running || summoned || !el.classList.contains('hidden') || window.innerWidth <= 768) return;
-    el.classList.remove('hidden', 'sleeping');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.classList.remove('hidden', 'sleeping');
+      window.mascotWake();
+      return;
+    }
+
+    // Entrance: fall from above the viewport onto its bottom-right spot, squash, then wave.
+    // Only .mascot-body/.mascot-shadow animate, so applyPos() keeps owning #mascot's transform.
+    state.paused = true;
+    state.idle = true;
+    el.classList.remove('sleeping', 'walking');
+    el.classList.add('entering');
+    el.classList.remove('hidden');
     window.mascotWake();
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) window.mascotWave();
+
+    function endEntrance() {
+      el.classList.remove('entering', 'dropping');
+      state.paused = menuOpen || drag.active;
+      state.idleTimer = Date.now();
+    }
+
+    setTimeout(function () {
+      el.classList.remove('entering');
+      if (el.classList.contains('hidden')) { endEntrance(); return; }
+      el.classList.add('dropping');
+      setTimeout(function () {
+        el.classList.remove('dropping');
+        if (el.classList.contains('hidden')) { endEntrance(); return; }
+        window.mascotWave();
+        // Stay put while waving; normal wandering resumes afterwards
+        setTimeout(endEntrance, 2500);
+      }, 400);
+    }, 650);
   }
   if (document.readyState === 'complete') setTimeout(autoSummon, 3000);
   else window.addEventListener('load', function () { setTimeout(autoSummon, 3000); }, { once: true });
