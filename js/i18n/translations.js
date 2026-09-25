@@ -117,6 +117,19 @@ const translations = {
     mascot_label: 'Abrir acciones de la mascota', mascot_dance: 'Bailar',
     mascot_love: 'Amor', mascot_puff: 'Inflarse', mascot_wave: 'Saludar',
     mascot_rainbow: 'Arcoíris',
+    mascot_hello: '¡Hola!',
+    mascot_tips: [
+      'Si llegaste hasta aquí, conversemos sobre tu equipo.',
+      'Busco un rol backend remoto de tiempo completo.',
+      'Respondo en menos de 24 horas.',
+      'Trabajo en GMT-6, con horario compatible con Estados Unidos.',
+      'Tengo experiencia con equipos remotos y distribuidos.',
+      'Sistemas bancarios en producción: estabilidad antes que atajos.',
+      '¿Tienes dudas? Escríbeme, con gusto las respondo.',
+      'También puedes encontrarme en LinkedIn.',
+      'Puedes agendar una llamada de 30 minutos en Calendly.',
+      'Cada línea de código tiene un objetivo de negocio.'
+    ],
 
     // Stats
     stat1: 'Años en sistemas de producción', stat2: 'Microservicios bancarios activos',
@@ -336,6 +349,19 @@ const translations = {
     mascot_label: 'Open mascot actions', mascot_dance: 'Dance',
     mascot_love: 'Love', mascot_puff: 'Puff', mascot_wave: 'Wave',
     mascot_rainbow: 'Rainbow',
+    mascot_hello: 'Hi!',
+    mascot_tips: [
+      'If you made it this far, let\'s talk about your team.',
+      'I\'m looking for a full-time remote backend role.',
+      'I reply within 24 hours.',
+      'I work in GMT-6, with hours that overlap the US.',
+      'I have experience working with remote, distributed teams.',
+      'Banking systems in production: stability over shortcuts.',
+      'Questions? Write to me, I\'m happy to answer.',
+      'You can also find me on LinkedIn.',
+      'You can book a 30-minute call on Calendly.',
+      'Every line of code serves a business goal.'
+    ],
 
     // Stats
     stat1: 'Years in production systems', stat2: 'Active banking microservices',

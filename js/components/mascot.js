@@ -147,21 +147,10 @@ function initMascot() {
     el.tabIndex = 0;
   }
 
-  // --- Contextual tips for Contact section ---
-  var contactTips = [
-    "Si llegaste hasta aquí, ya sabés lo que puedo hacer. Agendemos.",
-    "Conversemos sobre tu proyecto. Sin compromiso.",
-    "Tengo agenda disponible esta semana.",
-    "Respuesta en menos de 24 horas.",
-    "Hablemos. El tiempo de llamada corre por mi cuenta.",
-    "Tu proyecto no tiene que ser perfecto. Lo mejoramos juntos.",
-    "Cada línea de código tiene un objetivo de negocio. Hablemos del tuyo.",
-    "Si tenés dudas, preguntá. No custa nada.",
-    "Cero excusas, cero drama. Solo resultados.",
-    "Mi LinkedIn está abierto. También mis DMs.",
-    "Trabajo con equipos remotos. Zona horaria flexible.",
-    "No soy el más barato, pero tampoco el más caro. Soy el que entrega."
-  ];
+  // --- Contextual tips for Contact section (translations.js: mascot_tips, per language) ---
+  function contactTips() {
+    return translations[currentLang].mascot_tips;
+  }
   var lastTipIndex = -1;
   var tipVisible = false;
   var tipTimeout = null;
@@ -176,13 +165,14 @@ function initMascot() {
     var elTip = document.getElementById('mascotTip');
     if (!elTip) return;
 
+    var tips = contactTips();
     var idx;
     do {
-      idx = Math.floor(Math.random() * contactTips.length);
-    } while (idx === lastTipIndex && contactTips.length > 1);
+      idx = Math.floor(Math.random() * tips.length);
+    } while (idx === lastTipIndex && tips.length > 1);
     lastTipIndex = idx;
 
-    elTip.textContent = contactTips[idx];
+    elTip.textContent = tips[idx];
     elTip.classList.add('visible');
     tipVisible = true;
     lastTipTime = now;
@@ -325,7 +315,7 @@ function initMascot() {
 
     var elTip = document.getElementById('mascotTip');
     if (elTip) {
-      elTip.textContent = '¡Hola!';
+      elTip.textContent = translations[currentLang].mascot_hello;
       elTip.classList.add('visible');
       clearTimeout(tipTimeout);
       tipTimeout = setTimeout(function () {
