@@ -9,6 +9,7 @@ const translations = {
     hero_desc: 'Aporto experiencia en sistemas bancarios en producción, migraciones críticas y modernización de legacy. Busco sumarme a un equipo internacional de ingeniería backend.',
     hero_availability: 'Disponible para roles remotos · GMT-6',
     hero_btn1: 'Ver resultados', hero_btn_cta: 'Descargar CV', cv_href: 'resume/CV_Cristopher_Reyes.pdf',
+    terminal_command: 'Comando', terminal_try: 'Prueba:',
 
     // Stats
     stat1: 'Años en sistemas de producción', stat2: 'Microservicios bancarios activos',
@@ -120,6 +121,7 @@ const translations = {
     hero_desc: 'I bring experience with production banking systems, critical migrations, and legacy modernization. I am looking to join an international backend engineering team.',
     hero_availability: 'Open to remote roles · GMT-6',
     hero_btn1: 'See results', hero_btn_cta: 'Download CV', cv_href: 'resume/CV_Cristopher_Reyes_EN.pdf',
+    terminal_command: 'Command', terminal_try: 'Try:',
 
     // Stats
     stat1: 'Years in production systems', stat2: 'Active banking microservices',
