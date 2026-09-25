@@ -4,7 +4,7 @@ const commands = {
     <span class="t-str">experience</span> <span class="t-response">— years & current role</span><br>
     <span class="t-str">contact</span> <span class="t-response">— how to reach me</span><br>
     <span class="t-str">projects</span> <span class="t-response">— what I've built</span><br>
-    <span class="t-str">hire</span> <span class="t-response">— availability & rates</span><br>
+    <span class="t-str">hire</span> <span class="t-response">— remote role availability</span><br>
     <span class="t-str">resume</span> <span class="t-response">— download my CV</span><br>
     <span class="t-str">github</span> <span class="t-response">— open GitHub profile</span><br>
     <span class="t-str">linkedin</span> <span class="t-response">— open LinkedIn profile</span><br>
@@ -30,9 +30,9 @@ const commands = {
     <span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span><br>
     <span class="t-str">Infra:</span> <span class="t-response">OpenShift, Docker, Keycloak, CI/CD</span><br>
     <span class="t-str">Frontend:</span> <span class="t-response">React, Vite, Socket.io, WebRTC</span><br>
-    <span class="t-str">Gamedev:</span> <span class="t-response">Godot 4, GDScript, C#, Blender, Nakama</span>`,
+    <span class="t-str">Personal projects:</span> <span class="t-response">Godot 4, game dev</span>`,
   experience: () => `<span class="t-label">5+ years in production systems</span><br>
-    <span class="t-str">Current:</span> <span class="t-response">Backend Engineer @ BANTRAB (bank)</span><br>
+    <span class="t-str">Current:</span> <span class="t-response">Backend Software Engineer (Technical Analyst I) @ BANTRAB</span><br>
     <span class="t-str">Focus:</span> <span class="t-response">Banking transactions, 18+ microservices</span><br>
     <span class="t-str">Highlight:</span> <span class="t-response">Keycloak migration, 0 downtime</span>`,
   contact: () => `<span class="t-label">Let's talk:</span><br>
@@ -46,9 +46,9 @@ const commands = {
     <span class="t-str">→</span> <span class="t-response">PL/SQL monolith → 18+ microservices</span><br>
     <span class="t-str">→</span> <span class="t-response">XYRA — Survival MMO (Godot 4 + Nakama)</span><br>
     <span class="t-str">→</span> <span class="t-response">Línea Muerta — multiplayer mini-games</span>`,
-  hire: () => `<span class="t-label">Availability:</span> <span class="t-bool">true</span><br>
-    <span class="t-str">Mode:</span> <span class="t-response">B2B, freelance, remote</span><br>
-    <span class="t-str">Includes:</span> <span class="t-response">code + docs + runbooks + support</span><br>
+  hire: () => `<span class="t-label">Open to international remote backend roles</span><br>
+    <span class="t-str">Role:</span> <span class="t-response">Full-time Backend Engineer</span><br>
+    <span class="t-str">Timezone:</span> <span class="t-response">GMT-6</span><br>
     <span class="t-str">→</span> <a href="#contact" style="color:var(--accent)">Get in touch</a>`,
   resume: () => `<span class="t-label">Downloading CV...</span><br><span class="t-comment">// ${window.location.origin}/resume/CV_Cristopher_Reyes.pdf</span><br><span class="t-str">→</span> <a href="resume/CV_Cristopher_Reyes.pdf" download style="color:var(--accent)">Click here if download didn't start</a>`,
   github: () => {
