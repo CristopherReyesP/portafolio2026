@@ -1,3 +1,7 @@
+// whoami lines follow the ES/EN switch: setLang() re-renders every [data-i18n-html] element
+const whoamiKeys = ['terminal_whoami1', 'terminal_whoami2', 'terminal_whoami3'];
+const i18nLine = (key) => `<div data-i18n-html="${key}">${translations[currentLang][key]}</div>`;
+
 const commands = {
   help: () => `<span class="t-label">Available commands:</span><br>
     <span class="t-str">whoami</span> <span class="t-response">— a quick introduction</span><br>
@@ -26,9 +30,7 @@ const commands = {
     <span class="t-str">secret</span> <span class="t-response">— ???</span><br>
     <span class="t-str">pomodoro</span> <span class="t-response">— open a Pomodoro timer</span><br>
     <span class="t-str">clear</span> <span class="t-response">— clear terminal</span>`,
-  whoami: () => `<span class="t-label">Backend Engineer</span> <span class="t-response">building banking production systems.</span><br>
-    <span class="t-str">Experience:</span> <span class="t-response">5+ years in production systems.</span><br>
-    <span class="t-str">Availability:</span> <span class="t-response">Open to remote international roles · GMT-6.</span>`,
+  whoami: () => whoamiKeys.map(i18nLine).join(''),
   stack: () => `<span class="t-label">Production stack:</span><br>
     <span class="t-str">Backend:</span> <span class="t-response">NestJS, .NET/C#, Node.js, TypeScript</span><br>
     <span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span><br>
@@ -226,15 +228,10 @@ function initTerminal() {
 
   if (!terminalInput) return;
 
-  let typingTimer;
-  let isTyping = false;
-  let typedValue = '';
-
-  function cancelTyping(clearInput) {
-    if (!isTyping) return;
-    clearTimeout(typingTimer);
-    isTyping = false;
-    if (clearInput && terminalInput.value === typedValue) terminalInput.value = '';
+  function echoCommand(input) {
+    const cmdLine = document.createElement('div');
+    cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
+    terminalOutput.appendChild(cmdLine);
   }
 
   function runCommand() {
@@ -246,9 +243,7 @@ function initTerminal() {
     const cmd = parts[0];
     const args = parts.slice(1).join(' ');
 
-    const cmdLine = document.createElement('div');
-    cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
-    terminalOutput.appendChild(cmdLine);
+    echoCommand(input);
 
     const response = commands[cmd];
     if (response) {
@@ -271,38 +266,96 @@ function initTerminal() {
     terminalBody.scrollTop = terminalBody.scrollHeight;
   }
 
-  function typeCommand(command, delay = 0) {
-    if (isTyping) return;
-    isTyping = true;
-    typedValue = '';
-    terminalInput.value = '';
+  // --- Auto intro: runs `whoami` like a real session ---
+  // The typed text lives in its own span (with a block cursor) instead of the input,
+  // so the input stays empty and usable; output lines are separate blocks revealed one
+  // by one, so none of them outgrows the hero h1 as the LCP element.
+  const INTRO_COMMAND = 'whoami';
+  const intro = { state: 'idle', timer: 0, typed: null, lines: [], output: null, echoed: false };
+  const placeholder = terminalInput.getAttribute('placeholder');
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      terminalInput.value = command;
-      isTyping = false;
-      runCommand();
-      return;
-    }
-
-    let index = 0;
-    function typeNextCharacter() {
-      typedValue += command[index++];
-      terminalInput.value = typedValue;
-      if (index === command.length) {
-        isTyping = false;
-        runCommand();
-      } else {
-        typingTimer = setTimeout(typeNextCharacter, 50);
-      }
-    }
-    typingTimer = setTimeout(typeNextCharacter, delay || 50);
+  function introStep(fn, delay) {
+    intro.timer = setTimeout(fn, delay);
   }
 
-  terminalInput.addEventListener('focus', () => cancelTyping(true));
-  terminalInput.addEventListener('input', () => cancelTyping(false));
+  function removeTypedCommand() {
+    if (intro.typed) intro.typed.remove();
+    intro.typed = null;
+    if (placeholder !== null) terminalInput.setAttribute('placeholder', placeholder);
+  }
+
+  function echoIntroCommand() {
+    removeTypedCommand();
+    echoCommand(INTRO_COMMAND);
+    intro.echoed = true;
+    intro.output = document.createElement('div');
+    intro.output.className = 'terminal-output';
+    terminalOutput.appendChild(intro.output);
+    const template = document.createElement('div');
+    template.innerHTML = commands[INTRO_COMMAND]();
+    intro.lines = Array.from(template.children);
+  }
+
+  function revealNextLine() {
+    const line = intro.lines.shift();
+    if (!line) {
+      intro.state = 'done';
+      return;
+    }
+    line.classList.add('terminal-line');
+    intro.output.appendChild(line);
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+    introStep(revealNextLine, 180);
+  }
+
+  // Skip to the end: full output at once, nothing left half-typed
+  function finishIntro() {
+    if (intro.state === 'done') return;
+    clearTimeout(intro.timer);
+    if (!intro.echoed) echoIntroCommand();
+    intro.lines.forEach(line => intro.output.appendChild(line));
+    intro.lines = [];
+    intro.state = 'done';
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+  }
+
+  function startIntro() {
+    if (intro.state !== 'idle') return;
+    const userIsTyping = document.activeElement === terminalInput || terminalInput.value !== '';
+    if (userIsTyping || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      finishIntro();
+      return;
+    }
+    intro.state = 'running';
+    terminalInput.setAttribute('placeholder', '');
+    intro.typed = document.createElement('span');
+    intro.typed.className = 'terminal-typed';
+    intro.typed.setAttribute('aria-hidden', 'true');
+    intro.typed.innerHTML = '<span class="t-str"></span><span class="t-cursor"></span>';
+    terminalInput.before(intro.typed);
+
+    const typedText = intro.typed.firstChild;
+    let index = 0;
+    function typeNextCharacter() {
+      typedText.textContent += INTRO_COMMAND[index++];
+      if (index < INTRO_COMMAND.length) {
+        introStep(typeNextCharacter, 110);
+      } else {
+        // Short beat before "Enter", then the output streams in
+        introStep(() => {
+          echoIntroCommand();
+          introStep(revealNextLine, 180);
+        }, 400);
+      }
+    }
+    introStep(typeNextCharacter, 1000);
+  }
+
+  terminalInput.addEventListener('focus', finishIntro);
+  terminalInput.addEventListener('input', finishIntro);
   terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      cancelTyping(false);
+      finishIntro();
       runCommand();
     }
   });
@@ -311,21 +364,17 @@ function initTerminal() {
     terminalInput.focus();
   });
 
-  terminal.querySelectorAll('.terminal-chip').forEach(chip => {
-    chip.addEventListener('click', () => typeCommand(chip.dataset.command));
-  });
-
-  // Start the intro once the terminal is mostly visible, so on mobile (below the fold)
+  // Start the intro once the terminal is almost fully visible, so on mobile (below the fold)
   // the late-rendered output does not become the LCP element
   if ('IntersectionObserver' in window) {
     const introObserver = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) return;
       introObserver.disconnect();
-      typeCommand('whoami', 650);
-    }, { threshold: 0.6 });
+      startIntro();
+    }, { threshold: 0.9 });
     introObserver.observe(terminal);
   } else {
-    typeCommand('whoami', 650);
+    startIntro();
   }
 }
 
