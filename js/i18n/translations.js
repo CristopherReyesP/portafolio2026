@@ -244,6 +244,8 @@ const translations = {
       ]
     },
     pet_thinking: 'pensando',
+    pet_copy: 'Copiar respuesta',
+    pet_copied: 'Copiado',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend para sistemas que no pueden fallar.', experience: 'Más de 5 años en producción.',
@@ -610,6 +612,8 @@ const translations = {
       ]
     },
     pet_thinking: 'thinking',
+    pet_copy: 'Copy answer',
+    pet_copied: 'Copied',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend systems that cannot fail.', experience: '5+ years in production.',

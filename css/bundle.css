@@ -499,6 +499,21 @@ nav {
 .terminal-output { margin-top: 6px; font-size: 12px; line-height: 1.8; }
 .terminal-output .t-response { color: var(--muted); }
 .terminal-output .t-label { color: var(--accent2); }
+/* Pet answers: code-editor style copy button in the top-right corner */
+.terminal-output.pet-reply { position: relative; padding-right: 26px; }
+.t-copy {
+  position: absolute; top: 2px; right: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; padding: 0;
+  background: transparent; border: 1px solid transparent; border-radius: 4px;
+  color: var(--muted); cursor: pointer; opacity: 0.45;
+  transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+}
+.pet-reply:hover .t-copy, .t-copy:focus-visible { opacity: 1; }
+.t-copy:hover { color: var(--accent); border-color: var(--border); }
+.t-copy:focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
+.t-copy.copied { color: var(--accent); opacity: 1; }
+@media (hover: none) { .t-copy { opacity: 0.8; } }
 .terminal-hint { color: #2a2a40; font-size: 11px; margin-top: 12px; font-style: italic; }
 
 @media (max-width: 900px) {
