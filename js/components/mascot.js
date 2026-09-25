@@ -200,7 +200,7 @@ function initMascot() {
   }
 
   function checkContactSection() {
-    if (canTalk() && !state.sleeping && inContactSection()) showTip();
+    if (!answering && canTalk() && !state.sleeping && inContactSection()) showTip();
   }
 
   // --- Command hints outside Contact (translations.js: mascot_cmd_tips) ---
@@ -211,13 +211,14 @@ function initMascot() {
   var nextHintTime = 0;
   var hintIndex = 0;
   var triedCommands = {};
+  var answering = false;
 
   window.addEventListener('terminal:command', function (e) {
     triedCommands[e.detail] = true;
   });
 
   function checkCommandHint(now) {
-    if (!canTalk() || inContactSection()) return;
+    if (answering || !canTalk() || inContactSection()) return;
     if (!nextHintTime) {
       nextHintTime = now + HINT_FIRST_DELAY;
       return;
@@ -241,6 +242,25 @@ function initMascot() {
   }
 
   window.addEventListener('scroll', checkContactSection);
+
+  // --- Terminal answers (terminal.js + pet-brain.js) ---
+  // The short answer goes through the same bubble as the tips, so they share tipVisible
+  // and the cooldown and never overlap; an answer replaces whatever tip is showing.
+  window.mascotSay = function (text) {
+    var elTip = document.getElementById('mascotTip');
+    if (!elTip || !text || !summoned || state.paused || el.classList.contains('hidden')) return;
+    if (state.sleeping) {
+      state.sleeping = false;
+      el.classList.remove('sleeping');
+    }
+    state.lastAction = Date.now();
+    showBubble(elTip, text, Date.now());
+  };
+
+  // No command hints while the terminal is thinking or typing an answer
+  window.mascotBusy = function (busy) {
+    answering = !!busy;
+  };
 
   // Expose wake function for terminal command
   window.mascotWake = function () {

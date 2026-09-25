@@ -41,6 +41,7 @@ const translations = {
     terminal_help_clone: '— ¡mitosis!',
     terminal_help_pomodoro: '— abrir un temporizador Pomodoro',
     terminal_help_clear: '— limpiar la terminal',
+    terminal_help_ask: '<span class="t-comment">O simplemente pregúntame lo que quieras sobre Cristopher, por ejemplo: <span style="color:var(--accent)">¿dónde trabaja?</span></span>',
     terminal_help_tab: '<span class="t-comment">Tip: Tab autocompleta los comandos.</span>',
     terminal_stack_title: '<span class="t-label">Herramientas que uso en producción:</span>',
     terminal_stack_db: '<span class="t-str">Base de datos:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span>',
@@ -133,6 +134,7 @@ const translations = {
     // Command hints outside Contact: [command, text]; skipped once the visitor runs it
     mascot_cmd_tips: [
       ['help', 'Psst… escribe "help" en la terminal para ver todos los comandos.'],
+      ['ask', 'Pregúntame algo sobre Cristopher en la terminal, como "¿cuál es su stack?".'],
       ['dance', '¿Me haces bailar? Escribe "dance" en la terminal.'],
       ['projects', 'Escribe "projects" en la terminal para ver los proyectos.'],
       ['tab', 'Tip: en la terminal, la tecla Tab autocompleta los comandos.'],
@@ -239,6 +241,7 @@ const translations = {
         'Esa no me la sé. Pero sé bastante de Cristopher: pregúntame "¿dónde trabaja?".'
       ]
     },
+    pet_thinking: 'pensando',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend para sistemas que no pueden fallar.', experience: 'Más de 5 años en producción.',
@@ -402,6 +405,7 @@ const translations = {
     terminal_help_clone: '— mitosis!',
     terminal_help_pomodoro: '— open a Pomodoro timer',
     terminal_help_clear: '— clear terminal',
+    terminal_help_ask: '<span class="t-comment">Or just ask me anything about Cristopher, e.g. <span style="color:var(--accent)">where does he work?</span></span>',
     terminal_help_tab: '<span class="t-comment">Tip: Tab autocompletes commands.</span>',
     terminal_stack_title: '<span class="t-label">Tools I use in production:</span>',
     terminal_stack_db: '<span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span>',
@@ -494,6 +498,7 @@ const translations = {
     // Command hints outside Contact: [command, text]; skipped once the visitor runs it
     mascot_cmd_tips: [
       ['help', 'Psst… type "help" in the terminal to see every command.'],
+      ['ask', 'Ask me anything about Cristopher in the terminal, like "what is his stack?".'],
       ['dance', 'Want to see me dance? Type "dance" in the terminal.'],
       ['projects', 'Type "projects" in the terminal to see the projects.'],
       ['tab', 'Tip: in the terminal, the Tab key autocompletes commands.'],
@@ -600,6 +605,7 @@ const translations = {
         'That one I don\'t know. But I know a lot about Cristopher: ask me "where does he work?".'
       ]
     },
+    pet_thinking: 'thinking',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend systems that cannot fail.', experience: '5+ years in production.',

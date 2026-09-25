@@ -74,7 +74,7 @@ function blobAction(action, keys) {
 const commands = {
   help: () => i18nLine('terminal_help_title') + helpEntries.map(([cmd, key]) =>
     plainLine(`<span class="t-str">${cmd}</span> ${i18nSpan(key, ' class="t-response"')}`)
-  ).join('') + i18nLine('terminal_help_tab'),
+  ).join('') + i18nLine('terminal_help_ask') + i18nLine('terminal_help_tab'),
   whoami: () => i18nLines(whoamiKeys),
   stack: () => i18nLine('terminal_stack_title') +
     plainLine('<span class="t-str">Backend:</span> <span class="t-response">NestJS, Node.js, C# / .NET, TypeScript, REST APIs, GraphQL</span>') +
@@ -224,6 +224,160 @@ function handleTab(e, input, output, body) {
   else if (matches.length > 1) printCompletions(output, body, typed, matches);
 }
 
+function echoLine(output, text) {
+  const cmdLine = document.createElement('div');
+  cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${escapeHtml(text)}</span>`;
+  output.appendChild(cmdLine);
+}
+
+function appendOutput(output, html) {
+  const respDiv = document.createElement('div');
+  respDiv.className = 'terminal-output';
+  respDiv.innerHTML = html;
+  output.appendChild(respDiv);
+}
+
+// --- The pet answers plain-language questions (pet-brain.js) ---
+// The answer "thinks" for a moment, then types itself out; the mascot says the short
+// version in its bubble. Answers are our own strings, always set as text, never as HTML.
+const PET_PREFIX = '<span class="t-str" aria-hidden="true">●</span> <span class="t-label">blob:</span> ';
+// Output element → finish() of the answer it is typing, so a new message completes it first
+const petTyping = new Map();
+
+function setPetBusy() {
+  if (window.mascotBusy) window.mascotBusy(petTyping.size > 0);
+}
+
+function printPetReply(reply, output, body) {
+  const line = document.createElement('div');
+  line.className = 'terminal-output';
+  line.innerHTML = PET_PREFIX;
+  const thinking = document.createElement('span');
+  thinking.className = 't-comment';
+  const answer = document.createElement('span');
+  answer.className = 't-response';
+  line.append(thinking, answer);
+  const segments = [[answer, reply.text]];
+  if (reply.aside) {
+    const aside = document.createElement('div');
+    aside.className = 't-comment';
+    line.appendChild(aside);
+    segments.push([aside, reply.aside]);
+  }
+  output.appendChild(line);
+
+  let reacted = false;
+  let timer = 0;
+  let thinkingTimer = 0;
+  // The blob acts and speaks when the answer starts
+  function react() {
+    if (reacted) return;
+    reacted = true;
+    if (reply.action && window[reply.action]) window[reply.action]();
+    if (reply.bubble && window.mascotSay) window.mascotSay(reply.bubble);
+  }
+
+  function finish() {
+    clearTimeout(timer);
+    clearInterval(thinkingTimer);
+    thinking.remove();
+    react();
+    segments.forEach(([el, text]) => { el.textContent = text; });
+    line.removeAttribute('aria-busy');
+    petTyping.delete(output);
+    setPetBusy();
+    body.scrollTop = body.scrollHeight;
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    finish();
+    return;
+  }
+
+  // Screen readers wait for the full answer instead of reading it letter by letter
+  line.setAttribute('aria-busy', 'true');
+  petTyping.set(output, finish);
+  setPetBusy();
+
+  const label = t('pet_thinking');
+  let dots = 1;
+  thinking.textContent = label + '.';
+  thinkingTimer = setInterval(() => {
+    dots = dots % 3 + 1;
+    thinking.textContent = label + '.'.repeat(dots);
+  }, 200);
+
+  const cursor = document.createElement('span');
+  cursor.className = 't-cursor';
+  let segment = 0;
+  let chars = [];
+  let index = 0;
+  function typeNext() {
+    const el = segments[segment][0];
+    if (index === 0) {
+      chars = Array.from(segments[segment][1]);
+      el.append(document.createTextNode(''), cursor);
+    }
+    el.firstChild.data += chars[index++];
+    body.scrollTop = body.scrollHeight;
+    if (index < chars.length) {
+      timer = setTimeout(typeNext, 15 + Math.random() * 10);
+    } else if (++segment < segments.length) {
+      index = 0;
+      timer = setTimeout(typeNext, 150);
+    } else {
+      finish();
+    }
+  }
+
+  timer = setTimeout(() => {
+    clearInterval(thinkingTimer);
+    thinking.remove();
+    react();
+    typeNext();
+  }, 500 + Math.random() * 400);
+  body.scrollTop = body.scrollHeight;
+}
+
+// Shared by the hero and the floating terminal. A known first word runs the command as
+// always; anything else goes to the pet, except a single unknown word that matches no
+// intent, which keeps the "command not found" message.
+function handleInput(value, output, body) {
+  const typing = petTyping.get(output);
+  if (typing) typing();
+
+  const raw = value.trim();
+  if (!raw) return;
+  const input = raw.toLowerCase();
+  const parts = input.split(/\s+/);
+  const cmd = parts[0];
+
+  const response = commands[cmd];
+  if (response) {
+    echoLine(output, input);
+    announceCommand(cmd);
+    const result = response(parts.slice(1).join(' '));
+    if (result === 'CLEAR') {
+      output.innerHTML = '';
+      return;
+    }
+    appendOutput(output, result);
+  } else {
+    const reply = window.petBrain ? window.petBrain.answer(raw) : null;
+    const isQuestion = parts.length > 1 || raw.includes('?') || (reply && reply.intent !== 'fallback');
+    if (reply && isQuestion) {
+      echoLine(output, raw);
+      announceCommand('ask');
+      printPetReply(reply, output, body);
+      return;
+    }
+    echoLine(output, input);
+    appendOutput(output, notFoundMessage(cmd));
+  }
+
+  body.scrollTop = body.scrollHeight;
+}
+
 function initTerminal() {
   const terminalInput = document.getElementById('terminalInput');
   const terminalOutput = document.getElementById('terminalOutput');
@@ -232,43 +386,10 @@ function initTerminal() {
 
   if (!terminalInput) return;
 
-  function echoCommand(input) {
-    const cmdLine = document.createElement('div');
-    cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${escapeHtml(input)}</span>`;
-    terminalOutput.appendChild(cmdLine);
-  }
-
   function runCommand() {
-    const input = terminalInput.value.trim().toLowerCase();
+    const value = terminalInput.value;
     terminalInput.value = '';
-    if (!input) return;
-
-    const parts = input.split(/\s+/);
-    const cmd = parts[0];
-    const args = parts.slice(1).join(' ');
-
-    echoCommand(input);
-
-    const response = commands[cmd];
-    if (response) {
-      announceCommand(cmd);
-      const result = response(args);
-      if (result === 'CLEAR') {
-        terminalOutput.innerHTML = '';
-        return;
-      }
-      const respDiv = document.createElement('div');
-      respDiv.className = 'terminal-output';
-      respDiv.innerHTML = result;
-      terminalOutput.appendChild(respDiv);
-    } else {
-      const errDiv = document.createElement('div');
-      errDiv.className = 'terminal-output';
-      errDiv.innerHTML = notFoundMessage(cmd);
-      terminalOutput.appendChild(errDiv);
-    }
-
-    terminalBody.scrollTop = terminalBody.scrollHeight;
+    handleInput(value, terminalOutput, terminalBody);
   }
 
   // --- Auto intro: runs `whoami` like a real session ---
@@ -291,7 +412,7 @@ function initTerminal() {
 
   function echoIntroCommand() {
     removeTypedCommand();
-    echoCommand(INTRO_COMMAND);
+    echoLine(terminalOutput, INTRO_COMMAND);
     intro.echoed = true;
     intro.output = document.createElement('div');
     intro.output.className = 'terminal-output';
@@ -430,46 +551,17 @@ function initTerminalFab() {
   const floatOutput = document.getElementById('terminalFloatOutput');
 
   if (floatInput) {
+    const floatBody = document.getElementById('terminalFloatBody');
     floatInput.addEventListener('keydown', (e) => {
-      handleTab(e, floatInput, floatOutput, document.getElementById('terminalFloatBody'));
+      handleTab(e, floatInput, floatOutput, floatBody);
       if (e.key === 'Enter') {
-        const input = floatInput.value.trim().toLowerCase();
+        const value = floatInput.value;
         floatInput.value = '';
-        if (!input) return;
-
-        const parts = input.split(/\s+/);
-        const cmd = parts[0];
-        const args = parts.slice(1).join(' ');
-
-        const cmdLine = document.createElement('div');
-        cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${escapeHtml(input)}</span>`;
-        floatOutput.appendChild(cmdLine);
-
-        const response = commands[cmd];
-        if (response) {
-          announceCommand(cmd);
-          const result = response(args);
-          if (result === 'CLEAR') {
-            floatOutput.innerHTML = '';
-            return;
-          }
-          const respDiv = document.createElement('div');
-          respDiv.className = 'terminal-output';
-          respDiv.innerHTML = result;
-          floatOutput.appendChild(respDiv);
-        } else {
-          const errDiv = document.createElement('div');
-          errDiv.className = 'terminal-output';
-          errDiv.innerHTML = notFoundMessage(cmd);
-          floatOutput.appendChild(errDiv);
-        }
-
-        const body = document.getElementById('terminalFloatBody');
-        body.scrollTop = body.scrollHeight;
+        handleInput(value, floatOutput, floatBody);
       }
     });
 
-    document.getElementById('terminalFloatBody').addEventListener('click', () => {
+    floatBody.addEventListener('click', () => {
       floatInput.focus();
     });
   }
