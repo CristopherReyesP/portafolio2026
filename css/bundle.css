@@ -378,7 +378,6 @@ nav {
 
 .hero-title { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--muted); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.45s ease forwards; }
 .hero-title span { color: var(--accent2); font-style: italic; font-family: 'Space Mono', monospace; font-size: 18px; }
-.hero-desc { color: var(--muted); font-size: 14px; line-height: 1.8; max-width: 440px; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s 0.6s ease forwards; }
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards; }
 
 /* MAGNETIC BUTTONS */
