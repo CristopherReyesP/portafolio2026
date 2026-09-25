@@ -9,6 +9,38 @@
 .mascot.hidden { display: none; }
 .mascot.walking { transition: transform 0.18s ease-out; }
 .mascot.dance { transition: none; }
+.mascot:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; border-radius: 12px; }
+
+.mascot-actions {
+  position: fixed;
+  z-index: 10002;
+  min-width: 148px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+.mascot-actions[hidden] { display: none; }
+.mascot-actions button {
+  display: block;
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font: 12px 'Space Mono', monospace;
+  text-align: left;
+  cursor: pointer;
+}
+.mascot-actions button:hover,
+.mascot-actions button:focus-visible {
+  color: var(--accent);
+  background: var(--surface);
+  border-color: var(--border);
+}
+.mascot-actions button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
 /* Body */
 .mascot-body {
@@ -658,7 +690,7 @@
 }
 
 @media (max-width: 768px) {
-  .mascot { display: none; }
+  .mascot, .mascot-actions { display: none; }
 }
 
 /* Extasis mode */

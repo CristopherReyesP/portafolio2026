@@ -10,6 +10,9 @@ const translations = {
     hero_availability: 'Disponible para roles remotos · GMT-6',
     hero_btn1: 'Ver resultados', hero_btn_cta: 'Descargar CV', cv_href: 'resume/CV_Cristopher_Reyes.pdf',
     terminal_command: 'Comando', terminal_try: 'Prueba:',
+    mascot_label: 'Abrir acciones de la mascota', mascot_dance: 'Bailar',
+    mascot_love: 'Amor', mascot_puff: 'Inflarse', mascot_wave: 'Saludar',
+    mascot_rainbow: 'Arcoíris',
 
     // Stats
     stat1: 'Años en sistemas de producción', stat2: 'Microservicios bancarios activos',
@@ -122,6 +125,9 @@ const translations = {
     hero_availability: 'Open to remote roles · GMT-6',
     hero_btn1: 'See results', hero_btn_cta: 'Download CV', cv_href: 'resume/CV_Cristopher_Reyes_EN.pdf',
     terminal_command: 'Command', terminal_try: 'Try:',
+    mascot_label: 'Open mascot actions', mascot_dance: 'Dance',
+    mascot_love: 'Love', mascot_puff: 'Puff', mascot_wave: 'Wave',
+    mascot_rainbow: 'Rainbow',
 
     // Stats
     stat1: 'Years in production systems', stat2: 'Active banking microservices',

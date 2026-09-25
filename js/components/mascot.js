@@ -1,6 +1,7 @@
 function initMascot() {
   var el = document.getElementById('mascot');
-  if (!el || window.innerWidth < 768) return;
+  if (!el || window.innerWidth <= 768) return;
+  var actions = document.getElementById('mascotActions');
 
   // Measure dimensions (element starts with display:none)
   el.style.visibility = 'hidden';
@@ -11,7 +12,8 @@ function initMascot() {
   el.style.visibility = '';
 
   var m = 5;
-  var summoned = false;
+  var summoned = el.dataset.summoned === 'true';
+  var visibleBeforeMobile = false;
   var currentSurface = 'bottom';
   var currentRot = 0;
   var lastSurface = 'bottom';
@@ -138,7 +140,12 @@ function initMascot() {
   };
 
   applyPos(posToScreen(state.pos));
-  el.classList.add('hidden', 'on-bottom');
+  if (!summoned) el.classList.add('hidden');
+  el.classList.add('on-bottom');
+  if (summoned) {
+    state.sleeping = false;
+    el.tabIndex = 0;
+  }
 
   // --- Contextual tips for Contact section ---
   var contactTips = [
@@ -202,6 +209,7 @@ function initMascot() {
   // Expose wake function for terminal command
   window.mascotWake = function () {
     summoned = true;
+    if (!el.classList.contains('hidden') && window.innerWidth > 768) el.tabIndex = 0;
     state.sleeping = false;
     state.lastAction = Date.now();
     state.idleTimer = Date.now();
@@ -414,7 +422,7 @@ function initMascot() {
     clearTimeout(state.meltTimer);
     state.meltTimer = setTimeout(function () {
       el.classList.remove('melt');
-      state.paused = false;
+      state.paused = menuOpen || drag.active;
       state.idleTimer = Date.now();
     }, 2500);
   };
@@ -498,7 +506,7 @@ function initMascot() {
       clone.style.opacity = '0';
       setTimeout(function () {
         clone.remove();
-        state.paused = false;
+        state.paused = menuOpen || drag.active;
         state.idleTimer = Date.now();
       }, 600);
     }, 4000);
@@ -553,6 +561,63 @@ function initMascot() {
   // --- Drag & drop ---
   var drag = { active: false, offsetX: 0, offsetY: 0, moved: false, lastX: 0, lastY: 0, prevX: 0, prevY: 0, prevTime: 0, speed: 0, dizzyStart: 0 };
 
+  var menuOpen = false;
+  function closeActions(restoreFocus) {
+    if (!menuOpen) return;
+    menuOpen = false;
+    actions.hidden = true;
+    el.setAttribute('aria-expanded', 'false');
+    state.paused = drag.active;
+    state.idleTimer = Date.now();
+    state.lastAction = Date.now();
+    if (restoreFocus) el.focus();
+  }
+
+  function openActions(focusFirst) {
+    if (!actions || el.classList.contains('hidden')) return;
+    menuOpen = true;
+    actions.hidden = false;
+    el.setAttribute('aria-expanded', 'true');
+    state.paused = true;
+    el.classList.remove('walking');
+    var rect = el.getBoundingClientRect();
+    var width = actions.offsetWidth;
+    var height = actions.offsetHeight;
+    var gap = 10;
+    var left = rect.left + rect.width / 2 - width / 2;
+    var top = rect.top - height - gap;
+    if (top < gap) top = rect.bottom + gap;
+    actions.style.left = Math.max(gap, Math.min(left, window.innerWidth - width - gap)) + 'px';
+    actions.style.top = Math.max(gap, Math.min(top, window.innerHeight - height - gap)) + 'px';
+    if (focusFirst) actions.querySelector('button').focus();
+  }
+
+  if (actions) {
+    actions.addEventListener('click', function (e) {
+      var button = e.target.closest('button[data-mascot-action]');
+      if (!button) return;
+      var action = window['mascot' + button.dataset.mascotAction];
+      closeActions(true);
+      if (action) action();
+    });
+    document.addEventListener('click', function (e) {
+      if (menuOpen && !actions.contains(e.target) && !el.contains(e.target)) closeActions(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menuOpen) {
+        e.preventDefault();
+        closeActions(true);
+      }
+    });
+  }
+
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (!menuOpen) openActions(true);
+    }
+  });
+
   el.addEventListener('mousedown', function (e) {
     e.preventDefault();
     if (el.classList.contains('hidden') || !running) return;
@@ -582,6 +647,7 @@ function initMascot() {
   document.addEventListener('mousemove', function (e) {
     if (!drag.active) return;
     drag.moved = true;
+    closeActions(false);
     var nx = e.clientX - drag.offsetX;
     var ny = e.clientY - drag.offsetY;
     nx = Math.max(0, Math.min(nx, window.innerWidth - ew));
@@ -647,7 +713,7 @@ function initMascot() {
 
     setTimeout(function () {
       el.classList.remove('dropping');
-      state.paused = false;
+      state.paused = menuOpen;
       state.idleTimer = Date.now();
       state.lastAction = Date.now();
     }, 400);
@@ -656,6 +722,7 @@ function initMascot() {
   // --- Click to jump (or double click) ---
   var clickCount = 0;
   el.addEventListener('click', function () {
+    if (drag.moved) return;
     clearTimeout(clickTimer);
     clickCount = clickCount >= 2 ? 1 : clickCount + 1;
     
@@ -668,6 +735,8 @@ function initMascot() {
           el.classList.add('jump');
           state.lastAction = Date.now();
           setTimeout(function () { el.classList.remove('jump'); }, 500);
+          if (menuOpen) closeActions(false);
+          else openActions(false);
         }
         clickCount = 0;
       }, 250);
@@ -729,7 +798,7 @@ function initMascot() {
     checkFart();
     
     // Sleep after 15s of no interaction
-    if (!state.sleeping && now - state.lastAction > 15000 && state.idle) {
+    if (!state.sleeping && !menuOpen && now - state.lastAction > 15000 && state.idle) {
       state.sleeping = true;
       el.classList.add('sleeping');
     }
@@ -809,15 +878,31 @@ function initMascot() {
   state.idleTimer = Date.now();
   requestAnimationFrame(tick);
 
+  function autoSummon() {
+    if (!running || summoned || !el.classList.contains('hidden') || window.innerWidth <= 768) return;
+    el.classList.remove('hidden', 'sleeping');
+    window.mascotWake();
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) window.mascotWave();
+  }
+  if (document.readyState === 'complete') setTimeout(autoSummon, 3000);
+  else window.addEventListener('load', function () { setTimeout(autoSummon, 3000); }, { once: true });
+
   // --- Resize ---
   window.addEventListener('resize', function () {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth <= 768) {
+      visibleBeforeMobile = visibleBeforeMobile || (summoned && !el.classList.contains('hidden'));
+      closeActions(false);
       el.classList.add('hidden');
-      summoned = false;
+      el.tabIndex = -1;
       state.sleeping = true;
       el.classList.add('sleeping');
     } else {
-      el.classList.remove('hidden');
+      if (visibleBeforeMobile) {
+        el.classList.remove('hidden', 'sleeping');
+        el.tabIndex = 0;
+        state.sleeping = false;
+        visibleBeforeMobile = false;
+      }
       var p = getPerimeter(true);
       state.pos = state.pos % p.total;
       applyPos(posToScreen(state.pos));

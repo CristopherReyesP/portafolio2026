@@ -105,9 +105,10 @@ const commands = {
 
     // First summon
     if (!mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob is already here! Try <span style="color:var(--accent)">pet red</span> or <span style="color:var(--accent)">pet blue</span> to change its color.</span>';
+      return '<span class="t-response">The blob is already here! Click it for actions, or try <span style="color:var(--accent)">pet red</span> or <span style="color:var(--accent)">pet blue</span> to change its color.</span>';
     }
     mascot.classList.remove('hidden');
+    mascot.dataset.summoned = 'true';
     mascot.classList.remove('sleeping');
     mascot.classList.add('jump');
     setTimeout(function() { mascot.classList.remove('jump'); }, 500);
