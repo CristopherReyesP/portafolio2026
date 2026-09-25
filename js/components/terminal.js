@@ -8,6 +8,9 @@ const i18nSpan = (key, attrs = '') => `<span${attrs} data-i18n-html="${key}">${t
 const plainLine = (html) => `<div>${html}</div>`;
 const arrowLine = (html) => plainLine(`<span class="t-str">→</span> ${html}`);
 
+// Lets the mascot skip hints for commands the visitor already tried
+const announceCommand = (cmd) => window.dispatchEvent(new CustomEvent('terminal:command', { detail: cmd }));
+
 const whoamiKeys = ['terminal_whoami1', 'terminal_whoami2', 'terminal_whoami3'];
 
 const helpEntries = [
@@ -209,6 +212,7 @@ function initTerminal() {
 
     const response = commands[cmd];
     if (response) {
+      announceCommand(cmd);
       const result = response(args);
       if (result === 'CLEAR') {
         terminalOutput.innerHTML = '';
@@ -402,6 +406,7 @@ function initTerminalFab() {
 
         const response = commands[cmd];
         if (response) {
+          announceCommand(cmd);
           const result = response(args);
           if (result === 'CLEAR') {
             floatOutput.innerHTML = '';

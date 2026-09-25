@@ -129,6 +129,17 @@ const translations = {
       'Puedes agendar una llamada de 30 minutos en Calendly.',
       'Cada línea de código tiene un objetivo de negocio.'
     ],
+    // Command hints outside Contact: [command, text]; skipped once the visitor runs it
+    mascot_cmd_tips: [
+      ['help', 'Psst… escribe "help" en la terminal para ver todos los comandos.'],
+      ['dance', '¿Me haces bailar? Escribe "dance" en la terminal.'],
+      ['projects', 'Escribe "projects" en la terminal para ver los proyectos.'],
+      ['tab', 'Tip: en la terminal, la tecla Tab autocompleta los comandos.'],
+      ['rainbow', 'Prueba "rainbow" en la terminal.'],
+      ['hire', '¿Buscas backend para tu equipo? Escribe "hire" en la terminal.'],
+      ['clone', 'Escribe "clone" en la terminal… si te atreves.'],
+      ['matrix', 'Hay un comando misterioso: prueba "matrix".']
+    ],
 
     // Stats
     stat1: 'Años en sistemas de producción', stat2: 'Microservicios bancarios activos',
@@ -359,6 +370,17 @@ const translations = {
       'You can also find me on LinkedIn.',
       'You can book a 30-minute call on Calendly.',
       'Every line of code serves a business goal.'
+    ],
+    // Command hints outside Contact: [command, text]; skipped once the visitor runs it
+    mascot_cmd_tips: [
+      ['help', 'Psst… type "help" in the terminal to see every command.'],
+      ['dance', 'Want to see me dance? Type "dance" in the terminal.'],
+      ['projects', 'Type "projects" in the terminal to see the projects.'],
+      ['tab', 'Tip: in the terminal, the Tab key autocompletes commands.'],
+      ['rainbow', 'Try "rainbow" in the terminal.'],
+      ['hire', 'Looking for a backend engineer? Type "hire" in the terminal.'],
+      ['clone', 'Type "clone" in the terminal… if you dare.'],
+      ['matrix', 'There is a mysterious command: try "matrix".']
     ],
 
     // Stats
