@@ -172,7 +172,11 @@ function initMascot() {
     } while (idx === lastTipIndex && tips.length > 1);
     lastTipIndex = idx;
 
-    elTip.textContent = tips[idx];
+    showBubble(elTip, tips[idx], now);
+  }
+
+  function showBubble(elTip, text, now) {
+    elTip.textContent = text;
     elTip.classList.add('visible');
     tipVisible = true;
     lastTipTime = now;
@@ -184,14 +188,56 @@ function initMascot() {
     }, 5000);
   }
 
-  function checkContactSection() {
+  function inContactSection() {
     var contact = document.getElementById('contact');
-    if (!contact) return;
+    if (!contact) return false;
     var rect = contact.getBoundingClientRect();
-    var inContact = rect.top <= window.innerHeight * 0.6 && rect.bottom >= 0;
-    if (inContact && summoned && !state.sleeping && !state.paused && !tipVisible) {
-      showTip();
+    return rect.top <= window.innerHeight * 0.6 && rect.bottom >= 0;
+  }
+
+  function canTalk() {
+    return summoned && !state.paused && !tipVisible && !el.classList.contains('hidden');
+  }
+
+  function checkContactSection() {
+    if (canTalk() && !state.sleeping && inContactSection()) showTip();
+  }
+
+  // --- Command hints outside Contact (translations.js: mascot_cmd_tips) ---
+  // Suggests terminal commands in order, skipping the ones the visitor already ran
+  // (terminal.js dispatches `terminal:command`; using Tab completion counts as 'tab').
+  var HINT_FIRST_DELAY = 9000;
+  var HINT_INTERVAL = 25000;
+  var nextHintTime = 0;
+  var hintIndex = 0;
+  var triedCommands = {};
+
+  window.addEventListener('terminal:command', function (e) {
+    triedCommands[e.detail] = true;
+  });
+
+  function checkCommandHint(now) {
+    if (!canTalk() || inContactSection()) return;
+    if (!nextHintTime) {
+      nextHintTime = now + HINT_FIRST_DELAY;
+      return;
     }
+    if (now < nextHintTime || now - lastTipTime < tipCooldown) return;
+    nextHintTime = now + HINT_INTERVAL;
+
+    var elTip = document.getElementById('mascotTip');
+    var hints = translations[currentLang].mascot_cmd_tips.filter(function (hint) {
+      return !triedCommands[hint[0]];
+    });
+    if (!elTip || !hints.length) return;
+    // A due hint wakes the mascot up, the same way a nearby mouse does
+    if (state.sleeping) {
+      state.sleeping = false;
+      el.classList.remove('sleeping');
+      state.lastAction = now;
+    }
+    showBubble(elTip, hints[hintIndex % hints.length][1], now);
+    hintIndex++;
   }
 
   window.addEventListener('scroll', checkContactSection);
@@ -861,6 +907,7 @@ function initMascot() {
     }
 
     checkContactSection();
+    checkCommandHint(now);
 
     requestAnimationFrame(tick);
   }

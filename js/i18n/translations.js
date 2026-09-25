@@ -41,6 +41,7 @@ const translations = {
     terminal_help_clone: '— ¡mitosis!',
     terminal_help_pomodoro: '— abrir un temporizador Pomodoro',
     terminal_help_clear: '— limpiar la terminal',
+    terminal_help_tab: '<span class="t-comment">Tip: Tab autocompleta los comandos.</span>',
     terminal_stack_title: '<span class="t-label">Herramientas que uso en producción:</span>',
     terminal_stack_db: '<span class="t-str">Base de datos:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span>',
     terminal_stack_integrations: '<span class="t-str">Integraciones:</span> <span class="t-response">MuleSoft, APIs bancarias, OAuth 2.0, Azure AD</span>',
@@ -128,6 +129,17 @@ const translations = {
       'También puedes encontrarme en LinkedIn.',
       'Puedes agendar una llamada de 30 minutos en Calendly.',
       'Cada línea de código tiene un objetivo de negocio.'
+    ],
+    // Command hints outside Contact: [command, text]; skipped once the visitor runs it
+    mascot_cmd_tips: [
+      ['help', 'Psst… escribe "help" en la terminal para ver todos los comandos.'],
+      ['dance', '¿Me haces bailar? Escribe "dance" en la terminal.'],
+      ['projects', 'Escribe "projects" en la terminal para ver los proyectos.'],
+      ['tab', 'Tip: en la terminal, la tecla Tab autocompleta los comandos.'],
+      ['rainbow', 'Prueba "rainbow" en la terminal.'],
+      ['hire', '¿Buscas backend para tu equipo? Escribe "hire" en la terminal.'],
+      ['clone', 'Escribe "clone" en la terminal… si te atreves.'],
+      ['matrix', 'Hay un comando misterioso: prueba "matrix".']
     ],
 
     // Stats
@@ -272,6 +284,7 @@ const translations = {
     terminal_help_clone: '— mitosis!',
     terminal_help_pomodoro: '— open a Pomodoro timer',
     terminal_help_clear: '— clear terminal',
+    terminal_help_tab: '<span class="t-comment">Tip: Tab autocompletes commands.</span>',
     terminal_stack_title: '<span class="t-label">Tools I use in production:</span>',
     terminal_stack_db: '<span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span>',
     terminal_stack_integrations: '<span class="t-str">Integrations:</span> <span class="t-response">MuleSoft, banking APIs, OAuth 2.0, Azure AD</span>',
@@ -359,6 +372,17 @@ const translations = {
       'You can also find me on LinkedIn.',
       'You can book a 30-minute call on Calendly.',
       'Every line of code serves a business goal.'
+    ],
+    // Command hints outside Contact: [command, text]; skipped once the visitor runs it
+    mascot_cmd_tips: [
+      ['help', 'Psst… type "help" in the terminal to see every command.'],
+      ['dance', 'Want to see me dance? Type "dance" in the terminal.'],
+      ['projects', 'Type "projects" in the terminal to see the projects.'],
+      ['tab', 'Tip: in the terminal, the Tab key autocompletes commands.'],
+      ['rainbow', 'Try "rainbow" in the terminal.'],
+      ['hire', 'Looking for a backend engineer? Type "hire" in the terminal.'],
+      ['clone', 'Type "clone" in the terminal… if you dare.'],
+      ['matrix', 'There is a mysterious command: try "matrix".']
     ],
 
     // Stats
