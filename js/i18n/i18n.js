@@ -11,6 +11,10 @@ function setLang(lang) {
     const key = el.dataset.i18nHtml;
     if (translations[lang][key]) el.innerHTML = translations[lang][key];
   });
+  document.querySelectorAll('[data-i18n-href]').forEach(el => {
+    const key = el.dataset.i18nHref;
+    if (translations[lang][key]) el.setAttribute('href', translations[lang][key]);
+  });
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
