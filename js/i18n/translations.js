@@ -7,7 +7,7 @@ const translations = {
     // Hero
     hero_title: 'Construyo backend <span>que no puede fallar</span>',
     hero_desc: 'Mis sistemas procesan transacciones bancarias reales, todos los días. Si algo falla, se pierde dinero. Entrego sistemas que funcionan en producción, no solo en demos.',
-    hero_btn1: 'Ver resultados', hero_btn2: 'Hablemos de tu proyecto',
+    hero_btn1: 'Ver resultados', hero_btn_cta: 'Agendar call de 30 min',
 
     // Stats
     stat1: 'Años en sistemas de producción', stat2: 'Microservicios bancarios activos',
@@ -36,7 +36,7 @@ const translations = {
     proj3_pv4: 'Dominios organizados con DDD + API Gateway',
     proj3_pv5: 'Testeable y mantenible vs. monolito PL/SQL original',
     proj4_type: 'En curso · Integración de pagos',
-    proj4_name: 'Cobros por QR — YAYO / YOLO',
+    proj4_name: 'Cobros por QR para afiliados',
     proj4_desc: 'El endpoint generaba el QR sin dejar rastro y todos los afiliados cobran contra una cuenta bolsón compartida: el estado de cuenta no podía atribuir un depósito a su afiliado. Diseñé el modelo de datos y el endpoint de confirmación directa desde la billetera, separando cuenta de abono y cuenta de cargo. Cada cobro queda trazable a su origen.',
     proj5_type: 'En curso · Migración progresiva',
     proj5_name: 'Canary release por usuario — 38 rutas de gateway',
@@ -52,7 +52,6 @@ const translations = {
     ants_code: 'Ver el código',
     cobros_type: 'Fullstack · Aplicación de escritorio',
     cobros_desc: 'Sistema de cobros local empaquetado en un solo .exe de 14MB. Gestión de clientes, registro de deudas, procesamiento de pagos y generación de reportes PDF/Excel. Arquitectura hexagonal en Go, frontend React embebido y SQLite — sin instalar nada, solo ejecutar.',
-    cobros_download: 'Descargar .exe (14MB)',
     cobros_pv_title: 'Funcionalidades incluidas',
     cobros_pv1: 'Dashboard con KPIs: clientes, deudas, montos cobrados',
     cobros_pv2: 'CRUD completo de clientes con búsqueda',
@@ -95,6 +94,7 @@ const translations = {
     // Experience
     exp_tag: 'Experiencia', exp_title: 'Trayectoria profesional',
     exp1_date: 'Abril 2024 — Presente',
+    exp1_role: 'Backend Software Engineer (Analista Técnico I)',
     exp1_company: 'BANTRAB — Banco de los Trabajadores · Guatemala',
     exp1_p1: '18+ microservicios NestJS y .NET (C#) para transacciones bancarias en canales móvil y web',
     exp1_p2: 'Migración de monolito PL/SQL a microservicios con DDD, API Gateway y CI/CD en OpenShift',
@@ -103,11 +103,13 @@ const translations = {
     exp2_date: 'Mayo 2021 — Julio 2021',
     exp2_p1: 'Desarrollo y mantenimiento de features para plataforma de gestión empresarial con SQL Server y .NET',
     exp2_p2: 'Resolución de bugs en producción y optimización de queries en workflows de alto volumen transaccional',
-    exp3_date: 'Enero 2019 — Febrero 2021',
+    exp3_date: 'Enero 2021 — Marzo 2024',
     exp3_company: 'Proyectos independientes · Clientes internacionales',
     exp3_p1: 'Diseño y entrega de APIs REST con .NET Core y Node.js para clientes internacionales',
     exp3_p2: 'Gestión del ciclo completo de proyectos desde análisis de requerimientos hasta despliegue',
     exp3_p3: 'Manejo de múltiples proyectos concurrentes con entrega a tiempo',
+    education_tag: 'Educación',
+    education_status: 'Ingeniería en Sistemas — pensum cerrado, tesis en curso',
 
     // Contact & Footer
     contact_tag: 'Contacto',
@@ -124,7 +126,7 @@ const translations = {
     // Hero
     hero_title: 'I build backends that <span>cannot fail</span>',
     hero_desc: 'My systems process real banking transactions, every day. If something fails, money is lost. I deliver systems that work in production, not just in demos.',
-    hero_btn1: 'See results', hero_btn2: "Let's talk about your project",
+    hero_btn1: 'See results', hero_btn_cta: 'Schedule a 30-minute call',
 
     // Stats
     stat1: 'Years in production systems', stat2: 'Active banking microservices',
@@ -153,7 +155,7 @@ const translations = {
     proj3_pv4: 'Domains organized with DDD + API Gateway',
     proj3_pv5: 'Testable and maintainable vs. original PL/SQL monolith',
     proj4_type: 'In progress · Payment integration',
-    proj4_name: 'QR Payments — YAYO / YOLO',
+    proj4_name: 'QR payments for affiliates',
     proj4_desc: 'The endpoint generated the QR code without leaving a trace, and every merchant collects into a shared pooled account: the statement could not attribute a deposit to its merchant. I designed the data model and the direct confirmation endpoint from the wallet, separating the credited and debited accounts. Every payment is now traceable to its origin.',
     proj5_type: 'In progress · Progressive migration',
     proj5_name: 'Per-user canary release — 38 gateway routes',
@@ -169,7 +171,6 @@ const translations = {
     ants_code: 'View the code',
     cobros_type: 'Fullstack · Desktop Application',
     cobros_desc: 'Local billing system packaged as a single 14MB .exe. Client management, debt tracking, payment processing and PDF/Excel report generation. Hexagonal architecture in Go, embedded React frontend and SQLite — no installation, no dependencies, just run it.',
-    cobros_download: 'Download .exe (14MB)',
     cobros_pv_title: 'Features included',
     cobros_pv1: 'Dashboard with KPIs: clients, debts, collected amounts',
     cobros_pv2: 'Full client CRUD with search',
@@ -212,6 +213,7 @@ const translations = {
     // Experience
     exp_tag: 'Experience', exp_title: 'Professional track record',
     exp1_date: 'April 2024 — Present',
+    exp1_role: 'Backend Software Engineer (Technical Analyst I)',
     exp1_company: 'BANTRAB — Banco de los Trabajadores · Guatemala',
     exp1_p1: '18+ NestJS and .NET (C#) microservices for banking transactions on mobile and web channels',
     exp1_p2: 'PL/SQL monolith migration to microservices with DDD, API Gateway and CI/CD on OpenShift',
@@ -220,11 +222,13 @@ const translations = {
     exp2_date: 'May 2021 — July 2021',
     exp2_p1: 'Feature development and maintenance for enterprise management platform with SQL Server and .NET',
     exp2_p2: 'Production bug resolution and query optimization in high-volume transactional workflows',
-    exp3_date: 'January 2019 — February 2021',
+    exp3_date: 'January 2021 — March 2024',
     exp3_company: 'Independent projects · International clients',
     exp3_p1: 'Design and delivery of REST APIs with .NET Core and Node.js for international clients',
     exp3_p2: 'Full project lifecycle management from requirements analysis to deployment',
     exp3_p3: 'Management of multiple concurrent projects with on-time delivery',
+    education_tag: 'Education',
+    education_status: 'Systems Engineering — coursework completed, thesis in progress',
 
     // Contact & Footer
     contact_tag: 'Contact',

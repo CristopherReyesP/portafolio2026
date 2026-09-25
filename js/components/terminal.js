@@ -30,9 +30,9 @@ const commands = {
     <span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span><br>
     <span class="t-str">Infra:</span> <span class="t-response">OpenShift, Docker, Keycloak, CI/CD</span><br>
     <span class="t-str">Frontend:</span> <span class="t-response">React, Vite, Socket.io, WebRTC</span><br>
-    <span class="t-str">Gamedev:</span> <span class="t-response">Godot 4, GDScript, C#, Blender, Nakama</span>`,
+    <span class="t-str">Personal projects:</span> <span class="t-response">Godot 4, game dev</span>`,
   experience: () => `<span class="t-label">5+ years in production systems</span><br>
-    <span class="t-str">Current:</span> <span class="t-response">Backend Engineer @ BANTRAB (bank)</span><br>
+    <span class="t-str">Current:</span> <span class="t-response">Backend Software Engineer (Technical Analyst I) @ BANTRAB</span><br>
     <span class="t-str">Focus:</span> <span class="t-response">Banking transactions, 18+ microservices</span><br>
     <span class="t-str">Highlight:</span> <span class="t-response">Keycloak migration, 0 downtime</span>`,
   contact: () => `<span class="t-label">Let's talk:</span><br>
