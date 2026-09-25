@@ -147,21 +147,10 @@ function initMascot() {
     el.tabIndex = 0;
   }
 
-  // --- Contextual tips for Contact section ---
-  var contactTips = [
-    "Si llegaste hasta aquí, ya sabés lo que puedo hacer. Agendemos.",
-    "Conversemos sobre tu proyecto. Sin compromiso.",
-    "Tengo agenda disponible esta semana.",
-    "Respuesta en menos de 24 horas.",
-    "Hablemos. El tiempo de llamada corre por mi cuenta.",
-    "Tu proyecto no tiene que ser perfecto. Lo mejoramos juntos.",
-    "Cada línea de código tiene un objetivo de negocio. Hablemos del tuyo.",
-    "Si tenés dudas, preguntá. No custa nada.",
-    "Cero excusas, cero drama. Solo resultados.",
-    "Mi LinkedIn está abierto. También mis DMs.",
-    "Trabajo con equipos remotos. Zona horaria flexible.",
-    "No soy el más barato, pero tampoco el más caro. Soy el que entrega."
-  ];
+  // --- Contextual tips for Contact section (translations.js: mascot_tips, per language) ---
+  function contactTips() {
+    return translations[currentLang].mascot_tips;
+  }
   var lastTipIndex = -1;
   var tipVisible = false;
   var tipTimeout = null;
@@ -176,13 +165,14 @@ function initMascot() {
     var elTip = document.getElementById('mascotTip');
     if (!elTip) return;
 
+    var tips = contactTips();
     var idx;
     do {
-      idx = Math.floor(Math.random() * contactTips.length);
-    } while (idx === lastTipIndex && contactTips.length > 1);
+      idx = Math.floor(Math.random() * tips.length);
+    } while (idx === lastTipIndex && tips.length > 1);
     lastTipIndex = idx;
 
-    elTip.textContent = contactTips[idx];
+    elTip.textContent = tips[idx];
     elTip.classList.add('visible');
     tipVisible = true;
     lastTipTime = now;
@@ -325,7 +315,7 @@ function initMascot() {
 
     var elTip = document.getElementById('mascotTip');
     if (elTip) {
-      elTip.textContent = '¡Hola!';
+      elTip.textContent = translations[currentLang].mascot_hello;
       elTip.classList.add('visible');
       clearTimeout(tipTimeout);
       tipTimeout = setTimeout(function () {
@@ -880,9 +870,39 @@ function initMascot() {
 
   function autoSummon() {
     if (!running || summoned || !el.classList.contains('hidden') || window.innerWidth <= 768) return;
-    el.classList.remove('hidden', 'sleeping');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.classList.remove('hidden', 'sleeping');
+      window.mascotWake();
+      return;
+    }
+
+    // Entrance: fall from above the viewport onto its bottom-right spot, squash, then wave.
+    // Only .mascot-body/.mascot-shadow animate, so applyPos() keeps owning #mascot's transform.
+    state.paused = true;
+    state.idle = true;
+    el.classList.remove('sleeping', 'walking');
+    el.classList.add('entering');
+    el.classList.remove('hidden');
     window.mascotWake();
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) window.mascotWave();
+
+    function endEntrance() {
+      el.classList.remove('entering', 'dropping');
+      state.paused = menuOpen || drag.active;
+      state.idleTimer = Date.now();
+    }
+
+    setTimeout(function () {
+      el.classList.remove('entering');
+      if (el.classList.contains('hidden')) { endEntrance(); return; }
+      el.classList.add('dropping');
+      setTimeout(function () {
+        el.classList.remove('dropping');
+        if (el.classList.contains('hidden')) { endEntrance(); return; }
+        window.mascotWave();
+        // Stay put while waving; normal wandering resumes afterwards
+        setTimeout(endEntrance, 2500);
+      }, 400);
+    }, 650);
   }
   if (document.readyState === 'complete') setTimeout(autoSummon, 3000);
   else window.addEventListener('load', function () { setTimeout(autoSummon, 3000); }, { once: true });

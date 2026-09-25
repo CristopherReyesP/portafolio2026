@@ -1,222 +1,186 @@
+// Every output follows the ES/EN switch: translated fragments carry data-i18n-html (or
+// data-i18n / data-i18n-href), so setLang() re-renders output that is already printed
+const t = (key) => translations[currentLang][key];
+const i18nLine = (key) => `<div data-i18n-html="${key}">${t(key)}</div>`;
+const i18nLines = (keys) => keys.map(i18nLine).join('');
+const i18nSpan = (key, attrs = '') => `<span${attrs} data-i18n-html="${key}">${t(key)}</span>`;
+// Language-neutral lines (tech names, URLs, code) are printed as they are
+const plainLine = (html) => `<div>${html}</div>`;
+const arrowLine = (html) => plainLine(`<span class="t-str">→</span> ${html}`);
+
+const whoamiKeys = ['terminal_whoami1', 'terminal_whoami2', 'terminal_whoami3'];
+
+const helpEntries = [
+  ['whoami', 'terminal_help_whoami'], ['stack', 'terminal_help_stack'],
+  ['experience', 'terminal_help_experience'], ['contact', 'terminal_help_contact'],
+  ['projects', 'terminal_help_projects'], ['hire', 'terminal_help_hire'],
+  ['resume', 'terminal_help_resume'], ['github', 'terminal_help_github'],
+  ['linkedin', 'terminal_help_linkedin'], ['email', 'terminal_help_email'],
+  ['matrix', 'terminal_help_mystery'], ['pet', 'terminal_help_pet'],
+  ['dance', 'terminal_help_dance'], ['scare', 'terminal_help_scare'],
+  ['love', 'terminal_help_love'], ['puff', 'terminal_help_puff'],
+  ['wave', 'terminal_help_wave'], ['extasis', 'terminal_help_extasis'],
+  ['angry', 'terminal_help_angry'], ['pushhead', 'terminal_help_pushhead'],
+  ['melt', 'terminal_help_melt'], ['rainbow', 'terminal_help_rainbow'],
+  ['clone', 'terminal_help_clone'], ['secret', 'terminal_help_mystery'],
+  ['pomodoro', 'terminal_help_pomodoro'], ['clear', 'terminal_help_clear']
+];
+
+// Production project names are the page's own proj*_name keys; in-progress ones get a tag
+const productionProjects = [
+  ['proj1_name', false], ['proj2_name', false], ['proj3_name', false],
+  ['proj4_name', true], ['proj5_name', true]
+];
+// Personal project titles are not translated on the page either
+const personalProjects = ['Hormigas — Simulador de colonia', 'Cobros — Sistema de Gestión'];
+
+const petColors = { red: '#ff5f57', blue: '#5f9fff', green: '' };
+
+function escapeHtml(text) {
+  const span = document.createElement('span');
+  span.textContent = text;
+  return span.innerHTML;
+}
+
+function notFoundMessage(cmd) {
+  return `<span class="t-response">${i18nSpan('terminal_not_found_before')} <span style="color:var(--accent3)">${escapeHtml(cmd)}</span>${i18nSpan('terminal_not_found_after')}</span>`;
+}
+
+function openExternal(url, titleKey, comment) {
+  window.open(url, '_blank');
+  return i18nLine(titleKey) + plainLine(`<span class="t-comment">// ${comment}</span>`);
+}
+
+// Mascot commands need the blob on screen; returns why it cannot act, or null
+function blobUnavailable() {
+  const mascot = document.getElementById('mascot');
+  if (!mascot) return i18nLine('terminal_no_mascot');
+  if (mascot.classList.contains('hidden')) return i18nLine('terminal_pet_first');
+  return null;
+}
+
+function blobAction(action, keys) {
+  return () => {
+    const unavailable = blobUnavailable();
+    if (unavailable) return unavailable;
+    if (window[action]) window[action]();
+    return i18nLines(keys);
+  };
+}
+
 const commands = {
-  help: () => `<span class="t-label">Available commands:</span><br>
-    <span class="t-str">whoami</span> <span class="t-response">— a quick introduction</span><br>
-    <span class="t-str">stack</span> <span class="t-response">— technologies I use daily</span><br>
-    <span class="t-str">experience</span> <span class="t-response">— years & current role</span><br>
-    <span class="t-str">contact</span> <span class="t-response">— how to reach me</span><br>
-    <span class="t-str">projects</span> <span class="t-response">— what I've built</span><br>
-    <span class="t-str">hire</span> <span class="t-response">— remote role availability</span><br>
-    <span class="t-str">resume</span> <span class="t-response">— download my CV</span><br>
-    <span class="t-str">github</span> <span class="t-response">— open GitHub profile</span><br>
-    <span class="t-str">linkedin</span> <span class="t-response">— open LinkedIn profile</span><br>
-    <span class="t-str">email</span> <span class="t-response">— open email client</span><br>
-    <span class="t-str">matrix</span> <span class="t-response">— ???</span><br>
-    <span class="t-str">pet</span> <span class="t-response">— summon the blob</span><br>
-    <span class="t-str">dance</span> <span class="t-response">— make the blob dance</span><br>
-    <span class="t-str">scare</span> <span class="t-response">— scare the blob</span><br>
-    <span class="t-str">love</span> <span class="t-response">— blob falls in love</span><br>
-    <span class="t-str">puff</span> <span class="t-response">— inflate like a balloon</span><br>
-    <span class="t-str">wave</span> <span class="t-response">— says hello</span><br>
-    <span class="t-str">extasis</span> <span class="t-response">— TURBO MODE</span><br>
-    <span class="t-str">angry</span> <span class="t-response">— makes the blob angry</span><br>
-    <span class="t-str">pushhead</span> <span class="t-response">— nope nope nope</span><br>
-    <span class="t-str">melt</span> <span class="t-response">— melts into a puddle</span><br>
-    <span class="t-str">rainbow</span> <span class="t-response">— taste the rainbow</span><br>
-    <span class="t-str">clone</span> <span class="t-response">— mitosis!</span><br>
-    <span class="t-str">secret</span> <span class="t-response">— ???</span><br>
-    <span class="t-str">pomodoro</span> <span class="t-response">— open a Pomodoro timer</span><br>
-    <span class="t-str">clear</span> <span class="t-response">— clear terminal</span>`,
-  whoami: () => `<span class="t-label">Backend Engineer</span> <span class="t-response">building banking production systems.</span><br>
-    <span class="t-str">Experience:</span> <span class="t-response">5+ years in production systems.</span><br>
-    <span class="t-str">Availability:</span> <span class="t-response">Open to remote international roles · GMT-6.</span>`,
-  stack: () => `<span class="t-label">Production stack:</span><br>
-    <span class="t-str">Backend:</span> <span class="t-response">NestJS, .NET/C#, Node.js, TypeScript</span><br>
-    <span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span><br>
-    <span class="t-str">Infra:</span> <span class="t-response">OpenShift, Docker, Keycloak, CI/CD</span><br>
-    <span class="t-str">Frontend:</span> <span class="t-response">React, Vite, Socket.io, WebRTC</span><br>
-    <span class="t-str">Personal projects:</span> <span class="t-response">Godot 4, game dev</span>`,
-  experience: () => `<span class="t-label">5+ years in production systems</span><br>
-    <span class="t-str">Current:</span> <span class="t-response">Backend Software Engineer (Technical Analyst I) @ BANTRAB</span><br>
-    <span class="t-str">Focus:</span> <span class="t-response">Banking transactions, 18+ microservices</span><br>
-    <span class="t-str">Highlight:</span> <span class="t-response">Keycloak migration, 0 downtime</span>`,
-  contact: () => `<span class="t-label">Let's talk:</span><br>
-    <span class="t-str">Email:</span> <span class="t-response">reyescristop@gmail.com</span><br>
-    <span class="t-str">LinkedIn:</span> <span class="t-response">linkedin.com/in/cristopherrp</span><br>
-    <span class="t-str">GitHub:</span> <span class="t-response">github.com/CristopherReyesP</span><br>
-    <span class="t-str">Timezone:</span> <span class="t-response">CST (GMT-6)</span>`,
-  projects: () => `<span class="t-label">Production & personal:</span><br>
-    <span class="t-str">→</span> <span class="t-response">Keycloak v11→v19 migration (0 downtime)</span><br>
-    <span class="t-str">→</span> <span class="t-response">Saga Pattern — banking double reversal fix</span><br>
-    <span class="t-str">→</span> <span class="t-response">PL/SQL monolith → 18+ microservices</span><br>
-    <span class="t-str">→</span> <span class="t-response">XYRA — Survival MMO (Godot 4 + Nakama)</span><br>
-    <span class="t-str">→</span> <span class="t-response">Línea Muerta — multiplayer mini-games</span>`,
-  hire: () => `<span class="t-label">Open to international remote backend roles</span><br>
-    <span class="t-str">Role:</span> <span class="t-response">Full-time Backend Engineer</span><br>
-    <span class="t-str">Timezone:</span> <span class="t-response">GMT-6</span><br>
-    <span class="t-str">→</span> <a href="#contact" style="color:var(--accent)">Get in touch</a>`,
-  resume: () => `<span class="t-label">Downloading CV...</span><br><span class="t-comment">// ${window.location.origin}/resume/CV_Cristopher_Reyes.pdf</span><br><span class="t-str">→</span> <a href="resume/CV_Cristopher_Reyes.pdf" download style="color:var(--accent)">Click here if download didn't start</a>`,
-  github: () => {
-    window.open('https://github.com/CristopherReyesP', '_blank');
-    return `<span class="t-label">Opening GitHub...</span><br><span class="t-comment">// github.com/CristopherReyesP</span>`;
+  help: () => i18nLine('terminal_help_title') + helpEntries.map(([cmd, key]) =>
+    plainLine(`<span class="t-str">${cmd}</span> ${i18nSpan(key, ' class="t-response"')}`)
+  ).join(''),
+  whoami: () => i18nLines(whoamiKeys),
+  stack: () => i18nLine('terminal_stack_title') +
+    plainLine('<span class="t-str">Backend:</span> <span class="t-response">NestJS, Node.js, C# / .NET, TypeScript, REST APIs, GraphQL</span>') +
+    i18nLine('terminal_stack_db') +
+    plainLine('<span class="t-str">DevOps &amp; Infra:</span> <span class="t-response">OpenShift, Kubernetes, Docker, Keycloak, CI/CD</span>') +
+    i18nLine('terminal_stack_integrations') +
+    i18nLine('terminal_stack_architecture') +
+    plainLine('<span class="t-str">Frontend:</span> <span class="t-response">React, Vite, Socket.io, WebRTC</span>'),
+  experience: () => i18nLines([
+    'terminal_exp_title', 'terminal_exp_current', 'terminal_exp_focus',
+    'terminal_exp_highlight', 'terminal_exp_freelance', 'terminal_exp_onesolutions'
+  ]),
+  contact: () => i18nLine('terminal_contact_title') +
+    i18nLine('terminal_contact_email') +
+    plainLine('<span class="t-str">LinkedIn:</span> <span class="t-response">linkedin.com/in/cristopherrp</span>') +
+    plainLine('<span class="t-str">GitHub:</span> <span class="t-response">github.com/CristopherReyesP</span>') +
+    i18nLine('terminal_contact_calendly') +
+    i18nLine('terminal_contact_location'),
+  projects: () => i18nLine('terminal_projects_production') +
+    productionProjects.map(([key, inProgress]) => arrowLine(
+      i18nSpan(key, ' class="t-response"') + (inProgress ? ' ' + i18nSpan('terminal_in_progress', ' class="t-comment"') : '')
+    )).join('') +
+    i18nLine('terminal_projects_personal') +
+    personalProjects.map(name => arrowLine(`<span class="t-response">${name}</span>`)).join(''),
+  hire: () => i18nLines(['terminal_hire_title', 'terminal_hire_role', 'terminal_hire_location', 'terminal_hire_freelance']) +
+    arrowLine(`<a href="#contact" style="color:var(--accent)" data-i18n-html="terminal_hire_cta">${t('terminal_hire_cta')}</a>`),
+  // The CV follows the active language; the printed path and link update with setLang()
+  resume: () => {
+    const cv = t('cv_href');
+    const download = document.createElement('a');
+    download.href = cv;
+    download.download = '';
+    download.click();
+    return i18nLine('terminal_resume_title') +
+      plainLine(`<span class="t-comment">// <span data-i18n="cv_href">${cv}</span></span>`) +
+      arrowLine(`<a href="${cv}" download data-i18n-href="cv_href" data-i18n-html="terminal_resume_link" style="color:var(--accent)">${t('terminal_resume_link')}</a>`);
   },
-  linkedin: () => {
-    window.open('https://www.linkedin.com/in/cristopherrp', '_blank');
-    return `<span class="t-label">Opening LinkedIn...</span><br><span class="t-comment">// linkedin.com/in/cristopherrp</span>`;
-  },
-  email: () => {
-    window.open('mailto:reyescristop@gmail.com', '_blank');
-    return `<span class="t-label">Opening email client...</span><br><span class="t-comment">// reyescristop@gmail.com</span>`;
-  },
+  github: () => openExternal('https://github.com/CristopherReyesP', 'terminal_github_title', 'github.com/CristopherReyesP'),
+  linkedin: () => openExternal('https://www.linkedin.com/in/cristopherrp', 'terminal_linkedin_title', 'linkedin.com/in/cristopherrp'),
+  email: () => openExternal('mailto:reyescristop@gmail.com', 'terminal_email_title', 'reyescristop@gmail.com'),
   matrix: () => {
     runMatrix();
-    return `<span class="t-label">Wake up, Neo...</span><br><span class="t-comment">// follow the white rabbit</span>`;
+    return i18nLines(['terminal_matrix1', 'terminal_matrix2']);
   },
-  secret: () => `<span class="t-response">while (alive) {</span><br>
-    <span class="t-response">&nbsp;&nbsp;eat();</span><br>
-    <span class="t-response">&nbsp;&nbsp;code();</span><br>
-    <span class="t-response">&nbsp;&nbsp;sleep(maybe);</span><br>
-    <span class="t-response">&nbsp;&nbsp;repeat();</span><br>
-    <span class="t-response">}</span><br>
-    <span class="t-comment">// Also building a game about alien planets 🛸</span><br>
-    <span class="t-comment">// psst... try typing "pet"</span>`,
+  secret: () => ['while (alive) {', '&nbsp;&nbsp;eat();', '&nbsp;&nbsp;code();', '&nbsp;&nbsp;sleep(maybe);', '&nbsp;&nbsp;repeat();', '}']
+    .map(code => plainLine(`<span class="t-response">${code}</span>`)).join('') +
+    i18nLines(['terminal_secret1', 'terminal_secret2']),
   pet: (args) => {
-    var mascot = document.getElementById('mascot');
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    var colors = { red: '#ff5f57', blue: '#5f9fff', green: '' };
+    const mascot = document.getElementById('mascot');
+    if (!mascot) return i18nLine('terminal_no_mascot');
 
-    // Color change
-    if (args && colors.hasOwnProperty(args)) {
-      if (mascot.classList.contains('hidden')) {
-        return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-      }
-      var body = mascot.querySelector('.mascot-body');
-      body.style.background = colors[args] || '';
-      body.style.boxShadow = colors[args]
-        ? '0 4px 20px ' + colors[args] + '80, inset 0 -6px 12px rgba(0,0,0,0.15)'
+    // Color change: the color name is translated, the command argument is not
+    if (args && petColors.hasOwnProperty(args)) {
+      if (mascot.classList.contains('hidden')) return i18nLine('terminal_pet_first');
+      const color = petColors[args];
+      const body = mascot.querySelector('.mascot-body');
+      body.style.background = color || '';
+      body.style.boxShadow = color
+        ? '0 4px 20px ' + color + '80, inset 0 -6px 12px rgba(0,0,0,0.15)'
         : '';
       mascot.classList.add('jump');
       setTimeout(function() { mascot.classList.remove('jump'); }, 500);
-      return '<span class="t-response">Blob color changed to <span style="color:' + (colors[args] || 'var(--accent)') + '">' + (args || 'green') + '</span>!</span>';
+      return plainLine(`<span class="t-response">${i18nSpan('terminal_pet_color_before')} ${i18nSpan('terminal_color_' + args, ` style="color:${color || 'var(--accent)'}"`)}${i18nSpan('terminal_pet_color_after')}</span>`);
     }
 
-    if (args) {
-      return '<span class="t-response">Unknown color. Try: <span style="color:#ff5f57">red</span>, <span style="color:#5f9fff">blue</span>, <span style="color:var(--accent)">green</span></span>';
-    }
+    if (args) return i18nLine('terminal_pet_unknown_color');
 
     // First summon
-    if (!mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob is already here! Click it for actions, or try <span style="color:var(--accent)">pet red</span> or <span style="color:var(--accent)">pet blue</span> to change its color.</span>';
-    }
+    if (!mascot.classList.contains('hidden')) return i18nLine('terminal_pet_already_here');
     mascot.classList.remove('hidden');
     mascot.dataset.summoned = 'true';
     mascot.classList.remove('sleeping');
     mascot.classList.add('jump');
     setTimeout(function() { mascot.classList.remove('jump'); }, 500);
     if (window.mascotWake) window.mascotWake();
-    return '<span class="t-label">*a small blob appears*</span><br><span class="t-response">You found the pet! It now lives on your screen.</span><br><span class="t-comment">// click it, drag it, or type "pet red" / "pet blue"</span>';
+    return i18nLines(['terminal_pet_summon1', 'terminal_pet_summon2', 'terminal_pet_summon3']);
   },
-  dance: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotDance) window.mascotDance();
-    return '<span class="t-label">*the blob starts dancing!*</span><br><span class="t-comment">// boogie woogie</span>';
-  },
-  scare: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotScare) window.mascotScare();
-    return '<span class="t-label">*BOO!*</span><br><span class="t-comment">// got scared</span>';
-  },
-  love: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotLove) window.mascotLove();
-    return '<span class="t-label">*the blob is in love!*</span><br><span class="t-comment">// hearts everywhere</span>';
-  },
-  puff: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotPuff) window.mascotPuff();
-    return '<span class="t-label">*pfffffff!*</span><br><span class="t-comment">// inflating</span>';
-  },
-  wave: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotWave) window.mascotWave();
-    return '<span class="t-label">*hello!*</span><br><span class="t-comment">// waves hello</span>';
-  },
+  dance: blobAction('mascotDance', ['terminal_dance1', 'terminal_dance2']),
+  scare: blobAction('mascotScare', ['terminal_scare1', 'terminal_scare2']),
+  love: blobAction('mascotLove', ['terminal_love1', 'terminal_love2']),
+  puff: blobAction('mascotPuff', ['terminal_puff1', 'terminal_puff2']),
+  wave: blobAction('mascotWave', ['terminal_wave1', 'terminal_wave2']),
   extasis: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotExtasis) {
-      var result = window.mascotExtasis();
-      if (result === 'on') {
-        return '<span class="t-label">*THE BLOB IS IN THE ZONE*</span><br><span class="t-comment">// turbo mode engaged</span>';
-      } else {
-        return '<span class="t-label">*back to normal*</span><br><span class="t-comment">// turbo mode off</span>';
-      }
-    }
-    return '<span class="t-response">Extasis not available.</span>';
+    const unavailable = blobUnavailable();
+    if (unavailable) return unavailable;
+    if (!window.mascotExtasis) return i18nLine('terminal_extasis_unavailable');
+    return window.mascotExtasis() === 'on'
+      ? i18nLines(['terminal_extasis_on1', 'terminal_extasis_on2'])
+      : i18nLines(['terminal_extasis_off1', 'terminal_extasis_off2']);
   },
-  angry: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotAngry) window.mascotAngry();
-    return '<span class="t-label">*GRRRR!*</span><br><span class="t-comment">// angry blob</span>';
-  },
-  pushhead: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotPushHead) window.mascotPushHead();
-    return '<span class="t-label">*nope, nope, nope...*</span><br><span class="t-comment">// pushin\' head</span>';
-  },
+  angry: blobAction('mascotAngry', ['terminal_angry1', 'terminal_angry2']),
+  pushhead: blobAction('mascotPushHead', ['terminal_pushhead1', 'terminal_pushhead2']),
   rainbow: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    var result = window.mascotRainbow ? window.mascotRainbow() : null;
-    if (result === 'off') return '<span class="t-label">*rainbow fades...*</span><br><span class="t-comment">// back to normal</span>';
-    return '<span class="t-label">*✨ R A I N B O W ✨*</span><br><span class="t-comment">// type rainbow again to turn off</span>';
+    const unavailable = blobUnavailable();
+    if (unavailable) return unavailable;
+    const result = window.mascotRainbow ? window.mascotRainbow() : null;
+    return result === 'off'
+      ? i18nLines(['terminal_rainbow_off1', 'terminal_rainbow_off2'])
+      : i18nLines(['terminal_rainbow_on1', 'terminal_rainbow_on2']);
   },
-  melt: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotMelt) window.mascotMelt();
-    return '<span class="t-label">*the blob melts into a puddle...*</span><br><span class="t-comment">// splooosh... *reforms*</span>';
-  },
-  clone: () => {
-    if (!mascot) return '<span class="t-response">No mascot found.</span>';
-    if (mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob isn\'t here yet. Type <span style="color:var(--accent)">pet</span> first.</span>';
-    }
-    if (window.mascotClone) window.mascotClone();
-    return '<span class="t-label">*the blob splits in two!*</span><br><span class="t-comment">// mitosis in progress...</span>';
-  },
+  melt: blobAction('mascotMelt', ['terminal_melt1', 'terminal_melt2']),
+  clone: blobAction('mascotClone', ['terminal_clone1', 'terminal_clone2']),
   clear: () => 'CLEAR',
   pomodoro: () => {
     Pomodoro.open();
-    return '<span class="t-label">Opening Pomodoro...</span><br><span class="t-comment">// focus time 🍅</span>';
+    return i18nLines(['terminal_pomodoro1', 'terminal_pomodoro2']);
   }
 };
+
 
 function initTerminal() {
   const terminalInput = document.getElementById('terminalInput');
@@ -226,15 +190,10 @@ function initTerminal() {
 
   if (!terminalInput) return;
 
-  let typingTimer;
-  let isTyping = false;
-  let typedValue = '';
-
-  function cancelTyping(clearInput) {
-    if (!isTyping) return;
-    clearTimeout(typingTimer);
-    isTyping = false;
-    if (clearInput && terminalInput.value === typedValue) terminalInput.value = '';
+  function echoCommand(input) {
+    const cmdLine = document.createElement('div');
+    cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${escapeHtml(input)}</span>`;
+    terminalOutput.appendChild(cmdLine);
   }
 
   function runCommand() {
@@ -246,9 +205,7 @@ function initTerminal() {
     const cmd = parts[0];
     const args = parts.slice(1).join(' ');
 
-    const cmdLine = document.createElement('div');
-    cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
-    terminalOutput.appendChild(cmdLine);
+    echoCommand(input);
 
     const response = commands[cmd];
     if (response) {
@@ -264,45 +221,103 @@ function initTerminal() {
     } else {
       const errDiv = document.createElement('div');
       errDiv.className = 'terminal-output';
-      errDiv.innerHTML = `<span class="t-response">Command not found: <span style="color:var(--accent3)">${cmd}</span>. Type <span style="color:var(--accent)">help</span> for available commands.</span>`;
+      errDiv.innerHTML = notFoundMessage(cmd);
       terminalOutput.appendChild(errDiv);
     }
 
     terminalBody.scrollTop = terminalBody.scrollHeight;
   }
 
-  function typeCommand(command, delay = 0) {
-    if (isTyping) return;
-    isTyping = true;
-    typedValue = '';
-    terminalInput.value = '';
+  // --- Auto intro: runs `whoami` like a real session ---
+  // The typed text lives in its own span (with a block cursor) instead of the input,
+  // so the input stays empty and usable; output lines are separate blocks revealed one
+  // by one, so none of them outgrows the hero h1 as the LCP element.
+  const INTRO_COMMAND = 'whoami';
+  const intro = { state: 'idle', timer: 0, typed: null, lines: [], output: null, echoed: false };
+  const placeholder = terminalInput.getAttribute('placeholder');
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      terminalInput.value = command;
-      isTyping = false;
-      runCommand();
-      return;
-    }
-
-    let index = 0;
-    function typeNextCharacter() {
-      typedValue += command[index++];
-      terminalInput.value = typedValue;
-      if (index === command.length) {
-        isTyping = false;
-        runCommand();
-      } else {
-        typingTimer = setTimeout(typeNextCharacter, 50);
-      }
-    }
-    typingTimer = setTimeout(typeNextCharacter, delay || 50);
+  function introStep(fn, delay) {
+    intro.timer = setTimeout(fn, delay);
   }
 
-  terminalInput.addEventListener('focus', () => cancelTyping(true));
-  terminalInput.addEventListener('input', () => cancelTyping(false));
+  function removeTypedCommand() {
+    if (intro.typed) intro.typed.remove();
+    intro.typed = null;
+    if (placeholder !== null) terminalInput.setAttribute('placeholder', placeholder);
+  }
+
+  function echoIntroCommand() {
+    removeTypedCommand();
+    echoCommand(INTRO_COMMAND);
+    intro.echoed = true;
+    intro.output = document.createElement('div');
+    intro.output.className = 'terminal-output';
+    terminalOutput.appendChild(intro.output);
+    const template = document.createElement('div');
+    template.innerHTML = commands[INTRO_COMMAND]();
+    intro.lines = Array.from(template.children);
+  }
+
+  function revealNextLine() {
+    const line = intro.lines.shift();
+    if (!line) {
+      intro.state = 'done';
+      return;
+    }
+    line.classList.add('terminal-line');
+    intro.output.appendChild(line);
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+    introStep(revealNextLine, 180);
+  }
+
+  // Skip to the end: full output at once, nothing left half-typed
+  function finishIntro() {
+    if (intro.state === 'done') return;
+    clearTimeout(intro.timer);
+    if (!intro.echoed) echoIntroCommand();
+    intro.lines.forEach(line => intro.output.appendChild(line));
+    intro.lines = [];
+    intro.state = 'done';
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+  }
+
+  function startIntro() {
+    if (intro.state !== 'idle') return;
+    const userIsTyping = document.activeElement === terminalInput || terminalInput.value !== '';
+    if (userIsTyping || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      finishIntro();
+      return;
+    }
+    intro.state = 'running';
+    terminalInput.setAttribute('placeholder', '');
+    intro.typed = document.createElement('span');
+    intro.typed.className = 'terminal-typed';
+    intro.typed.setAttribute('aria-hidden', 'true');
+    intro.typed.innerHTML = '<span class="t-str"></span><span class="t-cursor"></span>';
+    terminalInput.before(intro.typed);
+
+    const typedText = intro.typed.firstChild;
+    let index = 0;
+    function typeNextCharacter() {
+      typedText.textContent += INTRO_COMMAND[index++];
+      if (index < INTRO_COMMAND.length) {
+        introStep(typeNextCharacter, 110);
+      } else {
+        // Short beat before "Enter", then the output streams in
+        introStep(() => {
+          echoIntroCommand();
+          introStep(revealNextLine, 180);
+        }, 400);
+      }
+    }
+    introStep(typeNextCharacter, 1000);
+  }
+
+  terminalInput.addEventListener('focus', finishIntro);
+  terminalInput.addEventListener('input', finishIntro);
   terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      cancelTyping(false);
+      finishIntro();
       runCommand();
     }
   });
@@ -311,21 +326,17 @@ function initTerminal() {
     terminalInput.focus();
   });
 
-  terminal.querySelectorAll('.terminal-chip').forEach(chip => {
-    chip.addEventListener('click', () => typeCommand(chip.dataset.command));
-  });
-
-  // Start the intro once the terminal is mostly visible, so on mobile (below the fold)
+  // Start the intro once the terminal is almost fully visible, so on mobile (below the fold)
   // the late-rendered output does not become the LCP element
   if ('IntersectionObserver' in window) {
     const introObserver = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) return;
       introObserver.disconnect();
-      typeCommand('whoami', 650);
-    }, { threshold: 0.6 });
+      startIntro();
+    }, { threshold: 0.9 });
     introObserver.observe(terminal);
   } else {
-    typeCommand('whoami', 650);
+    startIntro();
   }
 }
 
@@ -386,7 +397,7 @@ function initTerminalFab() {
         const args = parts.slice(1).join(' ');
 
         const cmdLine = document.createElement('div');
-        cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
+        cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${escapeHtml(input)}</span>`;
         floatOutput.appendChild(cmdLine);
 
         const response = commands[cmd];
@@ -403,7 +414,7 @@ function initTerminalFab() {
         } else {
           const errDiv = document.createElement('div');
           errDiv.className = 'terminal-output';
-          errDiv.innerHTML = `<span class="t-response">Command not found. Type <span style="color:var(--accent)">help</span></span>`;
+          errDiv.innerHTML = notFoundMessage(cmd);
           floatOutput.appendChild(errDiv);
         }
 
