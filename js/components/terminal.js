@@ -74,7 +74,7 @@ function blobAction(action, keys) {
 const commands = {
   help: () => i18nLine('terminal_help_title') + helpEntries.map(([cmd, key]) =>
     plainLine(`<span class="t-str">${cmd}</span> ${i18nSpan(key, ' class="t-response"')}`)
-  ).join(''),
+  ).join('') + i18nLine('terminal_help_tab'),
   whoami: () => i18nLines(whoamiKeys),
   stack: () => i18nLine('terminal_stack_title') +
     plainLine('<span class="t-str">Backend:</span> <span class="t-response">NestJS, Node.js, C# / .NET, TypeScript, REST APIs, GraphQL</span>') +
@@ -184,6 +184,45 @@ const commands = {
   }
 };
 
+
+// --- Tab autocomplete over the documented commands, like a shell ---
+const commandNames = [...new Set(helpEntries.map(([cmd]) => cmd))];
+
+function commonPrefix(words) {
+  let prefix = words[0];
+  for (const word of words) {
+    while (!word.startsWith(prefix)) prefix = prefix.slice(0, -1);
+  }
+  return prefix;
+}
+
+function printCompletions(output, body, typed, matches) {
+  const cmdLine = document.createElement('div');
+  cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${escapeHtml(typed)}</span>`;
+  const list = document.createElement('div');
+  list.className = 'terminal-output';
+  list.innerHTML = plainLine(matches.map((name) => `<span class="t-str">${name}</span>`).join('&nbsp;&nbsp;'));
+  output.append(cmdLine, list);
+  body.scrollTop = body.scrollHeight;
+}
+
+// A single match completes the command; several complete their common prefix, and once
+// there is nothing left to complete they are listed. Tab on an empty input keeps its
+// native behavior, so keyboard users can still move past the terminal.
+function handleTab(e, input, output, body) {
+  if (e.key !== 'Tab' || e.shiftKey || input.value.trim() === '') return;
+  e.preventDefault();
+  announceCommand('tab');
+
+  const typed = input.value.trimStart().toLowerCase();
+  if (/\s/.test(typed)) return;
+  const matches = commandNames.filter((name) => name.startsWith(typed));
+  if (!matches.length) return;
+
+  const prefix = commonPrefix(matches);
+  if (prefix.length > typed.length) input.value = prefix;
+  else if (matches.length > 1) printCompletions(output, body, typed, matches);
+}
 
 function initTerminal() {
   const terminalInput = document.getElementById('terminalInput');
@@ -324,6 +363,7 @@ function initTerminal() {
       finishIntro();
       runCommand();
     }
+    handleTab(e, terminalInput, terminalOutput, terminalBody);
   });
 
   terminalBody.addEventListener('click', () => {
@@ -391,6 +431,7 @@ function initTerminalFab() {
 
   if (floatInput) {
     floatInput.addEventListener('keydown', (e) => {
+      handleTab(e, floatInput, floatOutput, document.getElementById('terminalFloatBody'));
       if (e.key === 'Enter') {
         const input = floatInput.value.trim().toLowerCase();
         floatInput.value = '';
