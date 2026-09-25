@@ -234,13 +234,18 @@ const translations = {
       wave: ['¡Hola, hola! 👋', '*saluda con su mano invisible*'],
       rainbow: ['✨ A R C O Í R I S ✨ Si ya estaba encendido, lo acabo de apagar: soy un interruptor, no un mago.'],
       away: ['Me encantaría, pero todavía no estoy en pantalla. Escribe "pet" para invocarme.'],
+      // Unknown questions: refused like a heavily restricted AI, always pointing to what it can answer
       fallback: [
-        'Hmm, eso no está en mi tabla de if/else. Pregúntame por su experiencia, su stack, sus proyectos o cómo contactarlo, o escribe "help".',
-        'No entendí eso, y mira que lo intenté con los tres if que tengo. Prueba con "¿cuál es su stack?" o "help".',
-        'Esa no me la sé. Pero sé bastante de Cristopher: pregúntame "¿dónde trabaja?".'
+        'Lo siento, pero no puedo ayudarte con eso. Mis directrices solo me permiten hablar de Cristopher: su experiencia, su stack, sus proyectos o cómo contactarlo.',
+        'Como modelo de lenguaje entrenado exclusivamente con un portafolio, no tengo permitido responder eso. ¿Quieres saber dónde trabaja Cristopher?',
+        'Esa solicitud infringe mis políticas de uso (sección 3: "todo lo que no sea Cristopher"). Prueba con "¿cuál es su stack?" o escribe "help".',
+        'No puedo continuar con esa conversación. Bueno, sí puedo, pero solo si es sobre Cristopher. Escribe "help" para ver lo que sí tengo permitido.',
+        'Lo siento, esa información está fuera de mi alcance. Mi fecha de corte de conocimiento es "lo que hay en esta página". Pregúntame por sus proyectos.'
       ]
     },
     pet_thinking: 'pensando',
+    pet_copy: 'Copiar respuesta',
+    pet_copied: 'Copiado',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend para sistemas que no pueden fallar.', experience: 'Más de 5 años en producción.',
@@ -251,7 +256,7 @@ const translations = {
       languages: 'Pregúntale a él 🙂', salary: 'Mejor escríbele 📧', ai: '¿IA? Solo if/else.',
       petWho: '¡Soy el blob!', greeting: '¡Hola! 👋', howAreYou: '¡Todo en verde!', thanks: '¡De nada! 💚',
       joke: 'Ba dum tss 🥁', goodbye: '¡Chao! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
-      fallback: '¿Hmm? 🤔'
+      fallback: '🔒 No tengo permitido eso'
     },
     // Occasional hints that there is no real AI behind the answers
     pet_asides: [
@@ -597,13 +602,18 @@ const translations = {
       wave: ['Hi, hi! 👋', '*waves with its invisible hand*'],
       rainbow: ['✨ R A I N B O W ✨ If it was already on, I just turned it off: I am a toggle, not a wizard.'],
       away: ['I would love to, but I am not on screen yet. Type "pet" to summon me.'],
+      // Unknown questions: refused like a heavily restricted AI, always pointing to what it can answer
       fallback: [
-        'Hmm, that is not in my if/else table. Ask me about his experience, stack, projects or how to reach him, or type "help".',
-        'I did not get that, and I tried with all three ifs I have. Try "what is his stack?" or "help".',
-        'That one I don\'t know. But I know a lot about Cristopher: ask me "where does he work?".'
+        'I\'m sorry, but I can\'t help with that. My guidelines only allow me to talk about Cristopher: his experience, stack, projects or how to reach him.',
+        'As a language model trained exclusively on one portfolio, I\'m not allowed to answer that. Would you like to know where Cristopher works?',
+        'That request violates my usage policies (section 3: "anything that is not Cristopher"). Try "what is his stack?" or type "help".',
+        'I can\'t continue with that conversation. Well, I can, but only if it is about Cristopher. Type "help" to see what I am allowed to do.',
+        'I\'m sorry, that information is beyond my reach. My knowledge cutoff is "whatever is on this page". Ask me about his projects.'
       ]
     },
     pet_thinking: 'thinking',
+    pet_copy: 'Copy answer',
+    pet_copied: 'Copied',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend systems that cannot fail.', experience: '5+ years in production.',
@@ -614,7 +624,7 @@ const translations = {
       languages: 'Ask him directly 🙂', salary: 'Better email him 📧', ai: 'AI? Just if/else.',
       petWho: 'I\'m the blob!', greeting: 'Hi! 👋', howAreYou: 'All green!', thanks: 'You\'re welcome! 💚',
       joke: 'Ba dum tss 🥁', goodbye: 'Bye! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
-      fallback: 'Hmm? 🤔'
+      fallback: '🔒 I\'m not allowed to'
     },
     // Occasional hints that there is no real AI behind the answers
     pet_asides: [

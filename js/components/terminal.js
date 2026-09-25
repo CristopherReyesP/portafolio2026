@@ -248,9 +248,47 @@ function setPetBusy() {
   if (window.mascotBusy) window.mascotBusy(petTyping.size > 0);
 }
 
+const COPY_ICON = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+const COPIED_ICON = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
+// Code-editor style copy button for a pet answer; turns into a check for a moment once copied.
+// Without clipboard access (e.g. plain http) it selects the answer so the visitor can copy it.
+function addCopyButton(line, answer, text) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 't-copy';
+  button.innerHTML = COPY_ICON;
+  button.dataset.i18nAriaLabel = 'pet_copy';
+  button.setAttribute('aria-label', t('pet_copy'));
+  let resetTimer = 0;
+  button.addEventListener('click', (e) => {
+    // The terminal body focuses the input on click, which would drop a fallback selection
+    e.stopPropagation();
+    const copy = navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject();
+    copy.then(() => {
+      clearTimeout(resetTimer);
+      button.innerHTML = COPIED_ICON;
+      button.classList.add('copied');
+      button.setAttribute('aria-label', t('pet_copied'));
+      resetTimer = setTimeout(() => {
+        button.innerHTML = COPY_ICON;
+        button.classList.remove('copied');
+        button.setAttribute('aria-label', t('pet_copy'));
+      }, 1500);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNodeContents(answer);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    });
+  });
+  line.appendChild(button);
+}
+
 function printPetReply(reply, output, body) {
   const line = document.createElement('div');
-  line.className = 'terminal-output';
+  line.className = 'terminal-output pet-reply';
   line.innerHTML = PET_PREFIX;
   const thinking = document.createElement('span');
   thinking.className = 't-comment';
@@ -283,6 +321,7 @@ function printPetReply(reply, output, body) {
     thinking.remove();
     react();
     segments.forEach(([el, text]) => { el.textContent = text; });
+    addCopyButton(line, answer, reply.text);
     line.removeAttribute('aria-busy');
     petTyping.delete(output);
     setPetBusy();
