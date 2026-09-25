@@ -9,7 +9,6 @@ const translations = {
     hero_availability: 'Disponible para roles remotos · GMT-6',
     hero_btn1: 'Ver resultados', hero_btn_cta: 'Descargar CV', cv_href: 'resume/CV_Cristopher_Reyes.pdf',
     terminal_command: 'Comando',
-    terminal_header_role: '// Desarrollador Backend · Guatemala',
     terminal_header_help: '// Escribe <span style="color:var(--accent)">help</span> para ver los comandos disponibles',
     terminal_whoami1: '<span class="t-label">Desarrollador Backend</span> <span class="t-response">que construye sistemas bancarios en producción.</span>',
     terminal_whoami2: '<span class="t-str">Experiencia:</span> <span class="t-response">5+ años en sistemas de producción.</span>',
@@ -41,6 +40,7 @@ const translations = {
     terminal_help_clone: '— ¡mitosis!',
     terminal_help_pomodoro: '— abrir un temporizador Pomodoro',
     terminal_help_clear: '— limpiar la terminal',
+    terminal_help_ask: '<span class="t-comment">O simplemente pregúntame lo que quieras sobre Cristopher, por ejemplo: <span style="color:var(--accent)">¿dónde trabaja?</span></span>',
     terminal_help_tab: '<span class="t-comment">Tip: Tab autocompleta los comandos.</span>',
     terminal_stack_title: '<span class="t-label">Herramientas que uso en producción:</span>',
     terminal_stack_db: '<span class="t-str">Base de datos:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span>',
@@ -133,6 +133,7 @@ const translations = {
     // Command hints outside Contact: [command, text]; skipped once the visitor runs it
     mascot_cmd_tips: [
       ['help', 'Psst… escribe "help" en la terminal para ver todos los comandos.'],
+      ['ask', 'Pregúntame algo sobre Cristopher en la terminal, como "¿cuál es su stack?".'],
       ['dance', '¿Me haces bailar? Escribe "dance" en la terminal.'],
       ['projects', 'Escribe "projects" en la terminal para ver los proyectos.'],
       ['tab', 'Tip: en la terminal, la tecla Tab autocompleta los comandos.'],
@@ -140,6 +141,125 @@ const translations = {
       ['hire', '¿Buscas backend para tu equipo? Escribe "hire" en la terminal.'],
       ['clone', 'Escribe "clone" en la terminal… si te atreves.'],
       ['matrix', 'Hay un comando misterioso: prueba "matrix".']
+    ],
+    // Pet brain (pet-brain.js): plain-text answers per intent, several variants each.
+    // Only facts already on this page; anything else goes to "ask him directly".
+    pet_answers: {
+      who: [
+        'Cristopher es Desarrollador Backend: construye sistemas bancarios en producción desde Guatemala, con más de 5 años de experiencia.',
+        'Es un Backend Software Engineer que trabaja con microservicios, integraciones bancarias y migraciones que no pueden fallar.',
+        'En resumen: backend confiable para sistemas que no pueden fallar. Hoy lo hace en BANTRAB, con NestJS y .NET.'
+      ],
+      experience: [
+        'Tiene más de 5 años en sistemas de producción. Desde abril de 2024 es Backend Software Engineer en BANTRAB; antes fue Freelance Backend Developer (2021–2024) y Software Developer en OneSolutions (2021).',
+        'Más de 5 años. Los más recientes, en banca: 18+ microservicios NestJS y .NET, una migración de Keycloak sin downtime y 50k registros migrados sin pérdida.'
+      ],
+      job: [
+        'Trabaja en BANTRAB (Banco de los Trabajadores, Guatemala) como Backend Software Engineer (Analista Técnico I), desde abril de 2024.',
+        'Ahora mismo está en BANTRAB: microservicios NestJS y .NET (C#) para transacciones bancarias en canales móvil y web.',
+        'En BANTRAB, desde abril de 2024. Entre otras cosas, migró Keycloak v11 → v19 sin downtime y lleva un monolito PL/SQL hacia microservicios.'
+      ],
+      stack: [
+        'Backend: NestJS, Node.js, C# / .NET y TypeScript. Datos: Oracle, PL/SQL, PostgreSQL y SQL Server. Infra: OpenShift, Docker, Keycloak y CI/CD. Integraciones: MuleSoft y APIs bancarias.',
+        'Su día a día es NestJS y .NET sobre Oracle, desplegado en OpenShift. Cuando toca frontend usa React, Vite y TypeScript.',
+        'Microservicios con NestJS y .NET, DDD, API Gateway, OAuth 2.0 y Azure AD. Escribe "stack" para ver la lista completa.'
+      ],
+      projects: [
+        'En producción: la migración de Keycloak v11 → v19, un patrón Saga para reversas bancarias y el paso de un monolito PL/SQL a 18+ microservicios. Escribe "projects" para ver la lista.',
+        'Ahora mismo trabaja en cobros por QR para afiliados y en un canary release por usuario para 38 rutas de gateway.',
+        'Fuera del banco hizo "Hormigas", un simulador de colonia jugable en el navegador, y "Cobros", una app de escritorio en Go y React empaquetada en un solo .exe.'
+      ],
+      contact: [
+        'Escríbele a reyescristop@gmail.com o búscalo en LinkedIn: linkedin.com/in/cristopherrp. Responde en menos de 24 horas.',
+        'Puedes agendar una llamada de 30 minutos en calendly.com/reyescristop/30min, o escribir a reyescristop@gmail.com.',
+        'Correo: reyescristop@gmail.com · LinkedIn: linkedin.com/in/cristopherrp · GitHub: github.com/CristopherReyesP.'
+      ],
+      location: [
+        'Vive en Guatemala y trabaja en GMT-6, con horario compatible con Estados Unidos.',
+        'Desde Guatemala (GMT-6). Tiene experiencia con equipos remotos y distribuidos.'
+      ],
+      availability: [
+        'Sí: busca un rol backend remoto internacional de tiempo completo. También acepta proyectos freelance puntuales de APIs, seguridad y bases de datos.',
+        'Está abierto a roles remotos de tiempo completo, desde Guatemala (GMT-6). Si tu equipo busca backend, escribe "hire" o "contact".'
+      ],
+      cv: [
+        'Escribe "resume" y se descarga al instante, o usa el botón "Descargar CV" de arriba. Viene en el idioma de la página.',
+        'Su CV está a un comando de distancia: escribe "resume".'
+      ],
+      education: [
+        'Estudió Ingeniería en Sistemas en la Universidad Mariano Gálvez: pensum cerrado y tesis en curso.',
+        'Ingeniería en Sistemas en la Universidad Mariano Gálvez, con el pensum cerrado y la tesis en curso.'
+      ],
+      languages: [
+        'El portafolio está en español e inglés, pero no dice su nivel de idiomas. Mejor pregúntale directamente: reyescristop@gmail.com.',
+        'Eso no está en mis datos. Pregúntale a él en reyescristop@gmail.com; yo solo hablo español, inglés y JavaScript.'
+      ],
+      salary: [
+        'Eso lo conversa directamente con cada equipo. Escríbele a reyescristop@gmail.com o agenda 30 minutos en Calendly.',
+        'Yo cobro en galletas 🍪. Para hablar de compensación, escríbele a reyescristop@gmail.com.'
+      ],
+      ai: [
+        '¿Yo, una IA? Soy un blob con una lista de palabras clave y mucha actitud. Ninguna red neuronal fue molestada.',
+        'Seré honesto: mi "red neuronal" son tres if con gabardina. Pero de Cristopher sé bastante.',
+        'No soy ChatGPT: soy un buscador de palabras clave en JavaScript, sin servidor. Menos GPU, mismo entusiasmo.'
+      ],
+      petWho: [
+        'Soy el blob de Cristopher: vivo en esta página, camino por los bordes y respondo preguntas sobre él.',
+        'Un blob verde con un solo trabajo: contarte cosas de Cristopher. Y bailar, si me lo pides.'
+      ],
+      greeting: [
+        '¡Hola! Soy el blob de Cristopher. Pregúntame por su experiencia, su stack o cómo contactarlo.',
+        '¡Hey! ¿Qué quieres saber de Cristopher? Prueba con "¿dónde trabaja?".'
+      ],
+      howAreYou: [
+        '¡Muy bien! Recién compilado y sin warnings. ¿Qué quieres saber de Cristopher?',
+        'Todo en verde, como yo. ¿En qué te ayudo?'
+      ],
+      thanks: [
+        '¡De nada! Si quieres hablar con él, escribe "contact".',
+        'Con gusto. Para eso me programaron: con if/else, pero con cariño.'
+      ],
+      joke: [
+        '¿Por qué el backend terminó con el frontend? Porque no respetaba el contrato de la API.',
+        'Hay 10 tipos de personas: las que entienden binario y las que no.',
+        'Una query SQL entra a un bar, ve dos tablas y pregunta: "¿Puedo unirme?"',
+        '¿Cuántos programadores hacen falta para cambiar un foco? Ninguno: es un problema de hardware.'
+      ],
+      goodbye: [
+        '¡Hasta luego! Si te interesa su perfil, reyescristop@gmail.com siempre está abierto.',
+        '¡Chao! Yo me quedo aquí, caminando por los bordes.'
+      ],
+      dance: ['¡Música, maestro! *activa pasos de baile precompilados*', 'Con gusto. Mira hacia abajo 💃'],
+      love: ['Aww. *se sonroja en verde*', 'Yo también te quiero. Y a Cristopher, que me programó.'],
+      wave: ['¡Hola, hola! 👋', '*saluda con su mano invisible*'],
+      rainbow: ['✨ A R C O Í R I S ✨ Si ya estaba encendido, lo acabo de apagar: soy un interruptor, no un mago.'],
+      away: ['Me encantaría, pero todavía no estoy en pantalla. Escribe "pet" para invocarme.'],
+      fallback: [
+        'Hmm, eso no está en mi tabla de if/else. Pregúntame por su experiencia, su stack, sus proyectos o cómo contactarlo, o escribe "help".',
+        'No entendí eso, y mira que lo intenté con los tres if que tengo. Prueba con "¿cuál es su stack?" o "help".',
+        'Esa no me la sé. Pero sé bastante de Cristopher: pregúntame "¿dónde trabaja?".'
+      ]
+    },
+    pet_thinking: 'pensando',
+    // Short version for the mascot's speech bubble
+    pet_bubbles: {
+      who: 'Backend para sistemas que no pueden fallar.', experience: 'Más de 5 años en producción.',
+      job: 'Hoy trabaja en BANTRAB.', stack: 'NestJS, .NET y Oracle.',
+      projects: 'Tiene proyectos en producción y personales.', contact: 'reyescristop@gmail.com',
+      location: 'Guatemala · GMT-6', availability: 'Disponible para roles remotos.',
+      cv: 'Escribe "resume" 📄', education: 'Ingeniería en Sistemas · UMG',
+      languages: 'Pregúntale a él 🙂', salary: 'Mejor escríbele 📧', ai: '¿IA? Solo if/else.',
+      petWho: '¡Soy el blob!', greeting: '¡Hola! 👋', howAreYou: '¡Todo en verde!', thanks: '¡De nada! 💚',
+      joke: 'Ba dum tss 🥁', goodbye: '¡Chao! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
+      fallback: '¿Hmm? 🤔'
+    },
+    // Occasional hints that there is no real AI behind the answers
+    pet_asides: [
+      '*consulta su tabla de if/else*',
+      '// mi red neuronal son tres if con gabardina',
+      '// respuesta generada con 0 GPUs y 100% JavaScript',
+      '*finge que lo pensó mucho*',
+      '// entrenado con exactamente un portafolio'
     ],
 
     // Stats
@@ -252,7 +372,6 @@ const translations = {
     hero_availability: 'Open to remote roles · GMT-6',
     hero_btn1: 'See results', hero_btn_cta: 'Download CV', cv_href: 'resume/CV_Cristopher_Reyes_EN.pdf',
     terminal_command: 'Command',
-    terminal_header_role: '// Backend Engineer · Guatemala',
     terminal_header_help: '// Type <span style="color:var(--accent)">help</span> to see available commands',
     terminal_whoami1: '<span class="t-label">Backend Engineer</span> <span class="t-response">building banking production systems.</span>',
     terminal_whoami2: '<span class="t-str">Experience:</span> <span class="t-response">5+ years in production systems.</span>',
@@ -284,6 +403,7 @@ const translations = {
     terminal_help_clone: '— mitosis!',
     terminal_help_pomodoro: '— open a Pomodoro timer',
     terminal_help_clear: '— clear terminal',
+    terminal_help_ask: '<span class="t-comment">Or just ask me anything about Cristopher, e.g. <span style="color:var(--accent)">where does he work?</span></span>',
     terminal_help_tab: '<span class="t-comment">Tip: Tab autocompletes commands.</span>',
     terminal_stack_title: '<span class="t-label">Tools I use in production:</span>',
     terminal_stack_db: '<span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span>',
@@ -376,6 +496,7 @@ const translations = {
     // Command hints outside Contact: [command, text]; skipped once the visitor runs it
     mascot_cmd_tips: [
       ['help', 'Psst… type "help" in the terminal to see every command.'],
+      ['ask', 'Ask me anything about Cristopher in the terminal, like "what is his stack?".'],
       ['dance', 'Want to see me dance? Type "dance" in the terminal.'],
       ['projects', 'Type "projects" in the terminal to see the projects.'],
       ['tab', 'Tip: in the terminal, the Tab key autocompletes commands.'],
@@ -383,6 +504,125 @@ const translations = {
       ['hire', 'Looking for a backend engineer? Type "hire" in the terminal.'],
       ['clone', 'Type "clone" in the terminal… if you dare.'],
       ['matrix', 'There is a mysterious command: try "matrix".']
+    ],
+    // Pet brain (pet-brain.js): plain-text answers per intent, several variants each.
+    // Only facts already on this page; anything else goes to "ask him directly".
+    pet_answers: {
+      who: [
+        'Cristopher is a Backend Engineer building banking production systems from Guatemala, with 5+ years of experience.',
+        'He is a Backend Software Engineer working on microservices, banking integrations and migrations that cannot fail.',
+        'In short: backend systems your team can rely on. Right now he does it at BANTRAB, with NestJS and .NET.'
+      ],
+      experience: [
+        'He has 5+ years in production systems. Since April 2024 he has been a Backend Software Engineer at BANTRAB; before that, Freelance Backend Developer (2021–2024) and Software Developer at OneSolutions (2021).',
+        '5+ years. The latest ones in banking: 18+ NestJS and .NET microservices, a zero-downtime Keycloak migration and 50k records migrated with zero loss.'
+      ],
+      job: [
+        'He works at BANTRAB (Banco de los Trabajadores, Guatemala) as a Backend Software Engineer (Technical Analyst I), since April 2024.',
+        'Right now he is at BANTRAB: NestJS and .NET (C#) microservices for banking transactions on mobile and web channels.',
+        'At BANTRAB, since April 2024. Among other things, he migrated Keycloak v11 → v19 with zero downtime and is moving a PL/SQL monolith to microservices.'
+      ],
+      stack: [
+        'Backend: NestJS, Node.js, C# / .NET and TypeScript. Data: Oracle, PL/SQL, PostgreSQL and SQL Server. Infra: OpenShift, Docker, Keycloak and CI/CD. Integrations: MuleSoft and banking APIs.',
+        'His daily driver is NestJS and .NET on Oracle, deployed on OpenShift. For frontend work he uses React, Vite and TypeScript.',
+        'Microservices with NestJS and .NET, DDD, API Gateway, OAuth 2.0 and Azure AD. Type "stack" for the full list.'
+      ],
+      projects: [
+        'In production: the Keycloak v11 → v19 migration, a Saga pattern for banking reversals and a PL/SQL monolith split into 18+ microservices. Type "projects" for the list.',
+        'Right now he is working on QR payments for affiliates and a per-user canary release for 38 gateway routes.',
+        'Outside the bank he built "Hormigas", an ant colony simulator you can play in the browser, and "Cobros", a Go and React desktop app shipped as a single .exe.'
+      ],
+      contact: [
+        'Email him at reyescristop@gmail.com or find him on LinkedIn: linkedin.com/in/cristopherrp. He replies within 24 hours.',
+        'You can book a 30-minute call at calendly.com/reyescristop/30min, or write to reyescristop@gmail.com.',
+        'Email: reyescristop@gmail.com · LinkedIn: linkedin.com/in/cristopherrp · GitHub: github.com/CristopherReyesP.'
+      ],
+      location: [
+        'He lives in Guatemala and works in GMT-6, with hours that overlap the US.',
+        'From Guatemala (GMT-6). He has experience working with remote, distributed teams.'
+      ],
+      availability: [
+        'Yes: he is looking for a full-time international remote backend role. He also takes focused freelance projects on APIs, security and databases.',
+        'He is open to full-time remote roles, from Guatemala (GMT-6). If your team needs a backend engineer, type "hire" or "contact".'
+      ],
+      cv: [
+        'Type "resume" and it downloads right away, or use the "Download CV" button up top. It comes in the page\'s language.',
+        'His CV is one command away: type "resume".'
+      ],
+      education: [
+        'He studied Systems Engineering at Universidad Mariano Gálvez: coursework completed, thesis in progress.',
+        'Systems Engineering at Universidad Mariano Gálvez, with the coursework completed and the thesis in progress.'
+      ],
+      languages: [
+        'The portfolio is in Spanish and English, but it does not list his language levels. Better ask him directly: reyescristop@gmail.com.',
+        'That is not in my data. Ask him at reyescristop@gmail.com; I only speak Spanish, English and JavaScript.'
+      ],
+      salary: [
+        'He discusses that directly with each team. Write to reyescristop@gmail.com or book 30 minutes on Calendly.',
+        'I get paid in cookies 🍪. To talk compensation, write to reyescristop@gmail.com.'
+      ],
+      ai: [
+        'Me, an AI? I am a blob with a keyword list and a lot of attitude. No neural networks were harmed.',
+        'Honestly? My "neural network" is three ifs in a trench coat. But I know Cristopher pretty well.',
+        'I am not ChatGPT: I am a keyword matcher in plain JavaScript, no server. Less GPU, same enthusiasm.'
+      ],
+      petWho: [
+        'I am Cristopher\'s blob: I live on this page, walk along the edges and answer questions about him.',
+        'A green blob with one job: telling you about Cristopher. And dancing, if you ask.'
+      ],
+      greeting: [
+        'Hi! I am Cristopher\'s blob. Ask me about his experience, his stack or how to reach him.',
+        'Hey! What would you like to know about Cristopher? Try "where does he work?".'
+      ],
+      howAreYou: [
+        'Great! Freshly compiled and zero warnings. What would you like to know about Cristopher?',
+        'All green, like me. How can I help?'
+      ],
+      thanks: [
+        'You\'re welcome! If you want to talk to him, type "contact".',
+        'My pleasure. That is what I was programmed for: with if/else, but with love.'
+      ],
+      joke: [
+        'Why did the backend break up with the frontend? It kept breaking the API contract.',
+        'There are 10 kinds of people: those who understand binary and those who don\'t.',
+        'A SQL query walks into a bar, goes up to two tables and asks: "Can I join you?"',
+        'How many programmers does it take to change a light bulb? None, that\'s a hardware problem.'
+      ],
+      goodbye: [
+        'See you! If his profile caught your eye, reyescristop@gmail.com is always open.',
+        'Bye! I\'ll stay here, walking along the edges.'
+      ],
+      dance: ['Hit it! *loads precompiled dance moves*', 'Sure thing. Look down there 💃'],
+      love: ['Aww. *blushes green*', 'Love you too. And Cristopher, who programmed me.'],
+      wave: ['Hi, hi! 👋', '*waves with its invisible hand*'],
+      rainbow: ['✨ R A I N B O W ✨ If it was already on, I just turned it off: I am a toggle, not a wizard.'],
+      away: ['I would love to, but I am not on screen yet. Type "pet" to summon me.'],
+      fallback: [
+        'Hmm, that is not in my if/else table. Ask me about his experience, stack, projects or how to reach him, or type "help".',
+        'I did not get that, and I tried with all three ifs I have. Try "what is his stack?" or "help".',
+        'That one I don\'t know. But I know a lot about Cristopher: ask me "where does he work?".'
+      ]
+    },
+    pet_thinking: 'thinking',
+    // Short version for the mascot's speech bubble
+    pet_bubbles: {
+      who: 'Backend systems that cannot fail.', experience: '5+ years in production.',
+      job: 'He works at BANTRAB.', stack: 'NestJS, .NET and Oracle.',
+      projects: 'Production and side projects.', contact: 'reyescristop@gmail.com',
+      location: 'Guatemala · GMT-6', availability: 'Open to remote roles.',
+      cv: 'Type "resume" 📄', education: 'Systems Engineering · UMG',
+      languages: 'Ask him directly 🙂', salary: 'Better email him 📧', ai: 'AI? Just if/else.',
+      petWho: 'I\'m the blob!', greeting: 'Hi! 👋', howAreYou: 'All green!', thanks: 'You\'re welcome! 💚',
+      joke: 'Ba dum tss 🥁', goodbye: 'Bye! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
+      fallback: 'Hmm? 🤔'
+    },
+    // Occasional hints that there is no real AI behind the answers
+    pet_asides: [
+      '*checks its if/else table*',
+      '// my neural network is three ifs in a trench coat',
+      '// answer generated with 0 GPUs and 100% JavaScript',
+      '*pretends it thought really hard*',
+      '// trained on exactly one portfolio'
     ],
 
     // Stats
