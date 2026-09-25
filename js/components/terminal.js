@@ -1,5 +1,6 @@
 const commands = {
   help: () => `<span class="t-label">Available commands:</span><br>
+    <span class="t-str">whoami</span> <span class="t-response">— a quick introduction</span><br>
     <span class="t-str">stack</span> <span class="t-response">— technologies I use daily</span><br>
     <span class="t-str">experience</span> <span class="t-response">— years & current role</span><br>
     <span class="t-str">contact</span> <span class="t-response">— how to reach me</span><br>
@@ -25,6 +26,9 @@ const commands = {
     <span class="t-str">secret</span> <span class="t-response">— ???</span><br>
     <span class="t-str">pomodoro</span> <span class="t-response">— open a Pomodoro timer</span><br>
     <span class="t-str">clear</span> <span class="t-response">— clear terminal</span>`,
+  whoami: () => `<span class="t-label">Backend Engineer</span> <span class="t-response">building banking production systems.</span><br>
+    <span class="t-str">Experience:</span> <span class="t-response">5+ years in production systems.</span><br>
+    <span class="t-str">Availability:</span> <span class="t-response">Open to remote international roles · GMT-6.</span>`,
   stack: () => `<span class="t-label">Production stack:</span><br>
     <span class="t-str">Backend:</span> <span class="t-response">NestJS, .NET/C#, Node.js, TypeScript</span><br>
     <span class="t-str">Database:</span> <span class="t-response">Oracle, PL/SQL, PostgreSQL, SQL Server</span><br>
@@ -101,9 +105,10 @@ const commands = {
 
     // First summon
     if (!mascot.classList.contains('hidden')) {
-      return '<span class="t-response">The blob is already here! Try <span style="color:var(--accent)">pet red</span> or <span style="color:var(--accent)">pet blue</span> to change its color.</span>';
+      return '<span class="t-response">The blob is already here! Click it for actions, or try <span style="color:var(--accent)">pet red</span> or <span style="color:var(--accent)">pet blue</span> to change its color.</span>';
     }
     mascot.classList.remove('hidden');
+    mascot.dataset.summoned = 'true';
     mascot.classList.remove('sleeping');
     mascot.classList.add('jump');
     setTimeout(function() { mascot.classList.remove('jump'); }, 500);
@@ -216,49 +221,112 @@ const commands = {
 function initTerminal() {
   const terminalInput = document.getElementById('terminalInput');
   const terminalOutput = document.getElementById('terminalOutput');
+  const terminalBody = document.getElementById('terminalBody');
+  const terminal = document.getElementById('terminal');
 
   if (!terminalInput) return;
 
+  let typingTimer;
+  let isTyping = false;
+  let typedValue = '';
+
+  function cancelTyping(clearInput) {
+    if (!isTyping) return;
+    clearTimeout(typingTimer);
+    isTyping = false;
+    if (clearInput && terminalInput.value === typedValue) terminalInput.value = '';
+  }
+
+  function runCommand() {
+    const input = terminalInput.value.trim().toLowerCase();
+    terminalInput.value = '';
+    if (!input) return;
+
+    const parts = input.split(/\s+/);
+    const cmd = parts[0];
+    const args = parts.slice(1).join(' ');
+
+    const cmdLine = document.createElement('div');
+    cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
+    terminalOutput.appendChild(cmdLine);
+
+    const response = commands[cmd];
+    if (response) {
+      const result = response(args);
+      if (result === 'CLEAR') {
+        terminalOutput.innerHTML = '';
+        return;
+      }
+      const respDiv = document.createElement('div');
+      respDiv.className = 'terminal-output';
+      respDiv.innerHTML = result;
+      terminalOutput.appendChild(respDiv);
+    } else {
+      const errDiv = document.createElement('div');
+      errDiv.className = 'terminal-output';
+      errDiv.innerHTML = `<span class="t-response">Command not found: <span style="color:var(--accent3)">${cmd}</span>. Type <span style="color:var(--accent)">help</span> for available commands.</span>`;
+      terminalOutput.appendChild(errDiv);
+    }
+
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+  }
+
+  function typeCommand(command, delay = 0) {
+    if (isTyping) return;
+    isTyping = true;
+    typedValue = '';
+    terminalInput.value = '';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      terminalInput.value = command;
+      isTyping = false;
+      runCommand();
+      return;
+    }
+
+    let index = 0;
+    function typeNextCharacter() {
+      typedValue += command[index++];
+      terminalInput.value = typedValue;
+      if (index === command.length) {
+        isTyping = false;
+        runCommand();
+      } else {
+        typingTimer = setTimeout(typeNextCharacter, 50);
+      }
+    }
+    typingTimer = setTimeout(typeNextCharacter, delay || 50);
+  }
+
+  terminalInput.addEventListener('focus', () => cancelTyping(true));
+  terminalInput.addEventListener('input', () => cancelTyping(false));
   terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const input = terminalInput.value.trim().toLowerCase();
-      terminalInput.value = '';
-      if (!input) return;
-
-      const parts = input.split(/\s+/);
-      const cmd = parts[0];
-      const args = parts.slice(1).join(' ');
-
-      const cmdLine = document.createElement('div');
-      cmdLine.innerHTML = `<span class="terminal-prompt">~$</span> <span class="t-str">${input}</span>`;
-      terminalOutput.appendChild(cmdLine);
-
-      const response = commands[cmd];
-      if (response) {
-        const result = response(args);
-        if (result === 'CLEAR') {
-          terminalOutput.innerHTML = '';
-          return;
-        }
-        const respDiv = document.createElement('div');
-        respDiv.className = 'terminal-output';
-        respDiv.innerHTML = result;
-        terminalOutput.appendChild(respDiv);
-      } else {
-        const errDiv = document.createElement('div');
-        errDiv.className = 'terminal-output';
-        errDiv.innerHTML = `<span class="t-response">Command not found: <span style="color:var(--accent3)">${cmd}</span>. Type <span style="color:var(--accent)">help</span> for available commands.</span>`;
-        terminalOutput.appendChild(errDiv);
-      }
-
-      const body = document.getElementById('terminalBody');
-      body.scrollTop = body.scrollHeight;
+      cancelTyping(false);
+      runCommand();
     }
   });
 
-  document.getElementById('terminalBody').addEventListener('click', () => {
+  terminalBody.addEventListener('click', () => {
     terminalInput.focus();
   });
+
+  terminal.querySelectorAll('.terminal-chip').forEach(chip => {
+    chip.addEventListener('click', () => typeCommand(chip.dataset.command));
+  });
+
+  // Start the intro once the terminal is mostly visible, so on mobile (below the fold)
+  // the late-rendered output does not become the LCP element
+  if ('IntersectionObserver' in window) {
+    const introObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      introObserver.disconnect();
+      typeCommand('whoami', 650);
+    }, { threshold: 0.6 });
+    introObserver.observe(terminal);
+  } else {
+    typeCommand('whoami', 650);
+  }
 }
 
 function initTerminalTilt() {
