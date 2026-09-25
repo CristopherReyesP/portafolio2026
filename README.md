@@ -6,13 +6,14 @@ Personal portfolio of a backend engineer working on production banking systems (
 
 ## Stack
 
-Plain HTML, CSS and vanilla JavaScript — no build step, no dependencies.
+Plain HTML, CSS and vanilla JavaScript — no framework, no dependencies.
 
 - `index.html` — single-page layout and SEO metadata
-- `css/components/` — one stylesheet per section
+- `css/components/` — one stylesheet per section, bundled into `css/bundle.css`
+- `css/build.sh` — regenerates `css/bundle.css`; run it after editing any CSS file
 - `js/components/` — interactive pieces (terminal, keyboard, pomodoro, animations)
 - `js/i18n/` — Spanish / English translations
-- `resume/` — downloadable CV
+- `resume/` — downloadable CVs (ES/EN); `resume/build.sh` regenerates them from `resume/src/`
 
 ## Run locally
 
