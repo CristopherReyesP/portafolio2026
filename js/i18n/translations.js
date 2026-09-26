@@ -427,6 +427,8 @@ const translations = {
 
     // Experience
     exp_tag: 'Experiencia', exp_title: 'Trayectoria profesional',
+    exp_lead: 'De proyectos independientes a sistemas bancarios en producción.',
+    exp_now: 'Hoy',
     exp1_date: 'Abril 2024 — Presente',
     exp1_role: 'Backend Software Engineer (Analista Técnico I)',
     exp1_company: 'BANTRAB — Banco de los Trabajadores · Guatemala',
@@ -881,6 +883,8 @@ const translations = {
 
     // Experience
     exp_tag: 'Experience', exp_title: 'Professional track record',
+    exp_lead: 'From independent projects to banking systems in production.',
+    exp_now: 'Now',
     exp1_date: 'April 2024 — Present',
     exp1_role: 'Backend Software Engineer (Technical Analyst I)',
     exp1_company: 'BANTRAB — Banco de los Trabajadores · Guatemala',
