@@ -3,6 +3,7 @@ initStars();
 initI18n();
 initTerminal();
 initTerminalTilt();
+initTerminalDrag();
 initTerminalFab();
 initCursor();
 initScrollProgress();
