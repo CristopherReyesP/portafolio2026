@@ -2,17 +2,22 @@
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!prefersReducedMotion) initStars();
 initI18n();
-initTerminal();
-initTerminalTilt();
-initTerminalWindow();
-initTerminalFab();
+if (document.getElementById('terminal')) {
+  initTerminal();
+  initTerminalTilt();
+  initTerminalWindow();
+  initTerminalFab();
+}
+initBlogList();
+if (document.querySelector('[data-article]')) initArticle();
 initCursor();
 initScrollProgress();
 //initKeyboardNav();
 initRevealOnScroll();
 initCounters();
 initCardSpotlight();
-initActiveNav();
+// Blog pages keep a static active Blog link (no home sections to track).
+if (!document.body.classList.contains('blog-page')) initActiveNav();
 initSectionRail();
 initMagneticButtons();
 initGallery();

@@ -287,7 +287,7 @@ function initMascot() {
   });
 
   function checkCommandHint(now) {
-    if (answering || !canTalk() || inContactSection()) return;
+    if (!document.getElementById('terminal') || answering || !canTalk() || inContactSection()) return;
     if (!nextHintTime) {
       nextHintTime = now + HINT_FIRST_DELAY;
       return;

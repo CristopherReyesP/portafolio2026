@@ -3,7 +3,7 @@ const translations = {
     skip_link: 'Saltar al contenido',
     // Nav
     nav_skills: 'Stack', nav_projects: 'Proyectos', nav_why: 'Cómo trabajo',
-    nav_exp: 'Experiencia', nav_cta: 'Contacto',
+    nav_exp: 'Experiencia', nav_blog: 'Blog', nav_cta: 'Contacto',
 
     // Hero
     hero_eyebrow: "Backend Software Engineer",
@@ -440,6 +440,27 @@ const translations = {
     education_tag: 'Educación',
     education_status: 'Ingeniería en Sistemas — 10.º semestre',
 
+    // Blog
+    blog_search: 'Buscar artículos...', blog_filters: 'Filtrar por categoría',
+    blog_filter_all: 'TODOS', blog_filter_architecture: 'ARQUITECTURA',
+    blog_filter_microservices: 'MICROSERVICIOS', blog_filter_databases: 'BASES DE DATOS',
+    blog_filter_ai: 'IA', blog_filter_tools: 'HERRAMIENTAS', blog_filter_devops: 'DEVOPS',
+    blog_result_one: '{count} artículo', blog_result_many: '{count} artículos',
+    blog_empty: 'No hay artículos que coincidan.', blog_menu: 'Menú',
+    blog_nav: 'Navegación principal', blog_top: 'Volver arriba',
+    blog_tag: 'BLOG', blog_title: 'Notas de ingeniería.',
+    blog_lead: 'Lo que aprendo construyendo sistemas reales.',
+    blog_read_time: 'min de lectura', blog_all: 'VER TODOS LOS ARTÍCULOS →',
+
+    // Blog article template
+    article_back: '← VOLVER AL BLOG', article_toc: 'EN ESTE ARTÍCULO',
+    article_tags: 'Categoría y etiquetas', article_share: 'Compartir artículo',
+    article_copy: 'COPIAR ENLACE', article_copied: 'Enlace copiado',
+    article_copy_error: 'No se pudo copiar el enlace', article_linkedin: 'COMPARTIR EN LINKEDIN',
+    case_article: 'ARTÍCULO RELACIONADO →',
+    article_related: 'EXPERIENCIA RELACIONADA', article_related_cta: 'Ver caso →',
+    article_important: 'IMPORTANTE',
+
     // Contact & Footer
     contact_tag: 'Contacto',
     contact_title: 'Hablemos.',
@@ -458,13 +479,13 @@ const translations = {
     footer_email: 'Enviar correo',
     rail_label: 'Secciones',
     rail_1: 'Inicio', rail_2: 'Stack', rail_3: 'Casos reales', rail_4: 'Otros proyectos',
-    rail_5: 'Cómo trabajo', rail_6: 'Experiencia', rail_7: 'Contacto',
+    rail_5: 'Cómo trabajo', rail_6: 'Experiencia', rail_7: 'Blog', rail_8: 'Contacto',
   },
   en: {
     skip_link: 'Skip to content',
     // Nav
     nav_skills: 'Stack', nav_projects: 'Projects', nav_why: 'How I work',
-    nav_exp: 'Experience', nav_cta: 'Contact',
+    nav_exp: 'Experience', nav_blog: 'Blog', nav_cta: 'Contact',
 
     // Hero
     hero_eyebrow: "Backend Software Engineer",
@@ -901,6 +922,27 @@ const translations = {
     education_tag: 'Education',
     education_status: 'B.S. Systems Engineering — 10th semester',
 
+    // Blog
+    blog_search: 'Search articles...', blog_filters: 'Filter by category',
+    blog_filter_all: 'ALL', blog_filter_architecture: 'ARCHITECTURE',
+    blog_filter_microservices: 'MICROSERVICES', blog_filter_databases: 'DATABASES',
+    blog_filter_ai: 'AI', blog_filter_tools: 'TOOLS', blog_filter_devops: 'DEVOPS',
+    blog_result_one: '{count} article', blog_result_many: '{count} articles',
+    blog_empty: 'No articles match.', blog_menu: 'Menu',
+    blog_nav: 'Main navigation', blog_top: 'Back to top',
+    blog_tag: 'BLOG', blog_title: 'Engineering notes.',
+    blog_lead: 'What I learn building real systems.',
+    blog_read_time: 'min read', blog_all: 'SEE ALL ARTICLES →',
+
+    // Blog article template
+    article_back: '← BACK TO BLOG', article_toc: 'IN THIS ARTICLE',
+    article_tags: 'Category and tags', article_share: 'Share article',
+    article_copy: 'COPY LINK', article_copied: 'Link copied',
+    article_copy_error: 'Could not copy the link', article_linkedin: 'SHARE ON LINKEDIN',
+    case_article: 'RELATED ARTICLE →',
+    article_related: 'RELATED EXPERIENCE', article_related_cta: 'View case →',
+    article_important: 'IMPORTANT',
+
     // Contact & Footer
     contact_tag: 'Contact',
     contact_title: 'Let\'s talk.',
@@ -919,6 +961,6 @@ const translations = {
     footer_email: 'Send email',
     rail_label: 'Sections',
     rail_1: 'Home', rail_2: 'Stack', rail_3: 'Real cases', rail_4: 'Other projects',
-    rail_5: 'How I work', rail_6: 'Experience', rail_7: 'Contact',
+    rail_5: 'How I work', rail_6: 'Experience', rail_7: 'Blog', rail_8: 'Contact',
   }
 };

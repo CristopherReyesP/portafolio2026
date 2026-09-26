@@ -112,3 +112,5 @@
 @media (prefers-reduced-motion: reduce) {
   .case-card { transform: none; }
 }
+
+.case-article { display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px; color: var(--accent); font-size: 11px; letter-spacing: 1px; text-underline-offset: 4px; }
