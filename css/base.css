@@ -1,14 +1,79 @@
+/* ============================================================
+   DESIGN SYSTEM — every color, radius, spacing and shadow used by
+   the components comes from these tokens. The *-rgb triplets feed
+   translucent variants: rgb(var(--accent-rgb) / 0.15).
+   ============================================================ */
 :root {
-  --bg: #0a0a0f;
-  --bg2: #0f0f18;
-  --surface: #13131f;
-  --border: rgba(255,255,255,0.07);
-  --accent: #00e5a0;
-  --accent2: #7c6fff;
-  --accent3: #ff6b6b;
-  --text: #e8e8f0;
-  --muted: #8585a2;
-  --card: #111120;
+  /* Surfaces: deep navy-black, layered from page to elevated cards */
+  --bg-primary: #05080d;
+  --bg-secondary: #080d14;
+  --surface: #0b121b;
+  --surface-elevated: #0f1823;
+  --bg-rgb: 5 8 13;
+  --bg-secondary-rgb: 8 13 20;
+  --surface-rgb: 11 18 27;
+
+  /* Borders: hairlines that light up in the accent on focus/hover */
+  --border: rgb(148 214 226 / 0.10);
+  --border-strong: rgb(148 214 226 / 0.18);
+  --border-active: rgb(var(--accent-rgb) / 0.45);
+
+  /* Text */
+  --text: #e6edf3;
+  --text-secondary: #aab7c4;
+  --text-muted: #8190a0;
+
+  /* Accents: teal first, cyan for diagrams, purple only for small details */
+  --accent: #1fe0b0;
+  --accent-rgb: 31 224 176;
+  --accent-hover: #14c89c;
+  --accent-secondary: #3cc8e8;
+  --accent-secondary-rgb: 60 200 232;
+  --purple: #8f82ff;
+  --purple-rgb: 143 130 255;
+  --success: #34d399;
+  --warning: #f5c04e;
+  --danger: #ff6b6b;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius: 10px;
+  --radius-lg: 14px;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --section-pad-y: 110px;
+  --section-pad-x: clamp(20px, 5vw, 72px);
+  --content-max: 1240px;
+
+  /* Depth: soft shadows, a glow that stays controlled */
+  --shadow-sm: 0 2px 10px rgb(0 0 0 / 0.30);
+  --shadow: 0 18px 50px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 40px 90px rgb(0 0 0 / 0.55);
+  --glow: 0 0 0 1px rgb(var(--accent-rgb) / 0.18), 0 0 28px rgb(var(--accent-rgb) / 0.10);
+  --glow-strong: 0 0 0 1px rgb(var(--accent-rgb) / 0.35), 0 0 36px rgb(var(--accent-rgb) / 0.16);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Fonts */
+  --font-display: 'Orbitron', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Legacy aliases: older component rules keep working on the new palette */
+  --bg: var(--bg-primary);
+  --bg2: var(--bg-secondary);
+  --card: var(--surface);
+  --muted: var(--text-muted);
+  --accent2: var(--purple);
+  --accent3: var(--danger);
 
   /* Bantrab palette, sampled from the logo. Marks bank work only —
      personal projects keep the portfolio's own accents. */
@@ -20,11 +85,14 @@
   --bt-magenta-text: #df3c7f;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(1100px 620px at 12% -8%, rgb(var(--accent-rgb) / 0.07), transparent 60%),
+    radial-gradient(900px 600px at 100% 30%, rgb(var(--purple-rgb) / 0.05), transparent 60%),
+    var(--bg-primary);
   color: var(--text);
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
   line-height: 1.7;
   overflow-x: hidden;
@@ -44,14 +112,104 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  opacity: 0.75;
 }
+::selection { background: rgb(var(--accent-rgb) / 0.28); color: var(--text); }
+
+/* Keyboard focus: one consistent ring across links, buttons and inputs */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+/* Skip navigation stays above the fixed header when focused. */
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--section-pad-x);
+  z-index: 10002;
+  padding: var(--space-3) var(--space-4);
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-4)));
+}
+.skip-link:focus { transform: translateY(0); }
 
 /* SECTIONS */
-section { padding: 100px 60px; position: relative; z-index: 2; }
-.section-tag { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
-.section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-.section-title { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: clamp(28px,4vw,44px); letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
-.section-subtitle { color: var(--muted); max-width: 500px; margin-bottom: 60px; line-height: 1.8; }
+/* Content stays centered at --content-max; the padding grows on wide screens */
+section {
+  padding: var(--section-pad-y) max(var(--section-pad-x), calc((100% - var(--content-max)) / 2));
+  position: relative; z-index: 2;
+}
+
+/* Section eyebrow: "— 02 / STACK". The number is optional. */
+.section-tag {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent);
+  margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-3);
+}
+.section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); flex: none; }
+.section-num { color: var(--accent); font-weight: 700; }
+.section-num::after { content: ' /'; color: var(--text-muted); font-weight: 400; }
+
+.section-title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(28px, 4vw, 44px); letter-spacing: -1px; line-height: 1.12; text-wrap: balance;
+  margin-bottom: var(--space-4);
+}
+.section-subtitle { color: var(--text-secondary); max-width: 500px; margin-bottom: 60px; line-height: 1.8; }
+
+/* Outlined words inside a title ("Sistemas reales.") */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgb(230 237 243 / 0.55);
+}
+@supports not (-webkit-text-stroke: 1px black) { .text-outline { color: var(--text-secondary); } }
+
+/* Section header: title on the left, short lead on the right (stacks on small screens) */
+.section-head {
+  display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: end; gap: var(--space-6); margin-bottom: var(--space-7);
+}
+.section-head .section-title { margin-bottom: 0; }
+.section-lead { color: var(--text-secondary); font-size: 13px; line-height: 1.8; max-width: 360px; justify-self: end; }
+
+/* Panel: the shared dark card surface */
+.panel {
+  position: relative;
+  background: linear-gradient(180deg, rgb(var(--surface-rgb) / 0.92), rgb(var(--bg-secondary-rgb) / 0.88));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s var(--ease-out);
+}
+.panel:hover { border-color: var(--border-active); box-shadow: var(--shadow-sm), var(--glow); }
+
+/* Window dots for terminal-like panels */
+.win-dots { display: inline-flex; gap: 6px; }
+.win-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--danger); }
+.win-dots i:nth-child(2) { background: var(--warning); }
+.win-dots i:nth-child(3) { background: var(--success); }
+
+/* Chips: small labels for concepts and technologies */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 999px;
+  border: 1px solid rgb(var(--accent-rgb) / 0.35); color: var(--accent);
+  background: rgb(var(--accent-rgb) / 0.06);
+}
+.chip.purple { border-color: rgb(var(--purple-rgb) / 0.4); color: var(--purple); background: rgb(var(--purple-rgb) / 0.07); }
+.chip.muted { border-color: var(--border-strong); color: var(--text-secondary); background: transparent; }
 
 /* SR ONLY (accessibility) */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+@media (max-width: 900px) {
+  :root { --section-pad-y: 72px; }
+  .section-head { grid-template-columns: 1fr; gap: var(--space-4); }
+  .section-lead { justify-self: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .panel { transition: none; }
+}

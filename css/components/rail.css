@@ -1,0 +1,94 @@
+/* ============================================================
+   SECTION RAIL: fixed index on the right edge, desktop only.
+   section-rail.js sets .active + aria-current on the link of the
+   section in view. Sits under the nav (100) and the mascot.
+   ============================================================ */
+.section-rail { display: none; }
+
+@media (min-width: 1280px) {
+  .section-rail {
+    display: block;
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    z-index: 90;
+    transform: translateY(-50%);
+  }
+}
+
+.section-rail ol { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+.section-rail li { position: relative; display: flex; justify-content: flex-end; }
+/* Vertical connector between two numbers */
+.section-rail li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 9px;
+  width: 1px;
+  height: 12px;
+  background: var(--border-strong);
+}
+
+.section-rail a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  text-decoration: none;
+  color: var(--text-muted);
+}
+/* Active dot, left of the number */
+.section-rail a::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s, transform 0.25s var(--ease-out);
+}
+.rail-num {
+  width: 19px;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  transition: color 0.25s;
+}
+.rail-label {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: rgb(var(--bg-rgb) / 0.85);
+  font-size: 10px;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(8px, -50%);
+  transition: opacity 0.25s, transform 0.25s var(--ease-out), color 0.25s;
+}
+
+.section-rail a:hover .rail-num,
+.section-rail a:focus-visible .rail-num { color: var(--text); }
+.section-rail a:hover .rail-label,
+.section-rail a:focus-visible .rail-label { opacity: 1; transform: translate(0, -50%); }
+.section-rail a.active::before { opacity: 1; transform: scale(1); }
+.section-rail a.active .rail-num,
+.section-rail a.active .rail-label { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .section-rail a::before, .rail-num, .rail-label { transition: none; }
+}
+@media print {
+  .section-rail { display: none !important; }
+}

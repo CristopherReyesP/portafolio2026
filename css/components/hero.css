@@ -1,13 +1,21 @@
 .hero {
-  min-height: 100vh;
-  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
-  padding: 120px 60px 80px; position: relative; gap: 60px; z-index: 2;
+  min-height: 100vh; display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 56px; align-items: center; padding: 128px var(--section-pad-x) 72px;
+  max-width: 1440px; margin: 0 auto; position: relative; z-index: 2;
 }
+.hero-content { min-width: 0; }
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--accent); display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px; opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards;
+}
+.hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); flex: none; }
 
 /* HERO NAME WITH GLITCH */
 .hero-name {
   font-family: 'Orbitron', sans-serif; font-weight: 800;
-  font-size: clamp(42px,6vw,72px); line-height: 1;
+  font-size: clamp(44px,6.2vw,84px); line-height: 1;
   letter-spacing: -2px; margin-bottom: 12px;
   opacity: 0; animation: fadeUp 0.8s 0.3s ease forwards;
   position: relative;
@@ -25,38 +33,61 @@
   100% { transform: translate(0); -webkit-text-stroke-color: rgba(255,255,255,0.6); }
 }
 
-.hero-title { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--muted); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.45s ease forwards; }
-.hero-title span { color: var(--accent2); font-style: italic; font-family: 'Space Mono', monospace; font-size: 18px; }
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(17px, 1.6vw, 22px);
+  color: var(--text-secondary); line-height: 1.45; margin-bottom: 32px;
+  opacity: 0; animation: fadeUp 0.8s 0.45s ease forwards;
+}
+.hero-title span {
+  font-family: var(--font-mono); font-style: italic; color: var(--purple);
+  font-size: 0.9em; display: inline-block; margin-top: 4px;
+}
+.hero-metrics {
+  list-style: none; display: flex; flex-wrap: wrap; gap: 16px 32px;
+  margin: 0 0 26px; padding: 18px 0;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
+}
+.hero-metric { display: flex; gap: 12px; align-items: center; }
+.hero-metric svg { width: 26px; height: 26px; flex: none; color: var(--accent); }
+.hero-metric-num { display: block; font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--text); line-height: 1.1; }
+.hero-metric-label { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); line-height: 1.4; max-width: 160px; }
+.hero-availability { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.status-dot { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--success); animation: statusPulse 2s ease-out infinite; }
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--accent-rgb) / 0); }
+  50% { box-shadow: 0 0 0 5px rgb(var(--accent-rgb) / 0.12); }
+}
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards; }
 
 /* MAGNETIC BUTTONS */
-.btn-primary {
-  background: var(--accent); color: var(--bg); border: none;
-  padding: 14px 28px; font-family: 'Space Mono', monospace; font-size: 12px;
-  font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
-  cursor: none; border-radius: 2px; text-decoration: none;
-  display: inline-block; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative; overflow: hidden;
+.btn-primary, .btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px;
+  border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 12px;
+  text-transform: uppercase; letter-spacing: 1.2px; cursor: none; text-decoration: none;
+  transition: all 0.3s var(--ease-out);
 }
+.btn-primary { background: var(--accent); color: var(--bg-primary); border: none; font-weight: 700; position: relative; overflow: hidden; }
 .btn-primary::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.5s;
+  background: linear-gradient(90deg, transparent, rgb(var(--surface-rgb) / 0.2), transparent);
+  transform: translateX(-100%); transition: transform 0.5s;
 }
 .btn-primary:hover::before { transform: translateX(100%); }
-.btn-primary:hover { background: #00c98a; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,160,0.25); }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 30px rgb(var(--accent-rgb) / 0.22); }
+.btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border-strong); }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; flex: none; }
 
-.btn-secondary {
-  background: transparent; color: var(--text); border: 1px solid var(--border);
-  padding: 14px 28px; font-family: 'Space Mono', monospace; font-size: 12px;
-  letter-spacing: 1px; text-transform: uppercase; cursor: none;
-  border-radius: 2px; text-decoration: none; display: inline-block;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.btn-secondary:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
-
-@media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; padding: 100px 16px 60px; }
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding: 104px 20px 56px; gap: 40px; }
   .hero-terminal { min-width: 0; }
+  .hero-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .hero-metric-label { font-size: 9px; }
+  .hero-actions .btn-primary, .hero-actions .btn-secondary { flex: 1 1 auto; justify-content: center; }
 }
+@media (max-width: 420px) {
+  .hero-metric svg { display: none; }
+  .hero-metric-num { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }

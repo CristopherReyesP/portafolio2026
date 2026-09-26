@@ -11,13 +11,14 @@ sources=(
   components/cursor.css
   components/pomodoro.css
   components/nav.css
+  components/rail.css
   components/hero.css
   components/brands.css
   components/terminal.css
-  components/stats.css
   components/skills.css
   components/projects.css
-  components/services.css
+  components/diagrams.css
+  components/cases.css
   components/why.css
   components/experience.css
   components/contact.css

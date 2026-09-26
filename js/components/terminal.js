@@ -15,7 +15,8 @@ const whoamiKeys = ['terminal_whoami1', 'terminal_whoami2', 'terminal_whoami3'];
 
 const helpEntries = [
   ['whoami', 'terminal_help_whoami'], ['stack', 'terminal_help_stack'],
-  ['experience', 'terminal_help_experience'], ['contact', 'terminal_help_contact'],
+  ['experience', 'terminal_help_experience'], ['location', 'terminal_help_location'],
+  ['contact', 'terminal_help_contact'],
   ['projects', 'terminal_help_projects'], ['hire', 'terminal_help_hire'],
   ['resume', 'terminal_help_resume'], ['github', 'terminal_help_github'],
   ['linkedin', 'terminal_help_linkedin'], ['email', 'terminal_help_email'],
@@ -29,10 +30,10 @@ const helpEntries = [
   ['pomodoro', 'terminal_help_pomodoro'], ['clear', 'terminal_help_clear']
 ];
 
-// Production project names are the page's own proj*_name keys; in-progress ones get a tag
+// Production project names are the page's own case*_name keys; in-progress ones get a tag
 const productionProjects = [
-  ['proj1_name', false], ['proj2_name', false], ['proj3_name', false],
-  ['proj4_name', true], ['proj5_name', true]
+  ['case1_name', false], ['case2_name', false], ['case3_name', false],
+  ['case4_name', false], ['case5_name', false]
 ];
 // Personal project titles are not translated on the page either
 const personalProjects = ['Hormigas — Simulador de colonia', 'Cobros — Sistema de Gestión'];
@@ -76,14 +77,19 @@ const commands = {
     plainLine(`<span class="t-str">${cmd}</span> ${i18nSpan(key, ' class="t-response"')}`)
   ).join('') + i18nLine('terminal_help_ask') + i18nLine('terminal_help_tab'),
   whoami: () => i18nLines(whoamiKeys),
-  stack: () => i18nLine('terminal_stack_title') +
+  stack: (args) => args === '--core'
+    ? plainLine('<span class="t-response">NestJS · .NET · Oracle · OpenShift · Keycloak · MuleSoft</span>')
+    : i18nLine('terminal_stack_title') +
     plainLine('<span class="t-str">Backend:</span> <span class="t-response">NestJS, Node.js, C# / .NET, TypeScript, REST APIs, GraphQL</span>') +
     i18nLine('terminal_stack_db') +
     plainLine('<span class="t-str">DevOps &amp; Infra:</span> <span class="t-response">OpenShift, Kubernetes, Docker, Keycloak, CI/CD</span>') +
     i18nLine('terminal_stack_integrations') +
     i18nLine('terminal_stack_architecture') +
     plainLine('<span class="t-str">Frontend:</span> <span class="t-response">React, Vite, Socket.io, WebRTC</span>'),
-  experience: () => i18nLines([
+  location: () => i18nLine('terminal_location'),
+  experience: (args) => args === '--summary'
+    ? i18nLines(['terminal_exp_summary1', 'terminal_exp_summary2', 'terminal_exp_summary3'])
+    : i18nLines([
     'terminal_exp_title', 'terminal_exp_current', 'terminal_exp_focus',
     'terminal_exp_highlight', 'terminal_exp_freelance', 'terminal_exp_onesolutions'
   ]),
@@ -437,12 +443,12 @@ function initTerminal() {
     handleInput(value, terminalOutput, terminalBody);
   }
 
-  // --- Auto intro: runs `whoami` like a real session ---
+  // --- Auto intro: runs a short production profile like a real session ---
   // The typed text lives in its own span (with a block cursor) instead of the input,
   // so the input stays empty and usable; output lines are separate blocks revealed one
   // by one, so none of them outgrows the hero h1 as the LCP element.
-  const INTRO_COMMAND = 'whoami';
-  const intro = { state: 'idle', timer: 0, typed: null, lines: [], output: null, echoed: false };
+  const INTRO_COMMANDS = ['whoami', 'experience --summary', 'stack --core', 'location'];
+  const intro = { state: 'idle', timer: 0, typed: null, lines: [], output: null, echoed: false, command: 0 };
   const placeholder = terminalInput.getAttribute('placeholder');
 
   function introStep(fn, delay) {
@@ -457,37 +463,79 @@ function initTerminal() {
 
   function echoIntroCommand() {
     removeTypedCommand();
-    echoLine(terminalOutput, INTRO_COMMAND);
+    const command = INTRO_COMMANDS[intro.command];
+    echoLine(terminalOutput, command);
     intro.echoed = true;
     intro.output = document.createElement('div');
     intro.output.className = 'terminal-output';
     terminalOutput.appendChild(intro.output);
     const template = document.createElement('div');
-    template.innerHTML = commands[INTRO_COMMAND]();
+    const space = command.indexOf(' ');
+    const name = space < 0 ? command : command.slice(0, space);
+    const args = space < 0 ? '' : command.slice(space + 1);
+    template.innerHTML = commands[name](args);
     intro.lines = Array.from(template.children);
   }
 
   function revealNextLine() {
     const line = intro.lines.shift();
-    if (!line) {
-      intro.state = 'done';
-      return;
+    if (line) {
+      line.classList.add('terminal-line');
+      intro.output.appendChild(line);
+      terminalBody.scrollTop = terminalBody.scrollHeight;
     }
-    line.classList.add('terminal-line');
-    intro.output.appendChild(line);
-    terminalBody.scrollTop = terminalBody.scrollHeight;
-    introStep(revealNextLine, 180);
+    if (intro.lines.length) {
+      introStep(revealNextLine, 140);
+    } else {
+      intro.command++;
+      intro.echoed = false;
+      if (intro.command === INTRO_COMMANDS.length) {
+        intro.state = 'done';
+      } else {
+        introStep(() => typeIntroCommand(0), 350);
+      }
+    }
   }
 
   // Skip to the end: full output at once, nothing left half-typed
   function finishIntro() {
     if (intro.state === 'done') return;
     clearTimeout(intro.timer);
-    if (!intro.echoed) echoIntroCommand();
-    intro.lines.forEach(line => intro.output.appendChild(line));
-    intro.lines = [];
+    removeTypedCommand();
+    while (intro.command < INTRO_COMMANDS.length) {
+      if (!intro.echoed) echoIntroCommand();
+      intro.lines.forEach(line => intro.output.appendChild(line));
+      intro.lines = [];
+      intro.command++;
+      intro.echoed = false;
+    }
     intro.state = 'done';
     terminalBody.scrollTop = terminalBody.scrollHeight;
+  }
+
+  function typeIntroCommand(delay) {
+    terminalInput.setAttribute('placeholder', '');
+    intro.typed = document.createElement('span');
+    intro.typed.className = 'terminal-typed';
+    intro.typed.setAttribute('aria-hidden', 'true');
+    intro.typed.innerHTML = '<span class="t-str"></span><span class="t-cursor"></span>';
+    terminalInput.before(intro.typed);
+    const typedText = intro.typed.firstChild;
+    const command = INTRO_COMMANDS[intro.command];
+    let index = 0;
+    function typeNextCharacter() {
+      typedText.textContent += command[index++];
+      if (index < command.length) {
+        introStep(typeNextCharacter, 110);
+      } else {
+        // Short beat before "Enter", then the output streams in
+        introStep(() => {
+          echoIntroCommand();
+          introStep(revealNextLine, 140);
+        }, 400);
+      }
+    }
+    introStep(typeNextCharacter, delay);
   }
 
   function startIntro() {
@@ -498,28 +546,7 @@ function initTerminal() {
       return;
     }
     intro.state = 'running';
-    terminalInput.setAttribute('placeholder', '');
-    intro.typed = document.createElement('span');
-    intro.typed.className = 'terminal-typed';
-    intro.typed.setAttribute('aria-hidden', 'true');
-    intro.typed.innerHTML = '<span class="t-str"></span><span class="t-cursor"></span>';
-    terminalInput.before(intro.typed);
-
-    const typedText = intro.typed.firstChild;
-    let index = 0;
-    function typeNextCharacter() {
-      typedText.textContent += INTRO_COMMAND[index++];
-      if (index < INTRO_COMMAND.length) {
-        introStep(typeNextCharacter, 110);
-      } else {
-        // Short beat before "Enter", then the output streams in
-        introStep(() => {
-          echoIntroCommand();
-          introStep(revealNextLine, 180);
-        }, 400);
-      }
-    }
-    introStep(typeNextCharacter, 1000);
+    typeIntroCommand(1000);
   }
 
   terminalInput.addEventListener('focus', finishIntro);
