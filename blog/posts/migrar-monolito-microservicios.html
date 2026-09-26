@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patrón Saga en sistemas de pagos: qué hacer cuando una transacción falla a mitad · Cristopher Reyes</title>
-<meta name="description" content="En sistemas distribuidos no podemos depender de una única transacción de base de datos. Saga permite coordinar operaciones y compensarlas cuando algo falla.">
+<title>Migrar un monolito a microservicios sin detener producción · Cristopher Reyes</title>
+<meta name="description" content="Una migración de arquitectura no necesita convertirse en una gran reescritura. Es posible evolucionar gradualmente un sistema mientras el negocio continúa operando.">
 <meta name="author" content="Cristopher Reyes">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://cristopherreyesp.github.io/portafolio2026/blog/posts/patron-saga-sistemas-pagos.html">
+<link rel="canonical" href="https://cristopherreyesp.github.io/portafolio2026/blog/posts/migrar-monolito-microservicios.html">
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%230a0a0f'/%3E%3Ctext x='12' y='72' font-family='system-ui' font-weight='800' font-size='62' fill='%2300e5a0'%3ECR%3C/text%3E%3Ccircle cx='88' cy='22' r='5' fill='%2300e5a0'/%3E%3C/svg%3E">
@@ -93,187 +93,102 @@
 </header>
 
 <main>
-<article id="article" class="article" lang="es" data-article="patron-saga-sistemas-pagos" aria-labelledby="article-title">
+<article id="article" class="article" lang="es" data-article="migrar-monolito-microservicios" aria-labelledby="article-title">
   <header class="article-header">
     <a class="article-back" href="../" data-i18n="article_back">← VOLVER AL BLOG</a>
     <ul class="article-chips" aria-label="Categoría y etiquetas" data-i18n-aria-label="article_tags">
-      <li class="chip">Arquitectura</li>
-      <li class="chip muted">Saga</li>
-      <li class="chip muted">Sistemas distribuidos</li>
-      <li class="chip muted">Backend</li>
-      <li class="chip muted">Transacciones</li>
-      <li class="chip muted">Idempotencia</li>
+      <li class="chip">Microservicios</li>
     </ul>
-    <h1 class="article-title" id="article-title">Patrón Saga en sistemas de pagos: qué hacer cuando una transacción falla a mitad</h1>
-    <p class="article-lead">En sistemas distribuidos no podemos depender de una única transacción de base de datos. Saga permite coordinar operaciones y compensarlas cuando algo falla.</p>
+    <h1 class="article-title" id="article-title">Migrar un monolito a microservicios sin detener producción</h1>
+    <p class="article-lead">Una migración de arquitectura no necesita convertirse en una gran reescritura. Es posible evolucionar gradualmente un sistema mientras el negocio continúa operando.</p>
     <div class="blog-meta article-meta">
       <time datetime="2026-09-25" data-blog-date>25 de septiembre de 2026</time>
-      <span>3 <span data-i18n="blog_read_time">min de lectura</span></span>
+      <span>2 <span data-i18n="blog_read_time">min de lectura</span></span>
       <span>Cristopher Reyes</span>
     </div>
   </header>
 
   <div class="article-layout">
     <div class="article-content">
-      <p>Cuando una operación vive completamente dentro de una base de datos, mantener consistencia suele ser relativamente sencillo.</p>
-      <p>Podemos iniciar una transacción:</p>
-      <pre class="article-code"><code>BEGIN</code></pre>
-      <p>ejecutar varias operaciones y finalmente hacer:</p>
-      <pre class="article-code"><code>COMMIT</code></pre>
-      <p>Si algo falla:</p>
-      <pre class="article-code"><code>ROLLBACK</code></pre>
-      <p>El problema aparece cuando una operación de negocio depende de varios servicios.</p>
-      <p>Imaginemos un pago que necesita realizar varias acciones:</p>
-      <ol class="article-flow">
-        <li>Pago</li>
-        <li>Débito</li>
-        <li>Crédito</li>
-        <li>Actualización de cheque</li>
-        <li>Registro de operación</li>
-      </ol>
-      <p>Cada una puede pertenecer a un servicio diferente.</p>
-      <p>En ese momento ya no existe una única transacción de base de datos capaz de envolver todo el proceso.</p>
-
-      <h2>El problema</h2>
-      <p>Supongamos este flujo:</p>
-      <ol>
-        <li>El débito se procesa correctamente.</li>
-        <li>El crédito se procesa correctamente.</li>
-        <li>El servicio que actualiza el cheque tarda demasiado.</li>
-        <li>El orquestador recibe un timeout.</li>
-      </ol>
-      <p>Ahora tenemos un problema.</p>
-      <p>¿La operación falló realmente?</p>
-      <p>No necesariamente.</p>
-      <p>El timeout únicamente nos dice que no recibimos respuesta dentro del tiempo esperado.</p>
-      <p>El servicio podría haber terminado correctamente unos segundos después.</p>
-      <p>Por eso una de las ideas más importantes trabajando con sistemas distribuidos es:</p>
-      <blockquote class="article-concept"><p>Un timeout no es sinónimo de fallo.</p></blockquote>
-
-      <h2>¿Qué es Saga?</h2>
-      <p>Saga es un patrón para coordinar una operación de negocio compuesta por múltiples transacciones independientes.</p>
-      <p>En lugar de depender de una gran transacción distribuida, cada servicio ejecuta su propia operación.</p>
+      <p>Cuando escuchamos: &quot;vamos a migrar el monolito a microservicios&quot;</p>
+      <p>es fácil imaginar una reescritura completa.</p>
+      <p>Proyecto nuevo.</p>
+      <p>Repositorio nuevo.</p>
+      <p>Arquitectura nueva.</p>
+      <p>Y después de meses de trabajo: gran migración.</p>
+      <p>En sistemas importantes esa estrategia puede ser demasiado riesgosa.</p>
+      <p>Existe otra alternativa: evolucionar gradualmente.</p>
+      <h2>El problema de reescribir todo</h2>
+      <p>Una reescritura completa obliga a resolver simultáneamente:</p>
+      <ul>
+      <li>reglas de negocio</li>
+      <li>integraciones</li>
+      <li>autenticación</li>
+      <li>infraestructura</li>
+      <li>datos</li>
+      <li>compatibilidad</li>
+      <li>despliegues</li>
+      <li>operación</li>
+      </ul>
+      <p>Mientras tanto el sistema anterior sigue cambiando.</p>
+      <p>El objetivo se mueve mientras intentamos alcanzarlo.</p>
+      <h2>Migración progresiva</h2>
+      <p>Una estrategia más segura consiste en permitir que el sistema nuevo y el antiguo convivan temporalmente.</p>
+      <p>Conceptualmente:</p>
+<ol class="article-flow"><li>Canales</li><li>API Gateway<ul class="article-branches"><li>Legacy</li><li>Servicio nuevo A</li><li>Servicio nuevo B</li><li>Servicio nuevo C</li></ul></li></ol>
+      <p>Cada nueva capacidad puede migrarse independientemente.</p>
+      <h2>El gateway como frontera</h2>
+      <p>Un API Gateway puede ayudar a ocultar esta transición a los consumidores.</p>
+      <p>Desde el punto de vista del frontend: <code>/clientes</code> <code>/transacciones</code> <code>/agentes</code> — pueden seguir siendo las mismas APIs.</p>
+      <p>Internamente algunas solicitudes terminan en el monolito y otras en servicios nuevos.</p>
+      <p>Esto reduce el impacto sobre los consumidores.</p>
+      <h2>Migrar por capacidad</h2>
+      <p>En lugar de pensar: &quot;migrar aplicación&quot; — podemos pensar: &quot;migrar capacidades&quot;.</p>
       <p>Ejemplo:</p>
-      <ol class="article-flow">
-        <li>Pago</li>
-        <li>Débito</li>
-        <li>Crédito</li>
-        <li>Cheque</li>
-        <li class="is-success"><code>SUCCESS</code></li>
-      </ol>
-      <p>Si uno de los pasos falla, ejecutamos operaciones compensatorias.</p>
-      <p>Por ejemplo:</p>
-      <div class="article-columns">
-        <ul class="article-steps">
-          <li>Débito realizado</li>
-          <li>Crédito realizado</li>
-          <li class="is-failed">Cheque falla</li>
-        </ul>
-        <div>
-          <p class="article-columns-label">entonces podemos necesitar:</p>
-          <ul class="article-steps article-steps--compensation">
-            <li>Reversa de crédito</li>
-            <li>Reversa de débito</li>
-          </ul>
-        </div>
-      </div>
-      <p>La compensación no es un rollback tradicional.</p>
-      <p>Es una nueva operación de negocio que intenta revertir el efecto de otra operación ya confirmada.</p>
-
-      <h2>Estados explícitos</h2>
-      <p>Una Saga necesita conocer el estado del proceso.</p>
-      <div class="article-table">
-        <table>
-          <tbody>
-            <tr>
-              <th scope="row">Estados simples pueden ser:</th>
-              <td><code>INITIATED</code> <code>SUCCESS</code> <code>ERROR</code></td>
-            </tr>
-            <tr>
-              <th scope="row">Y para las compensaciones:</th>
-              <td><code>PENDING</code> <code>RETRYING</code> <code>FAILED</code> <code>COMPLETE</code></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Persistir estados permite responder preguntas importantes:</p>
+<ul><li>autenticación</li><li>consultas</li><li>transacciones</li><li>reportes</li></ul>
+      <p>Cada capacidad puede moverse cuando esté lista.</p>
+      <h2>Compatibilidad</h2>
+      <p>Durante una migración debemos asumir que habrá dos mundos: legacy y nuevo.</p>
+      <p>Eso hace importante mantener:</p>
       <ul>
-        <li>¿qué pasos terminaron?</li>
-        <li>¿qué paso falló?</li>
-        <li>¿qué compensaciones faltan?</li>
-        <li>¿se puede reintentar?</li>
-        <li>¿la operación ya terminó?</li>
+      <li>contratos</li>
+      <li>formatos</li>
+      <li>códigos de error</li>
+      <li>autenticación</li>
+      <li>comportamiento esperado</li>
       </ul>
-      <p>Sin esta información, diagnosticar un fallo distribuido se vuelve muy difícil.</p>
-
-      <h2>Idempotencia</h2>
-      <p>Una operación distribuida puede repetirse.</p>
-      <p>El cliente puede reintentar.</p>
-      <p>El gateway puede reintentar.</p>
-      <p>El orquestador puede volver a ejecutar una llamada.</p>
-      <p>Por eso las operaciones importantes deberían ser idempotentes.</p>
-      <p>Una operación idempotente permite ejecutar la misma solicitud varias veces sin producir efectos adicionales.</p>
-      <p>Ejemplo: Una petición:</p>
-      <pre class="article-code"><code>procesar débito operación=ABC123</code></pre>
-      <p>no debería generar dos débitos si se recibe dos veces.</p>
-      <p>La segunda petición debería detectar que <code>ABC123</code> ya fue procesada y devolver el resultado correspondiente.</p>
-
-      <h2>Compensaciones</h2>
-      <p>Las compensaciones deben diseñarse desde el inicio.</p>
-      <p>No es suficiente implementar:</p>
-      <pre class="article-code"><code>hacerDébito()</code></pre>
-      <p>También debemos pensar:</p>
-      <pre class="article-code"><code>revertirDébito()</code></pre>
-      <p>Lo mismo ocurre con:</p>
-      <pre class="article-code"><code>hacerCrédito()
-revertirCrédito()</code></pre>
-      <p>El diseño cambia cuando asumimos que cualquier parte puede fallar.</p>
-
-      <h2>Reintentos</h2>
-      <p>No todos los errores deben provocar inmediatamente una compensación.</p>
-      <p>Algunos errores son temporales.</p>
-      <p>Por ejemplo:</p>
+      <p>La arquitectura nueva no aporta mucho si rompe todos los consumidores existentes.</p>
+      <h2>Observabilidad</h2>
+      <p>Durante una transición necesitamos saber:</p>
       <ul>
-        <li>conexión momentáneamente caída</li>
-        <li>servicio temporalmente saturado</li>
-        <li>bloqueo de base de datos</li>
-        <li>error de red</li>
+        <li>qué solicitudes van al legacy</li>
+        <li>qué solicitudes van al nuevo servicio</li>
+        <li>qué errores aparecen</li>
+        <li>cuánto tarda cada ruta</li>
       </ul>
-      <p>En esos casos puede ser válido aplicar retries.</p>
-      <p>Pero un retry debe tener:</p>
+      <p>Sin observabilidad, migrar gradualmente se convierte en migrar a ciegas.</p>
+      <h2>Cuándo retirar el legacy</h2>
+      <p>Un componente legacy debería desaparecer únicamente cuando:</p>
       <ul>
-        <li>número máximo de intentos</li>
-        <li>espera controlada</li>
-        <li>idempotencia</li>
-        <li>observabilidad</li>
+      <li>el nuevo flujo está validado</li>
+      <li>los consumidores fueron migrados</li>
+      <li>los datos son consistentes</li>
+      <li>existe monitoreo</li>
+      <li>existe rollback</li>
       </ul>
-      <div class="article-warning" role="note">
-        <p class="article-block-label" data-i18n="article_important">IMPORTANTE</p>
-        <p>Un retry infinito simplemente transforma un fallo en otro tipo de incidente.</p>
-      </div>
-
+      <p>Eliminar código antiguo demasiado pronto también puede ser un riesgo.</p>
       <h2>Conclusión</h2>
-      <p>Saga no elimina la complejidad de los sistemas distribuidos.</p>
-      <p>La hace explícita.</p>
-      <p>Cuando una operación atraviesa múltiples servicios debemos pensar desde el principio en:</p>
-      <ul>
-        <li>estados</li>
-        <li>idempotencia</li>
-        <li>compensaciones</li>
-        <li>retries</li>
-        <li>timeouts</li>
-        <li>observabilidad</li>
-      </ul>
-      <p>En sistemas críticos, el camino feliz es apenas una parte del diseño.</p>
-      <p>La verdadera arquitectura comienza cuando preguntamos:</p>
-      <p>¿qué ocurre si este paso falla?</p>
+      <p>Migrar hacia microservicios no debería significar necesariamente: &quot;reescribir todo&quot;.</p>
+      <p>Muchas veces una estrategia más segura es: encapsular, migrar, observar, validar, retirar.</p>
+      <p>La arquitectura evolutiva suele ser menos emocionante que una gran reescritura.</p>
+      <p>También suele ser bastante menos peligrosa.</p>
     </div>
   </div>
 
   <div class="article-end">
     <div class="article-share" role="group" aria-label="Compartir artículo" data-i18n-aria-label="article_share">
       <button type="button" class="article-share-btn" data-article-copy data-i18n="article_copy" hidden>COPIAR ENLACE</button>
-      <a class="article-share-btn" data-article-linkedin href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcristopherreyesp.github.io%2Fportafolio2026%2Fblog%2Fposts%2Fpatron-saga-sistemas-pagos.html" target="_blank" rel="noopener" data-i18n="article_linkedin">COMPARTIR EN LINKEDIN</a>
+      <a class="article-share-btn" data-article-linkedin href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcristopherreyesp.github.io%2Fportafolio2026%2Fblog%2Fposts%2Fmigrar-monolito-microservicios.html" target="_blank" rel="noopener" data-i18n="article_linkedin">COMPARTIR EN LINKEDIN</a>
       <p class="article-share-status" data-article-status role="status" aria-live="polite" aria-atomic="true"></p>
     </div>
     <a class="article-related panel" data-article-related href="../" hidden></a>

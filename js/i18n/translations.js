@@ -457,6 +457,7 @@ const translations = {
     article_tags: 'Categoría y etiquetas', article_share: 'Compartir artículo',
     article_copy: 'COPIAR ENLACE', article_copied: 'Enlace copiado',
     article_copy_error: 'No se pudo copiar el enlace', article_linkedin: 'COMPARTIR EN LINKEDIN',
+    case_article: 'ARTÍCULO RELACIONADO →',
     article_related: 'EXPERIENCIA RELACIONADA', article_related_cta: 'Ver caso →',
     article_important: 'IMPORTANTE',
 
@@ -938,6 +939,7 @@ const translations = {
     article_tags: 'Category and tags', article_share: 'Share article',
     article_copy: 'COPY LINK', article_copied: 'Link copied',
     article_copy_error: 'Could not copy the link', article_linkedin: 'SHARE ON LINKEDIN',
+    case_article: 'RELATED ARTICLE →',
     article_related: 'RELATED EXPERIENCE', article_related_cta: 'View case →',
     article_important: 'IMPORTANT',
 

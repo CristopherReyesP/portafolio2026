@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patrón Saga en sistemas de pagos: qué hacer cuando una transacción falla a mitad · Cristopher Reyes</title>
-<meta name="description" content="En sistemas distribuidos no podemos depender de una única transacción de base de datos. Saga permite coordinar operaciones y compensarlas cuando algo falla.">
+<title>Agentes de IA locales: dónde tienen sentido realmente · Cristopher Reyes</title>
+<meta name="description" content="Ejecutar modelos localmente es atractivo por privacidad y control, pero no siempre es la solución más práctica. Estas son las situaciones donde empieza a tener sentido.">
 <meta name="author" content="Cristopher Reyes">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://cristopherreyesp.github.io/portafolio2026/blog/posts/patron-saga-sistemas-pagos.html">
+<link rel="canonical" href="https://cristopherreyesp.github.io/portafolio2026/blog/posts/agentes-ia-local.html">
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%230a0a0f'/%3E%3Ctext x='12' y='72' font-family='system-ui' font-weight='800' font-size='62' fill='%2300e5a0'%3ECR%3C/text%3E%3Ccircle cx='88' cy='22' r='5' fill='%2300e5a0'/%3E%3C/svg%3E">
@@ -93,187 +93,90 @@
 </header>
 
 <main>
-<article id="article" class="article" lang="es" data-article="patron-saga-sistemas-pagos" aria-labelledby="article-title">
+<article id="article" class="article" lang="es" data-article="agentes-ia-local" aria-labelledby="article-title">
   <header class="article-header">
     <a class="article-back" href="../" data-i18n="article_back">← VOLVER AL BLOG</a>
     <ul class="article-chips" aria-label="Categoría y etiquetas" data-i18n-aria-label="article_tags">
-      <li class="chip">Arquitectura</li>
-      <li class="chip muted">Saga</li>
-      <li class="chip muted">Sistemas distribuidos</li>
-      <li class="chip muted">Backend</li>
-      <li class="chip muted">Transacciones</li>
-      <li class="chip muted">Idempotencia</li>
+      <li class="chip">IA</li>
     </ul>
-    <h1 class="article-title" id="article-title">Patrón Saga en sistemas de pagos: qué hacer cuando una transacción falla a mitad</h1>
-    <p class="article-lead">En sistemas distribuidos no podemos depender de una única transacción de base de datos. Saga permite coordinar operaciones y compensarlas cuando algo falla.</p>
+    <h1 class="article-title" id="article-title">Agentes de IA locales: dónde tienen sentido realmente</h1>
+    <p class="article-lead">Ejecutar modelos localmente es atractivo por privacidad y control, pero no siempre es la solución más práctica. Estas son las situaciones donde empieza a tener sentido.</p>
     <div class="blog-meta article-meta">
       <time datetime="2026-09-25" data-blog-date>25 de septiembre de 2026</time>
-      <span>3 <span data-i18n="blog_read_time">min de lectura</span></span>
+      <span>2 <span data-i18n="blog_read_time">min de lectura</span></span>
       <span>Cristopher Reyes</span>
     </div>
   </header>
 
   <div class="article-layout">
     <div class="article-content">
-      <p>Cuando una operación vive completamente dentro de una base de datos, mantener consistencia suele ser relativamente sencillo.</p>
-      <p>Podemos iniciar una transacción:</p>
-      <pre class="article-code"><code>BEGIN</code></pre>
-      <p>ejecutar varias operaciones y finalmente hacer:</p>
-      <pre class="article-code"><code>COMMIT</code></pre>
-      <p>Si algo falla:</p>
-      <pre class="article-code"><code>ROLLBACK</code></pre>
-      <p>El problema aparece cuando una operación de negocio depende de varios servicios.</p>
-      <p>Imaginemos un pago que necesita realizar varias acciones:</p>
-      <ol class="article-flow">
-        <li>Pago</li>
-        <li>Débito</li>
-        <li>Crédito</li>
-        <li>Actualización de cheque</li>
-        <li>Registro de operación</li>
-      </ol>
-      <p>Cada una puede pertenecer a un servicio diferente.</p>
-      <p>En ese momento ya no existe una única transacción de base de datos capaz de envolver todo el proceso.</p>
-
-      <h2>El problema</h2>
-      <p>Supongamos este flujo:</p>
-      <ol>
-        <li>El débito se procesa correctamente.</li>
-        <li>El crédito se procesa correctamente.</li>
-        <li>El servicio que actualiza el cheque tarda demasiado.</li>
-        <li>El orquestador recibe un timeout.</li>
-      </ol>
-      <p>Ahora tenemos un problema.</p>
-      <p>¿La operación falló realmente?</p>
-      <p>No necesariamente.</p>
-      <p>El timeout únicamente nos dice que no recibimos respuesta dentro del tiempo esperado.</p>
-      <p>El servicio podría haber terminado correctamente unos segundos después.</p>
-      <p>Por eso una de las ideas más importantes trabajando con sistemas distribuidos es:</p>
-      <blockquote class="article-concept"><p>Un timeout no es sinónimo de fallo.</p></blockquote>
-
-      <h2>¿Qué es Saga?</h2>
-      <p>Saga es un patrón para coordinar una operación de negocio compuesta por múltiples transacciones independientes.</p>
-      <p>En lugar de depender de una gran transacción distribuida, cada servicio ejecuta su propia operación.</p>
-      <p>Ejemplo:</p>
-      <ol class="article-flow">
-        <li>Pago</li>
-        <li>Débito</li>
-        <li>Crédito</li>
-        <li>Cheque</li>
-        <li class="is-success"><code>SUCCESS</code></li>
-      </ol>
-      <p>Si uno de los pasos falla, ejecutamos operaciones compensatorias.</p>
-      <p>Por ejemplo:</p>
-      <div class="article-columns">
-        <ul class="article-steps">
-          <li>Débito realizado</li>
-          <li>Crédito realizado</li>
-          <li class="is-failed">Cheque falla</li>
-        </ul>
-        <div>
-          <p class="article-columns-label">entonces podemos necesitar:</p>
-          <ul class="article-steps article-steps--compensation">
-            <li>Reversa de crédito</li>
-            <li>Reversa de débito</li>
-          </ul>
-        </div>
-      </div>
-      <p>La compensación no es un rollback tradicional.</p>
-      <p>Es una nueva operación de negocio que intenta revertir el efecto de otra operación ya confirmada.</p>
-
-      <h2>Estados explícitos</h2>
-      <p>Una Saga necesita conocer el estado del proceso.</p>
-      <div class="article-table">
-        <table>
-          <tbody>
-            <tr>
-              <th scope="row">Estados simples pueden ser:</th>
-              <td><code>INITIATED</code> <code>SUCCESS</code> <code>ERROR</code></td>
-            </tr>
-            <tr>
-              <th scope="row">Y para las compensaciones:</th>
-              <td><code>PENDING</code> <code>RETRYING</code> <code>FAILED</code> <code>COMPLETE</code></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Persistir estados permite responder preguntas importantes:</p>
+      <p>Ejecutar una IA local tiene algo atractivo.</p>
+      <p>Los datos permanecen en nuestra máquina.</p>
+      <p>No dependemos completamente de una API externa.</p>
+      <p>Podemos experimentar.</p>
+      <p>Podemos integrar modelos con herramientas propias.</p>
+      <p>Pero existe una diferencia entre: &quot;poder ejecutar un modelo&quot; y &quot;tener un sistema realmente útil&quot;.</p>
+      <h2>El hardware importa</h2>
+      <p>Los modelos necesitan memoria.</p>
+      <p>En equipos personales, la principal limitación suele ser cuánto modelo podemos mantener cargado y a qué velocidad puede generar.</p>
+      <p>Los modelos pequeños pueden funcionar bien para:</p>
       <ul>
-        <li>¿qué pasos terminaron?</li>
-        <li>¿qué paso falló?</li>
-        <li>¿qué compensaciones faltan?</li>
-        <li>¿se puede reintentar?</li>
-        <li>¿la operación ya terminó?</li>
+      <li>clasificación</li>
+      <li>resumen</li>
+      <li>extracción</li>
+      <li>pequeñas transformaciones</li>
+      <li>automatizaciones específicas</li>
       </ul>
-      <p>Sin esta información, diagnosticar un fallo distribuido se vuelve muy difícil.</p>
-
-      <h2>Idempotencia</h2>
-      <p>Una operación distribuida puede repetirse.</p>
-      <p>El cliente puede reintentar.</p>
-      <p>El gateway puede reintentar.</p>
-      <p>El orquestador puede volver a ejecutar una llamada.</p>
-      <p>Por eso las operaciones importantes deberían ser idempotentes.</p>
-      <p>Una operación idempotente permite ejecutar la misma solicitud varias veces sin producir efectos adicionales.</p>
-      <p>Ejemplo: Una petición:</p>
-      <pre class="article-code"><code>procesar débito operación=ABC123</code></pre>
-      <p>no debería generar dos débitos si se recibe dos veces.</p>
-      <p>La segunda petición debería detectar que <code>ABC123</code> ya fue procesada y devolver el resultado correspondiente.</p>
-
-      <h2>Compensaciones</h2>
-      <p>Las compensaciones deben diseñarse desde el inicio.</p>
-      <p>No es suficiente implementar:</p>
-      <pre class="article-code"><code>hacerDébito()</code></pre>
-      <p>También debemos pensar:</p>
-      <pre class="article-code"><code>revertirDébito()</code></pre>
-      <p>Lo mismo ocurre con:</p>
-      <pre class="article-code"><code>hacerCrédito()
-revertirCrédito()</code></pre>
-      <p>El diseño cambia cuando asumimos que cualquier parte puede fallar.</p>
-
-      <h2>Reintentos</h2>
-      <p>No todos los errores deben provocar inmediatamente una compensación.</p>
-      <p>Algunos errores son temporales.</p>
-      <p>Por ejemplo:</p>
+      <p>Pero una tarea compleja de programación puede exigir bastante más capacidad.</p>
+      <h2>El agente puede importar más que el modelo</h2>
+      <p>Un modelo aislado únicamente responde texto.</p>
+      <p>Un agente puede:</p>
       <ul>
-        <li>conexión momentáneamente caída</li>
-        <li>servicio temporalmente saturado</li>
-        <li>bloqueo de base de datos</li>
-        <li>error de red</li>
+      <li>leer archivos</li>
+      <li>ejecutar comandos</li>
+      <li>consultar documentación</li>
+      <li>modificar código</li>
+      <li>ejecutar tests</li>
+      <li>repetir el proceso</li>
       </ul>
-      <p>En esos casos puede ser válido aplicar retries.</p>
-      <p>Pero un retry debe tener:</p>
+      <p>Eso cambia muchísimo su utilidad.</p>
+      <p>En algunos casos, un modelo moderado con buenas herramientas puede ser más útil que un modelo mayor sin acceso al entorno.</p>
+      <h2>Una arquitectura interesante</h2>
+      <p>Una posibilidad es:</p>
+<ol class="article-flow"><li>Laptop</li><li>Agente<ul class="article-branches"><li>Modelo local</li><li>Git</li><li>Terminal</li><li>Archivos</li><li>Herramientas</li></ul></li></ol>
+      <p>La IA se convierte en una capa de automatización sobre el entorno.</p>
+      <h2>¿Dónde veo valor?</h2>
+      <p>Algunos escenarios interesantes:</p>
       <ul>
-        <li>número máximo de intentos</li>
-        <li>espera controlada</li>
-        <li>idempotencia</li>
-        <li>observabilidad</li>
+      <li>repositorios privados</li>
+      <li>análisis de documentos internos</li>
+      <li>automatización repetitiva</li>
+      <li>experimentación</li>
+      <li>procesamiento offline</li>
+      <li>tareas donde privacidad sea importante</li>
       </ul>
-      <div class="article-warning" role="note">
-        <p class="article-block-label" data-i18n="article_important">IMPORTANTE</p>
-        <p>Un retry infinito simplemente transforma un fallo en otro tipo de incidente.</p>
-      </div>
-
+      <h2>¿Dónde no?</h2>
+      <p>No utilizaría IA local solamente porque: &quot;es local&quot;.</p>
+      <p>Si una API externa produce resultados mucho mejores, cuesta poco y los datos no son sensibles, probablemente sea una solución más práctica.</p>
+      <p>La tecnología debería resolver una necesidad.</p>
+      <p>No convertirse en la necesidad.</p>
+      <h2>Modelos híbridos</h2>
+      <p>Un enfoque que me parece especialmente interesante es combinar: modelo local para tareas sencillas + modelo remoto para razonamiento complejo.</p>
+      <p>El agente puede decidir cuál utilizar dependiendo de la tarea.</p>
+      <p>Eso permite equilibrar:</p>
+<ul><li>privacidad</li><li>coste</li><li>velocidad</li><li>calidad</li></ul>
       <h2>Conclusión</h2>
-      <p>Saga no elimina la complejidad de los sistemas distribuidos.</p>
-      <p>La hace explícita.</p>
-      <p>Cuando una operación atraviesa múltiples servicios debemos pensar desde el principio en:</p>
-      <ul>
-        <li>estados</li>
-        <li>idempotencia</li>
-        <li>compensaciones</li>
-        <li>retries</li>
-        <li>timeouts</li>
-        <li>observabilidad</li>
-      </ul>
-      <p>En sistemas críticos, el camino feliz es apenas una parte del diseño.</p>
-      <p>La verdadera arquitectura comienza cuando preguntamos:</p>
-      <p>¿qué ocurre si este paso falla?</p>
+      <p>La IA local no reemplazará automáticamente a los grandes modelos cloud.</p>
+      <p>Pero abre otra posibilidad: tener pequeños sistemas inteligentes completamente controlados por nosotros.</p>
+      <p>Para desarrolladores, probablemente una de las áreas más interesantes no sea solamente ejecutar modelos.</p>
+      <p>Será construir agentes alrededor de ellos.</p>
     </div>
   </div>
 
   <div class="article-end">
     <div class="article-share" role="group" aria-label="Compartir artículo" data-i18n-aria-label="article_share">
       <button type="button" class="article-share-btn" data-article-copy data-i18n="article_copy" hidden>COPIAR ENLACE</button>
-      <a class="article-share-btn" data-article-linkedin href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcristopherreyesp.github.io%2Fportafolio2026%2Fblog%2Fposts%2Fpatron-saga-sistemas-pagos.html" target="_blank" rel="noopener" data-i18n="article_linkedin">COMPARTIR EN LINKEDIN</a>
+      <a class="article-share-btn" data-article-linkedin href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcristopherreyesp.github.io%2Fportafolio2026%2Fblog%2Fposts%2Fagentes-ia-local.html" target="_blank" rel="noopener" data-i18n="article_linkedin">COMPARTIR EN LINKEDIN</a>
       <p class="article-share-status" data-article-status role="status" aria-live="polite" aria-atomic="true"></p>
     </div>
     <a class="article-related panel" data-article-related href="../" hidden></a>

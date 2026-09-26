@@ -153,7 +153,7 @@
   background: rgb(var(--surface-rgb) / 0.7);
   list-style: none;
 }
-.article-content .article-flow li {
+.article-content .article-flow > li {
   position: relative;
   margin: 0;
   padding: var(--space-2) var(--space-3);
@@ -164,7 +164,7 @@
   font-size: 12px;
   line-height: 1.4;
 }
-.article-flow li:not(:last-child)::after {
+.article-flow > li:not(:last-child)::after {
   content: '→';
   content: '→' / '';
   position: absolute;
@@ -175,12 +175,12 @@
   color: var(--accent);
   text-align: center;
 }
-.article-content .article-flow li.is-success {
+.article-content .article-flow > li.is-success {
   border-color: var(--success);
   background: transparent;
   color: var(--success);
 }
-.article-flow li.is-success code { background: transparent; color: inherit; padding: 0; }
+.article-flow > li.is-success code { background: transparent; color: inherit; padding: 0; }
 
 /* Two-column comparison (e.g. steps done vs. compensations needed) */
 .article-columns {
@@ -351,7 +351,7 @@
   .article { padding-top: 130px; }
   .article-content { font-size: 14px; }
   .article-content .article-flow { flex-direction: column; align-items: stretch; gap: var(--space-6); }
-  .article-flow li:not(:last-child)::after {
+  .article-flow > li:not(:last-child)::after {
     content: '↓';
     content: '↓' / '';
     top: 100%;
@@ -370,3 +370,7 @@
   .article-toc a,
   .article-share-btn { transition: none; }
 }
+
+/* Branches are siblings beneath their shared gateway or agent. */
+.article-content .article-branches { display: grid; gap: var(--space-2); margin-top: var(--space-3); padding-left: var(--space-4); border-left: 1px solid var(--accent); list-style: none; }
+.article-branches li::after { display: none; }
