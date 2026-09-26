@@ -475,12 +475,29 @@ nav {
   from { opacity: 0; transform: translateY(20px) rotateX(5deg); }
   to { opacity: 1; transform: translateY(0) rotateX(0); }
 }
-/* Draggable window (desktop only, see initTerminalDrag): above the hero text while moved */
+/* Draggable window (desktop only, see initTerminalWindow): above the hero text while moved */
 .hero-terminal.draggable { position: relative; z-index: 3; }
 .hero-terminal.draggable .terminal-bar { touch-action: none; user-select: none; }
 .hero-terminal.dragging { transition: none; box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,111,255,0.25); }
 .hero-terminal.returning { transition: transform 0.3s ease, translate 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 @media (prefers-reduced-motion: reduce) { .hero-terminal.returning { transition: none; } }
+/* Resize edges and corners keep their native desktop cursor */
+.terminal-resize { position: absolute; z-index: 4; touch-action: none; }
+.terminal-resize-n, .terminal-resize-s { left: 8px; right: 8px; height: 6px; cursor: ns-resize; }
+.terminal-resize-e, .terminal-resize-w { top: 8px; bottom: 8px; width: 6px; cursor: ew-resize; }
+.terminal-resize-n { top: 0; }
+.terminal-resize-e { right: 0; }
+.terminal-resize-s { bottom: 0; }
+.terminal-resize-w { left: 0; }
+.terminal-resize-ne, .terminal-resize-nw, .terminal-resize-se, .terminal-resize-sw { width: 12px; height: 12px; }
+.terminal-resize-ne { top: 0; right: 0; cursor: nesw-resize; }
+.terminal-resize-nw { top: 0; left: 0; cursor: nwse-resize; }
+.terminal-resize-se { bottom: 0; right: 0; cursor: nwse-resize; }
+.terminal-resize-sw { bottom: 0; left: 0; cursor: nesw-resize; }
+/* Moved or resized, the window may sit over the hero text: opaque glass keeps both readable */
+.hero-terminal.detached { background: rgba(19, 19, 31, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.hero-terminal.resized { display: flex; flex-direction: column; }
+.hero-terminal.resized .terminal-body { flex: 1; min-height: 0; max-height: none; }
 .terminal-bar { background: rgba(255,255,255,0.04); padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
 .t-dot { width: 10px; height: 10px; border-radius: 50%; }
 .t-dot.r { background: #ff5f57; } .t-dot.y { background: #febc2e; } .t-dot.g { background: #28c840; }

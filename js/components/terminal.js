@@ -566,9 +566,9 @@ function initTerminalTilt() {
   });
 }
 
-// The hero works as a desktop: the terminal window is dragged by its title bar, stays
-// inside the hero, and a double click on the bar sends it back to its place
-function initTerminalDrag() {
+// The hero works as a desktop: drag the title bar or resize the edges within the hero.
+// Resizing preserves the grid slot; a bar double click restores position and size
+function initTerminalWindow() {
   const terminal = document.getElementById('terminal');
   const hero = terminal && terminal.closest('.hero');
   const bar = terminal && terminal.querySelector('.terminal-bar');
@@ -579,15 +579,47 @@ function initTerminalDrag() {
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   let offset = { x: 0, y: 0 };
   let drag = null;
+  let resize = null;
+  let natural = null;
+  const MIN_W = 320;
+  const MIN_H = 200;
 
   function place(x, y) {
     offset = { x, y };
     terminal.style.translate = `${x}px ${y}px`;
+    // Out of its slot the window can cover the hero text: it turns opaque (see terminal.css)
+    terminal.classList.toggle('detached', x !== 0 || y !== 0 || natural !== null);
   }
+
+  function resizeTo(width, height) {
+    terminal.style.width = `${width}px`;
+    terminal.style.height = `${height}px`;
+    // Keep the margin box at its natural size so the centered grid never shifts
+    terminal.style.marginRight = `${natural.w - width}px`;
+    terminal.style.marginBottom = `${natural.h - height}px`;
+    terminal.classList.add('resized', 'detached');
+  }
+
+  function restore() {
+    stopDrag();
+    resize = null;
+    place(0, 0);
+    terminal.style.width = '';
+    terminal.style.height = '';
+    terminal.style.marginRight = '';
+    terminal.style.marginBottom = '';
+    terminal.classList.remove('resized', 'detached');
+    natural = null;
+  }
+
+  // Blocks text selection on the bar. Canceling pointerdown instead would also suppress
+  // mousemove until release, freezing the custom cursor and the mascot's eyes
+  bar.addEventListener('mousedown', (e) => {
+    if (e.button === 0) e.preventDefault();
+  });
 
   bar.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
-    e.preventDefault();
     // offsetLeft/offsetTop ignore transforms, so they give the untouched grid slot
     const left = terminal.offsetLeft;
     const top = terminal.offsetTop;
@@ -620,15 +652,62 @@ function initTerminalDrag() {
   bar.addEventListener('pointerup', stopDrag);
   bar.addEventListener('pointercancel', stopDrag);
 
+  ['n', 'e', 's', 'w', 'ne', 'nw', 'se', 'sw'].forEach((direction) => {
+    const handle = document.createElement('div');
+    handle.className = `terminal-resize terminal-resize-${direction}`;
+    handle.setAttribute('aria-hidden', 'true');
+    terminal.appendChild(handle);
+
+    // As on the bar, keep pointerdown uncanceled so the custom cursor keeps moving
+    handle.addEventListener('mousedown', (e) => {
+      if (e.button === 0) e.preventDefault();
+    });
+    handle.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      if (!natural) natural = { w: terminal.offsetWidth, h: terminal.offsetHeight };
+      const left = terminal.offsetLeft + offset.x;
+      const top = terminal.offsetTop + offset.y;
+      const nav = document.querySelector('nav');
+      resize = {
+        direction, x: e.clientX, y: e.clientY,
+        left, top, right: left + terminal.offsetWidth, bottom: top + terminal.offsetHeight,
+        offsetX: offset.x, offsetY: offset.y,
+        navHeight: nav ? nav.offsetHeight : 0,
+      };
+      handle.setPointerCapture(e.pointerId);
+      terminal.classList.remove('returning');
+      terminal.classList.add('dragging');
+      terminal.style.transform = '';
+      resizeTo(terminal.offsetWidth, terminal.offsetHeight);
+    });
+    handle.addEventListener('pointermove', (e) => {
+      if (!resize || resize.direction !== direction) return;
+      const dx = e.clientX - resize.x;
+      const dy = e.clientY - resize.y;
+      let { left, top, right, bottom } = resize;
+      if (direction.includes('e')) right = clamp(right + dx, left + MIN_W, hero.clientWidth);
+      if (direction.includes('w')) left = clamp(left + dx, 0, right - MIN_W);
+      if (direction.includes('s')) bottom = clamp(bottom + dy, top + MIN_H, hero.clientHeight);
+      if (direction.includes('n')) top = clamp(top + dy, resize.navHeight, bottom - MIN_H);
+      place(resize.offsetX + left - resize.left, resize.offsetY + top - resize.top);
+      resizeTo(right - left, bottom - top);
+    });
+    function stopResize() {
+      resize = null;
+      terminal.classList.remove('dragging');
+    }
+    handle.addEventListener('pointerup', stopResize);
+    handle.addEventListener('pointercancel', stopResize);
+    handle.addEventListener('lostpointercapture', stopResize);
+  });
+
   bar.addEventListener('dblclick', () => {
     terminal.classList.add('returning');
-    place(0, 0);
+    restore();
   });
 
   // A new layout could leave the window outside the hero
-  window.addEventListener('resize', () => {
-    if (offset.x || offset.y) place(0, 0);
-  });
+  window.addEventListener('resize', restore);
 }
 
 function initTerminalFab() {
@@ -645,6 +724,25 @@ function initTerminalFab() {
     floatTerminal.classList.toggle('open');
     fab.classList.toggle('active');
   });
+
+  // Near the hero the FAB hides and the hero terminal takes over: an open window is
+  // stowed with it and comes back, output included, when the page scrolls down again
+  let stowed = false;
+  function syncWithScroll() {
+    const visible = document.documentElement.scrollTop > 400;
+    fab.classList.toggle('visible', visible);
+    if (!visible && floatTerminal.classList.contains('open')) {
+      stowed = true;
+      closeTerminal();
+      if (floatTerminal.contains(document.activeElement)) document.activeElement.blur();
+    } else if (visible && stowed) {
+      stowed = false;
+      floatTerminal.classList.add('open');
+      fab.classList.add('active');
+    }
+  }
+  window.addEventListener('scroll', syncWithScroll, { passive: true });
+  syncWithScroll();
 
   floatTerminal.querySelector('.t-dot.r').addEventListener('click', closeTerminal);
 
