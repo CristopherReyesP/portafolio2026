@@ -50,7 +50,11 @@ function initBlogList() {
   const count = document.getElementById('blogCount');
   const empty = document.getElementById('blogEmpty');
   const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  let category = 'all';
+  const params = new URLSearchParams(window.location.search);
+  const requestedCategory = params.get('cat');
+  let category = [...filters].some(button => button.dataset.blogFilter === requestedCategory) ? requestedCategory : 'all';
+  search.value = params.get('q') || '';
+  filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.blogFilter === category)));
   let resultCount = 0;
 
   function updateCount() {
@@ -59,6 +63,12 @@ function initBlogList() {
   }
 
   function renderResults() {
+    const url = new URL(window.location.href);
+    if (category === 'all') url.searchParams.delete('cat');
+    else url.searchParams.set('cat', category);
+    if (search.value.trim()) url.searchParams.set('q', search.value);
+    else url.searchParams.delete('q');
+    window.history.replaceState(null, '', url.pathname + url.search + url.hash);
     const query = normalize(search.value.trim());
     const posts = window.BLOG_POSTS.filter(post => {
       const text = normalize([post.title, post.excerpt, post.category, ...post.tags].join(' '));
@@ -77,6 +87,12 @@ function initBlogList() {
     renderResults();
   }));
   search.addEventListener('input', renderResults);
+  search.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      search.value = '';
+      renderResults();
+    }
+  });
   document.addEventListener('languagechange', updateCount);
   renderResults();
 }
