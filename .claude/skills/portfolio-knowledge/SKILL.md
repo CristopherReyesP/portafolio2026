@@ -33,7 +33,7 @@ Pipeline: **Engram → draft → review → published**. This skill only ever re
 | `mem_context` | Recent context first |
 | `mem_search` | Several thematic searches (never a single generic one) |
 | `mem_get_observation` | Full content of each promising hit |
-| `mem_timeline` | Surrounding context of a hit when the observation alone is ambiguous |
+| `engram timeline <id>` (CLI, via Bash) | Surrounding context of a hit when the observation alone is ambiguous; `mem_timeline` is not exposed by the `--tools=agent` MCP profile |
 | `mem_suggest_topic_key` | Check the key before creating a new `portfolio-*` topic |
 | `mem_save` (with `topic_key`) | Capture / upsert a publication candidate |
 | `mem_update` | Refine an existing candidate by id |
@@ -62,9 +62,14 @@ One stable key per subject, lowercase kebab-case, no company names:
 - `portfolio-learning/<topic>` — e.g. `portfolio-learning/aws`
 - `portfolio-case/<topic>` — e.g. `portfolio-case/agents-modernization`
 
-Before creating one: `mem_search` for `portfolio-<class>/<topic>` and check
-`content/index.json` (every draft/published slug lives there). If it exists, **update it**
-(`mem_save` with the same `topic_key` upserts; or `mem_update` by id). Never create duplicates.
+Always save `portfolio-*` candidates with `scope: personal`. Engram upserts a `topic_key`
+only within the same project + scope, so a mixed scope creates duplicates.
+
+Before creating one: `mem_search` for `portfolio-<class>/<topic>` with `all_projects: true`
+and check `content/index.json` (every draft/published slug lives there). If it exists,
+**update it**: `mem_save` with the same `topic_key` and `scope: personal` upserts when the
+project matches; if the existing candidate lives in another project, use `mem_update` by id.
+Never create duplicates.
 
 ## Action 1 — Find content ("busca en Engram notas para mi portafolio", "ideas sobre Oracle", "qué aprendí esta semana")
 
