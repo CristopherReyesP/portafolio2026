@@ -79,7 +79,7 @@ const petWorkCues = ['proyecto*', 'project*', 'hizo', 'did he', 'built', 'constr
 // Category slug (posts.js categoryKey) → blog filter label in translations.js
 const petBlogFilters = { arquitectura: 'blog_filter_architecture', microservicios: 'blog_filter_microservices',
   'bases-de-datos': 'blog_filter_databases', ia: 'blog_filter_ai', herramientas: 'blog_filter_tools',
-  devops: 'blog_filter_devops' };
+  devops: 'blog_filter_devops', oracle: 'blog_filter_oracle' };
 // Links come only from manifest slugs, resolved from the site root (this file is in js/components/)
 const PET_SITE_ROOT = typeof document !== 'undefined' && document.currentScript && document.currentScript.src
   ? new URL('../../', document.currentScript.src).href : '';
