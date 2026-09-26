@@ -16,13 +16,18 @@ function escapeBlogText(text) {
   return String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
 }
 
-// Articles and notes in one list, newest first (articles first on the same day).
+// Best work first for someone evaluating the author: articles from a real project (linked
+// from a case on the home page), then other articles, then short notes; newest first in each.
+function getBlogRank(entry) {
+  if (entry.type === 'note') return 2;
+  return entry.relatedProject ? 0 : 1;
+}
+
 function getBlogEntries() {
   const posts = (window.BLOG_POSTS || []).map(post => ({ ...post, type: post.type || 'article',
     path: `blog/posts/${post.slug}.html`, relatedProject: post.relatedProject || post.relatedCase || null }));
   const notes = window.BLOG_NOTES || [];
-  return [...posts, ...notes].sort((a, b) => b.date.localeCompare(a.date)
-    || (a.type === b.type ? 0 : a.type === 'article' ? -1 : 1));
+  return [...posts, ...notes].sort((a, b) => getBlogRank(a) - getBlogRank(b) || b.date.localeCompare(a.date));
 }
 
 // base: relative path from the current page to the site root ('' on the home page)
@@ -39,11 +44,13 @@ function renderBlogCard(post, base, withArt = false) {
 </article>`;
 }
 
+// Home page: articles only, so the few cards shown there are the strongest content.
 function initBlogLatest() {
   const grid = document.querySelector('[data-blog-latest]');
   if (!grid || !window.BLOG_POSTS) return;
   const count = Number(grid.dataset.blogLatest) || 4;
-  grid.innerHTML = getBlogEntries().slice(0, count).map(post => renderBlogCard(post, '')).join('');
+  grid.innerHTML = getBlogEntries().filter(post => post.type === 'article').slice(0, count)
+    .map(post => renderBlogCard(post, '')).join('');
 }
 
 initBlogLatest();
