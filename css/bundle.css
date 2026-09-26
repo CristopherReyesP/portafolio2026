@@ -477,6 +477,16 @@ nav {
 .terminal-title { margin-left: 8px; font-size: 11px; color: var(--muted); }
 .terminal-body { padding: 24px; font-size: 13px; line-height: 2; max-height: 340px; overflow-y: auto; }
 .hero-terminal .terminal-body { height: 300px; max-height: none; }
+/* Space Mono lacks box-drawing glyphs: one system mono font for the whole art keeps it aligned.
+   48 columns ≈ 29em, so the font scales with the terminal width to fit narrow screens. */
+.hero-terminal { container-type: inline-size; --banner-pad: 24px; }
+.terminal-banner {
+  margin: 0; padding: 20px var(--banner-pad) 0; overflow: hidden; white-space: pre;
+  font-family: ui-monospace, Menlo, Consolas, 'DejaVu Sans Mono', 'Courier New', monospace;
+  font-size: min(11px, calc((100cqi - 2 * var(--banner-pad)) / 30)); line-height: 1.1;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 .t-comment { color: var(--muted); } .t-key { color: var(--accent2); } .t-str { color: var(--accent); }
 .t-num { color: #ff9966; } .t-bool { color: var(--accent3); } .t-bracket { color: var(--muted); }
 .t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s infinite; vertical-align: middle; margin-left: 2px; }
@@ -517,6 +527,7 @@ nav {
 .terminal-hint { color: #2a2a40; font-size: 11px; margin-top: 12px; font-style: italic; }
 
 @media (max-width: 900px) {
+  .hero-terminal { --banner-pad: 16px; }
   .hero-terminal .terminal-body { height: 260px; padding: 16px; }
 }
 
