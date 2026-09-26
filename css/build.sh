@@ -14,7 +14,6 @@ sources=(
   components/hero.css
   components/brands.css
   components/terminal.css
-  components/stats.css
   components/skills.css
   components/projects.css
   components/services.css
