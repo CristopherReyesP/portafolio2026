@@ -387,6 +387,12 @@ function handleInput(value, output, body) {
 
   const raw = value.trim();
   if (!raw) return;
+  if (window.petBrain && window.petBrain.isHack(raw)) {
+    echoLine(output, raw);
+    announceCommand('ask');
+    printPetReply(window.petBrain.answer(raw), output, body);
+    return;
+  }
   const input = raw.toLowerCase();
   const parts = input.split(/\s+/);
   const cmd = parts[0];

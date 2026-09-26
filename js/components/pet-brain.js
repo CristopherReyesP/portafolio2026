@@ -62,7 +62,11 @@ const petIntents = [
 
 // Roughly 1 in 4 answers adds an aside hinting that there is no real AI behind it
 const PET_ASIDE_CHANCE = 0.25;
-const petNoAside = ['ai', 'away', 'fallback'];
+const petNoAside = ['ai', 'away', 'fallback', 'hacker'];
+
+function isHack(raw) {
+  return /(?:\bor\s+1\s*=\s*1|['"]\s*--|;\s*--|['"]\s*or\s+['"]|\bdrop\s+(?:table|database)\b|\btruncate\s+table\b|\bunion\s+select|\bselect\s+\*\s+from|\bdelete\s+from|\binsert\s+into|\bxp_cmdshell\b|\bsleep\s*\(|<script|javascript:|onerror\s*=|\balert\s*\(|document\.cookie|\brm\s+-rf|\bsudo\b|\bchmod\s+777|\/etc\/passwd|\.\.\/|\$\(|\bnmap\b|\bwget\b|\|\s*(?:sh|bash)\b|\bhack\w*|\bexploit\w*|\binyecci[oó]n\b|\binjection\b|\bbypass\b|\bddos\b|\bbrute\s+force\b|\bfuerza\s+bruta\b|\bphishing\b|\bmalware\b|\bkeylogger\b|\bpassword\b|\bcontrase[nñ]a\b)/i.test(String(raw));
+}
 
 function normalizePetText(text) {
   return String(text).toLowerCase()
@@ -98,7 +102,7 @@ function petOnScreen() {
 }
 
 // Returns { intent, text, bubble, action, aside } in the active language. `action` names a
-// window.mascot* function to run (only when the blob is on screen); `aside` may be ''.
+// window.mascot* function to run (hacker can summon the blob); `aside` may be ''.
 function answerPet(text) {
   const normalized = normalizePetText(text);
   const words = normalized.split(' ');
@@ -114,8 +118,10 @@ function answerPet(text) {
     }
   });
 
+  if (isHack(text)) best = { id: 'hacker', action: 'mascotPolice' };
+
   let intent = best ? best.id : 'fallback';
-  const action = best && best.action && petOnScreen() ? best.action : null;
+  const action = best && best.action && (best.id === 'hacker' || petOnScreen()) ? best.action : null;
   if (best && best.needsBlob && !action) intent = 'away';
 
   const copy = translations[currentLang];
@@ -131,4 +137,4 @@ function answerPet(text) {
   };
 }
 
-window.petBrain = { answer: answerPet, normalize: normalizePetText };
+window.petBrain = { answer: answerPet, normalize: normalizePetText, isHack };
