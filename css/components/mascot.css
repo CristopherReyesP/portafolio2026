@@ -134,6 +134,10 @@
 
 /* Face */
 .mascot-face { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 28px; }
+.mascot.on-top .mascot-face {
+  transform: translateX(-50%) rotate(180deg);
+  transform-origin: 50% 8.5px;
+}
 
 /* Eyes */
 .mascot-eye {
@@ -147,7 +151,7 @@
 .mascot-pupil {
   width: 5px; height: 5px;
   background: #fff; border-radius: 50%;
-  position: absolute; top: 2px; left: 2px;
+  position: absolute; top: 2.5px; left: 2.5px;
   transition: transform 0.15s ease-out;
 }
 
@@ -161,9 +165,9 @@
 /* Mouth */
 .mascot-mouth {
   position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-  width: 6px; height: 3px;
+  width: 10px; height: 5px;
   border-bottom: 2px solid #0a0a0f;
-  border-radius: 0 0 50% 50%;
+  border-radius: 0 0 10px 10px;
   transition: all 0.2s;
 }
 .mascot:hover .mascot-mouth {
@@ -719,7 +723,7 @@
 }
 
 @media (max-width: 768px) {
-  .mascot, .mascot-actions { display: none; }
+  .mascot, .mascot-actions, .mascot-tip { display: none; }
 }
 
 /* Extasis mode */
@@ -772,10 +776,8 @@
 
 /* Speech bubble / tip */
 .mascot-tip {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  transform: translateY(4px);
   background: var(--bg-card);
   border: 1px solid var(--accent);
   border-radius: 8px;
@@ -797,15 +799,38 @@
 .mascot-tip::after {
   content: '';
   position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
   border: 6px solid transparent;
+}
+.mascot-tip[data-side="above"]::after {
+  top: 100%;
+  left: var(--arrow);
+  transform: translateX(-50%);
   border-top-color: var(--accent);
+}
+.mascot-tip[data-side="below"] { transform: translateY(-4px); }
+.mascot-tip[data-side="below"]::after {
+  bottom: 100%;
+  left: var(--arrow);
+  transform: translateX(-50%);
+  border-bottom-color: var(--accent);
+}
+.mascot-tip[data-side="left"] { transform: translateX(4px); }
+.mascot-tip[data-side="left"]::after {
+  left: 100%;
+  top: var(--arrow);
+  transform: translateY(-50%);
+  border-left-color: var(--accent);
+}
+.mascot-tip[data-side="right"] { transform: translateX(-4px); }
+.mascot-tip[data-side="right"]::after {
+  right: 100%;
+  top: var(--arrow);
+  transform: translateY(-50%);
+  border-right-color: var(--accent);
 }
 .mascot-tip.visible {
   opacity: 1;
-  transform: translateX(-50%) translateY(-4px);
+  transform: translate(0, 0);
 }
 
 /* Police alert: one red/blue cycle per second, confined to the blob. */
@@ -850,7 +875,6 @@
   width: 9px; height: 0; top: 16px;
   background: none; border-bottom: 2px solid #0a0a0f; border-radius: 0;
 }
-.mascot.police .mascot-tip { bottom: calc(100% + 30px); }
 @keyframes mascotPoliceGlow {
   0%, 100% { box-shadow: -5px 0 14px rgba(255,70,70,0.8); }
   50% { box-shadow: 5px 0 14px rgba(65,135,255,0.8); }
@@ -861,6 +885,7 @@
   65% { transform: translateY(0) scaleY(0.94); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .mascot-tip { transition: none; }
   .mascot.police .mascot-body,
   .mascot.police .mascot-siren {
     animation: none;

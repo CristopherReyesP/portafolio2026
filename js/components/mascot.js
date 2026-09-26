@@ -155,6 +155,7 @@ function initMascot() {
   var lastTipIndex = -1;
   var tipVisible = false;
   var tipTimeout = null;
+  var tipFrame = null;
   var tipCooldown = 8000;
   var lastTipTime = 0;
 
@@ -176,17 +177,84 @@ function initMascot() {
     showBubble(elTip, tips[idx], now);
   }
 
-  function showBubble(elTip, text, now) {
+  function hideBubble(elTip) {
+    elTip.classList.remove('visible');
+    tipVisible = false;
+    clearTimeout(tipTimeout);
+    cancelAnimationFrame(tipFrame);
+    tipFrame = null;
+  }
+
+  function placeTip(elTip) {
+    if (el.classList.contains('hidden') || !el.parentNode) {
+      hideBubble(elTip);
+      return;
+    }
+    var body = el.querySelector('.mascot-body');
+    var rect = (body || el).getBoundingClientRect();
+    var width = elTip.offsetWidth;
+    var height = elTip.offsetHeight;
+    var nav = document.querySelector('nav');
+    var minTop = Math.max(8, nav ? nav.offsetHeight : 0);
+    var maxRight = window.innerWidth - 8;
+    var maxBottom = window.innerHeight - 8;
+    var cx = rect.left + rect.width / 2;
+    var cy = rect.top + rect.height / 2;
+    var gap = 12 + (el.classList.contains('police') ? 18 : 0);
+    var sides = {
+      bottom: ['above', 'left', 'right'],
+      top: ['left', 'right', 'below'],
+      right: ['left', 'above', 'below'],
+      left: ['right', 'above', 'below']
+    }[currentSurface];
+    var terminalBar = document.querySelector('#terminal .terminal-bar');
+    var bar = terminalBar ? terminalBar.getBoundingClientRect() : null;
+    var fallback = null;
+    var chosen = null;
+    for (var i = 0; i < sides.length; i++) {
+      var side = sides[i];
+      var vertical = side === 'above' || side === 'below';
+      var left = vertical ? Math.max(8, Math.min(cx - width / 2, maxRight - width)) :
+        (side === 'left' ? rect.left - gap - width : rect.right + gap);
+      var top = vertical ? (side === 'above' ? rect.top - gap - height : rect.bottom + gap) :
+        Math.max(minTop, Math.min(cy - height / 2, maxBottom - height));
+      if (left < 8 || top < minTop || left + width > maxRight || top + height > maxBottom) continue;
+      var candidate = { left: left, top: top, side: side, vertical: vertical };
+      if (!fallback) fallback = candidate;
+      if (bar && left < bar.right + 8 && left + width > bar.left - 8 &&
+          top < bar.bottom + 8 && top + height > bar.top - 8) continue;
+      chosen = candidate;
+      break;
+    }
+    chosen = chosen || fallback;
+    if (!chosen) {
+      hideBubble(elTip);
+      return;
+    }
+    elTip.style.left = chosen.left + 'px';
+    elTip.style.top = chosen.top + 'px';
+    elTip.dataset.side = chosen.side;
+    elTip.style.setProperty('--arrow', (chosen.vertical ? cx - chosen.left : cy - chosen.top) + 'px');
+  }
+
+  function followTip(elTip) {
+    tipFrame = null;
+    if (!tipVisible) return;
+    placeTip(elTip);
+    if (tipVisible) tipFrame = requestAnimationFrame(function () { followTip(elTip); });
+  }
+
+  function showBubble(elTip, text, now, duration) {
+    hideBubble(elTip);
     elTip.textContent = text;
-    elTip.classList.add('visible');
     tipVisible = true;
     lastTipTime = now;
-
-    clearTimeout(tipTimeout);
+    followTip(elTip);
+    if (!tipVisible) return;
+    elTip.classList.add('visible');
     tipTimeout = setTimeout(function () {
-      elTip.classList.remove('visible');
-      tipVisible = false;
-    }, 5000);
+      hideBubble(elTip);
+    }, duration || 5000);
   }
 
   function inContactSection() {
@@ -382,12 +450,7 @@ function initMascot() {
 
     var elTip = document.getElementById('mascotTip');
     if (elTip) {
-      elTip.textContent = translations[currentLang].mascot_hello;
-      elTip.classList.add('visible');
-      clearTimeout(tipTimeout);
-      tipTimeout = setTimeout(function () {
-        elTip.classList.remove('visible');
-      }, 2000);
+      showBubble(elTip, translations[currentLang].mascot_hello, Date.now(), 2000);
     }
 
     state.lastAction = Date.now();
@@ -613,8 +676,8 @@ function initMascot() {
     var dx = e.clientX - cx;
     var dy = e.clientY - cy;
     var dist = Math.sqrt(dx * dx + dy * dy);
-    var px = (dx / Math.max(dist, 1)) * 2.5;
-    var py = (dy / Math.max(dist, 1)) * 2.5;
+    var px = (dx / Math.max(dist, 1)) * 1.5;
+    var py = (dy / Math.max(dist, 1)) * 1.5;
     pupils.forEach(function (p) { p.style.transform = 'translate(' + px + 'px,' + py + 'px)'; });
     
     mouseMoveCount++;
