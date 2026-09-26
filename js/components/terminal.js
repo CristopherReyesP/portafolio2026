@@ -555,6 +555,7 @@ function initTerminalTilt() {
   if (!terminal) return;
 
   terminal.addEventListener('mousemove', (e) => {
+    if (terminal.classList.contains('dragging')) return;
     const rect = terminal.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -562,6 +563,71 @@ function initTerminalTilt() {
   });
   terminal.addEventListener('mouseleave', () => {
     terminal.style.transform = 'perspective(800px) rotateY(0) rotateX(0)';
+  });
+}
+
+// The hero works as a desktop: the terminal window is dragged by its title bar, stays
+// inside the hero, and a double click on the bar sends it back to its place
+function initTerminalDrag() {
+  const terminal = document.getElementById('terminal');
+  const hero = terminal && terminal.closest('.hero');
+  const bar = terminal && terminal.querySelector('.terminal-bar');
+  // Touch screens scroll the page with that gesture, so only mouse-like pointers drag
+  if (!hero || !bar || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  terminal.classList.add('draggable');
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  let offset = { x: 0, y: 0 };
+  let drag = null;
+
+  function place(x, y) {
+    offset = { x, y };
+    terminal.style.translate = `${x}px ${y}px`;
+  }
+
+  bar.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    // offsetLeft/offsetTop ignore transforms, so they give the untouched grid slot
+    const left = terminal.offsetLeft;
+    const top = terminal.offsetTop;
+    // The fixed nav covers the top of the hero: a bar under it could not be grabbed again
+    const nav = document.querySelector('nav');
+    const navHeight = nav ? nav.offsetHeight : 0;
+    drag = {
+      x: e.clientX - offset.x,
+      y: e.clientY - offset.y,
+      minX: -left,
+      maxX: hero.clientWidth - terminal.offsetWidth - left,
+      minY: navHeight - top,
+      maxY: hero.clientHeight - terminal.offsetHeight - top,
+    };
+    bar.setPointerCapture(e.pointerId);
+    terminal.classList.remove('returning');
+    terminal.classList.add('dragging');
+    terminal.style.transform = '';
+  });
+
+  bar.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    place(clamp(e.clientX - drag.x, drag.minX, drag.maxX), clamp(e.clientY - drag.y, drag.minY, drag.maxY));
+  });
+
+  function stopDrag() {
+    drag = null;
+    terminal.classList.remove('dragging');
+  }
+  bar.addEventListener('pointerup', stopDrag);
+  bar.addEventListener('pointercancel', stopDrag);
+
+  bar.addEventListener('dblclick', () => {
+    terminal.classList.add('returning');
+    place(0, 0);
+  });
+
+  // A new layout could leave the window outside the hero
+  window.addEventListener('resize', () => {
+    if (offset.x || offset.y) place(0, 0);
   });
 }
 
