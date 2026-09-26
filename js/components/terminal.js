@@ -334,11 +334,8 @@ function printPetReply(reply, output, body) {
     body.scrollTop = body.scrollHeight;
   }
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    finish();
-    return;
-  }
-
+  // Typing stays on with reduced motion: text appearing is not motion, and the blinking
+  // cursor is already disabled by the CSS media query.
   // Screen readers wait for the full answer instead of reading it letter by letter
   line.setAttribute('aria-busy', 'true');
   petTyping.set(output, finish);
@@ -541,7 +538,8 @@ function initTerminal() {
   function startIntro() {
     if (intro.state !== 'idle') return;
     const userIsTyping = document.activeElement === terminalInput || terminalInput.value !== '';
-    if (userIsTyping || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Reduced motion keeps the typed intro too (see the pet reply note); only the cursor blink stops
+    if (userIsTyping) {
       finishIntro();
       return;
     }
