@@ -646,6 +646,25 @@ function initTerminalFab() {
     fab.classList.toggle('active');
   });
 
+  // Near the hero the FAB hides and the hero terminal takes over: an open window is
+  // stowed with it and comes back, output included, when the page scrolls down again
+  let stowed = false;
+  function syncWithScroll() {
+    const visible = document.documentElement.scrollTop > 400;
+    fab.classList.toggle('visible', visible);
+    if (!visible && floatTerminal.classList.contains('open')) {
+      stowed = true;
+      closeTerminal();
+      if (floatTerminal.contains(document.activeElement)) document.activeElement.blur();
+    } else if (visible && stowed) {
+      stowed = false;
+      floatTerminal.classList.add('open');
+      fab.classList.add('active');
+    }
+  }
+  window.addEventListener('scroll', syncWithScroll, { passive: true });
+  syncWithScroll();
+
   floatTerminal.querySelector('.t-dot.r').addEventListener('click', closeTerminal);
 
   floatTerminal.querySelector('.t-dot.g').addEventListener('click', () => {
