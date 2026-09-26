@@ -1,4 +1,4 @@
-#contact { background: rgba(15, 15, 24, 0.35); backdrop-filter: blur(8px); text-align: center; }
+#contact { background: rgb(var(--bg-secondary-rgb) / 0.35); backdrop-filter: blur(8px); text-align: center; }
 .contact-inner { max-width: 600px; margin: 0 auto; }
 .contact-email {
   font-family: 'Orbitron', sans-serif; font-weight: 800;

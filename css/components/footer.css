@@ -14,7 +14,7 @@ footer { padding: 28px 60px; border-top: 1px solid var(--border); display: flex;
   height: 44px;
   border: 1px solid var(--border);
   border-radius: 50%;
-  background: rgba(15, 15, 24, 0.6);
+  background: rgb(var(--bg-secondary-rgb) / 0.6);
   backdrop-filter: blur(8px);
   color: var(--accent);
   cursor: none;
@@ -32,7 +32,7 @@ footer { padding: 28px 60px; border-top: 1px solid var(--border); display: flex;
   transform: translateY(0);
 }
 .scroll-top:hover {
-  background: rgba(0, 229, 160, 0.15);
+  background: rgb(var(--accent-rgb) / 0.15);
   border-color: var(--accent);
 }
 

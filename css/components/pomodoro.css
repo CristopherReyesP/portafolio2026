@@ -29,9 +29,9 @@
   flex-shrink: 0;
   transition: all 0.2s;
 }
-.pomo-dot.r { background: #ff5f57; cursor: pointer; }
-.pomo-dot.y { background: #ffbd2e; }
-.pomo-dot.g { background: #28c840; }
+.pomo-dot.r { background: var(--danger); cursor: pointer; }
+.pomo-dot.y { background: var(--warning); }
+.pomo-dot.g { background: var(--success); }
 .pomo-dot.r:hover { filter: brightness(1.2); }
 .pomo-title {
   flex: 1;
@@ -73,8 +73,8 @@
   background: var(--accent); color: var(--bg);
 }
 .pomo-btn.primary:hover {
-  background: #00c98a;
-  box-shadow: 0 4px 20px rgba(0,229,160,0.3);
+  background: var(--accent-hover);
+  box-shadow: 0 4px 20px rgb(var(--accent-rgb) / 0.3);
 }
 .pomo-btn.secondary {
   background: rgba(255,255,255,0.06);
@@ -140,5 +140,5 @@
 .pomo-s-dot.done {
   background: var(--accent);
   border-color: var(--accent);
-  box-shadow: 0 0 8px rgba(0,229,160,0.3);
+  box-shadow: 0 0 8px rgb(var(--accent-rgb) / 0.3);
 }

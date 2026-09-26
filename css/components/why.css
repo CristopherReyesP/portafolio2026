@@ -1,11 +1,11 @@
-#why { background: rgba(15, 15, 24, 0.35); backdrop-filter: blur(8px); }
+#why { background: rgb(var(--bg-secondary-rgb) / 0.35); backdrop-filter: blur(8px); }
 .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .why-card {
-  background: rgba(17, 17, 32, 0.6); border: 1px solid var(--border); border-radius: 8px;
+  background: rgb(var(--surface-rgb) / 0.6); border: 1px solid var(--border); border-radius: 8px;
   padding: 40px; position: relative; overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.why-card:hover { border-color: rgba(0,229,160,0.15); transform: translateY(-2px); }
+.why-card:hover { border-color: rgb(var(--accent-rgb) / 0.15); transform: translateY(-2px); }
 .why-card::before {
   content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0;
   background: linear-gradient(180deg, var(--accent), var(--accent2));
@@ -18,8 +18,8 @@
 .why-text strong { color: var(--text); font-weight: 500; }
 .why-highlight {
   grid-column: 1 / -1;
-  background: linear-gradient(135deg, rgba(0,229,160,0.04), rgba(124,111,255,0.04));
-  border: 1px solid rgba(0,229,160,0.12);
+  background: linear-gradient(135deg, rgb(var(--accent-rgb) / 0.04), rgb(var(--purple-rgb) / 0.04));
+  border: 1px solid rgb(var(--accent-rgb) / 0.12);
   border-radius: 8px; padding: 48px; text-align: center;
 }
 .why-highlight-text {

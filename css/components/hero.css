@@ -45,7 +45,7 @@
   transition: transform 0.5s;
 }
 .btn-primary:hover::before { transform: translateX(100%); }
-.btn-primary:hover { background: #00c98a; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,160,0.25); }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 30px rgb(var(--accent-rgb) / 0.25); }
 
 .btn-secondary {
   background: transparent; color: var(--text); border: 1px solid var(--border);
