@@ -50,7 +50,7 @@ const translations = {
     terminal_exp_current: '<span class="t-str">Actual:</span> <span class="t-response">Backend Software Engineer (Analista Técnico I) @ BANTRAB · Abril 2024 — Presente</span>',
     terminal_exp_focus: '<span class="t-str">Foco:</span> <span class="t-response">18+ microservicios NestJS y .NET para transacciones bancarias</span>',
     terminal_exp_highlight: '<span class="t-str">Destacado:</span> <span class="t-response">Migración de Keycloak v11 → v19 sin downtime</span>',
-    terminal_exp_freelance: '<span class="t-str">Anterior:</span> <span class="t-response">Freelance Backend Developer · Enero 2021 — Marzo 2024</span>',
+    terminal_exp_freelance: '<span class="t-str">Anterior:</span> <span class="t-response">Freelance Backend Developer · Enero 2019 — Febrero 2021</span>',
     terminal_exp_onesolutions: '<span class="t-str">Anterior:</span> <span class="t-response">Software Developer @ OneSolutions · Mayo 2021 — Julio 2021</span>',
     terminal_contact_title: '<span class="t-label">Hablemos de tu equipo:</span>',
     terminal_contact_email: '<span class="t-str">Correo:</span> <span class="t-response">reyescristop@gmail.com</span>',
@@ -187,8 +187,8 @@ const translations = {
         'Su CV está a un comando de distancia: escribe "resume".'
       ],
       education: [
-        'Estudió Ingeniería en Sistemas en la Universidad Mariano Gálvez: pensum cerrado y tesis en curso.',
-        'Ingeniería en Sistemas en la Universidad Mariano Gálvez, con el pensum cerrado y la tesis en curso.'
+        'Estudia Ingeniería en Sistemas en la Universidad Mariano Gálvez: va en el 10.º semestre.',
+        'Ingeniería en Sistemas en la Universidad Mariano Gálvez, cursando el 10.º semestre.'
       ],
       languages: [
         'El portafolio está en español e inglés, pero no dice su nivel de idiomas. Mejor pregúntale directamente: reyescristop@gmail.com.',
@@ -291,7 +291,7 @@ const translations = {
     proj1_desc: 'Migración completa de WildFly a Quarkus en OpenShift para un banco con miles de usuarios activos. Redirects de URLs legacy, guías de rollback y documentación ADS. Resultado: cero downtime, cero tickets.',
     proj2_type: 'Producción · Arquitectura financiera',
     proj2_name: 'Saga Pattern — Reversas Bancarias',
-    proj2_desc: 'Bug crítico de doble reversa en transacciones reales. Diagnostiqué la cadena NestJS → MuleSoft → Oracle, implementé arquitectura Saga con orquestador y reconciliación automática. Resuelto sin pérdida de datos.',
+    proj2_desc: 'Inconsistencias en reversas de transacciones distribuidas. Diagnostiqué la cadena NestJS → MuleSoft → Oracle e implementé un patrón Saga con orquestador y reconciliación automática, sin pérdida de datos.',
     proj3_type: 'Producción · Modernización de arquitectura',
     proj3_name: 'Monolito PL/SQL → 18+ Microservicios',
     proj3_desc: 'El core transaccional dependía de stored procedures PL/SQL acoplados, imposibles de escalar o testear. Migración progresiva a 18+ microservicios NestJS y .NET con DDD, API Gateway y CI/CD en OpenShift.',
@@ -303,7 +303,7 @@ const translations = {
     proj3_pv5: 'Testeable y mantenible vs. monolito PL/SQL original',
     proj4_type: 'En curso · Integración de pagos',
     proj4_name: 'Cobros por QR para afiliados',
-    proj4_desc: 'El endpoint generaba el QR sin dejar rastro y todos los afiliados cobran contra una cuenta bolsón compartida: el estado de cuenta no podía atribuir un depósito a su afiliado. Diseñé el modelo de datos y el endpoint de confirmación directa desde la billetera, separando cuenta de abono y cuenta de cargo. Cada cobro queda trazable a su origen.',
+    proj4_desc: 'El endpoint generaba el QR sin dejar rastro: los cobros quedaban sin trazabilidad por afiliado. Diseñé el modelo de datos y el endpoint de confirmación directa desde la billetera, separando cuenta de abono y cuenta de cargo. Cada cobro queda trazable a su origen.',
     proj5_type: 'En curso · Migración progresiva',
     proj5_name: 'Canary release por usuario — 38 rutas de gateway',
     proj5_desc: 'Migrar 38 rutas de un gateway NGINX hacia servicios nuevos sin apagar el legacy ni exponer a todos los agentes a la vez. Construí un catálogo de rutas en base de datos y un panel donde cada ruta guarda destino legacy y destino nuevo, y la conmutación se habilita agente por agente. Sin asignación explícita el destino es legacy, siempre: el rollback es quitar la asignación.',
@@ -324,7 +324,7 @@ const translations = {
     why_title: 'Ingeniería backend para sistemas críticos y equipos que evolucionan.',
     why1_num: '01 — Responsabilidad en producción',
     why1_title: 'Asumo sistemas donde cada transacción importa.',
-    why1_text: 'Trabajo con integraciones bancarias y flujos de dinero real. <strong>Diagnostiqué y resolví una doble reversa en producción.</strong>',
+    why1_text: 'Trabajo con integraciones bancarias y flujos de dinero real. <strong>Diagnostiqué y resolví incidentes transaccionales en producción.</strong>',
     why2_num: '02 — Migraciones sin interrupción',
     why2_title: '50k registros migrados. Cero downtime.',
     why2_text: 'Migré Keycloak en un banco activo, con redirects de URLs legacy y guías de rollback. <strong>El servicio siguió disponible.</strong>',
@@ -359,13 +359,13 @@ const translations = {
     exp2_date: 'Mayo 2021 — Julio 2021',
     exp2_p1: 'Desarrollo y mantenimiento de features para plataforma de gestión empresarial con SQL Server y .NET',
     exp2_p2: 'Resolución de bugs en producción y optimización de queries en workflows de alto volumen transaccional',
-    exp3_date: 'Enero 2021 — Marzo 2024',
+    exp3_date: 'Enero 2019 — Febrero 2021',
     exp3_company: 'Proyectos independientes · Clientes internacionales',
     exp3_p1: 'Diseño y entrega de APIs REST con .NET Core y Node.js para clientes internacionales',
     exp3_p2: 'Gestión del ciclo completo de proyectos desde análisis de requerimientos hasta despliegue',
     exp3_p3: 'Manejo de múltiples proyectos concurrentes con entrega a tiempo',
     education_tag: 'Educación',
-    education_status: 'Ingeniería en Sistemas — pensum cerrado, tesis en curso',
+    education_status: 'Ingeniería en Sistemas — 10.º semestre',
 
     // Contact & Footer
     contact_tag: 'Contacto',
@@ -426,7 +426,7 @@ const translations = {
     terminal_exp_current: '<span class="t-str">Current:</span> <span class="t-response">Backend Software Engineer (Technical Analyst I) @ BANTRAB · April 2024 — Present</span>',
     terminal_exp_focus: '<span class="t-str">Focus:</span> <span class="t-response">18+ NestJS and .NET microservices for banking transactions</span>',
     terminal_exp_highlight: '<span class="t-str">Highlight:</span> <span class="t-response">Keycloak v11 → v19 migration with zero downtime</span>',
-    terminal_exp_freelance: '<span class="t-str">Previously:</span> <span class="t-response">Freelance Backend Developer · January 2021 — March 2024</span>',
+    terminal_exp_freelance: '<span class="t-str">Previously:</span> <span class="t-response">Freelance Backend Developer · January 2019 — February 2021</span>',
     terminal_exp_onesolutions: '<span class="t-str">Previously:</span> <span class="t-response">Software Developer @ OneSolutions · May 2021 — July 2021</span>',
     terminal_contact_title: '<span class="t-label">Let\'s talk about your team:</span>',
     terminal_contact_email: '<span class="t-str">Email:</span> <span class="t-response">reyescristop@gmail.com</span>',
@@ -563,8 +563,8 @@ const translations = {
         'His CV is one command away: type "resume".'
       ],
       education: [
-        'He studied Systems Engineering at Universidad Mariano Gálvez: coursework completed, thesis in progress.',
-        'Systems Engineering at Universidad Mariano Gálvez, with the coursework completed and the thesis in progress.'
+        'He studies Systems Engineering at Universidad Mariano Gálvez: currently in his 10th semester.',
+        'Systems Engineering at Universidad Mariano Gálvez, currently in the 10th semester.'
       ],
       languages: [
         'The portfolio is in Spanish and English, but it does not list his language levels. Better ask him directly: reyescristop@gmail.com.',
@@ -667,7 +667,7 @@ const translations = {
     proj1_desc: 'Full migration from WildFly to Quarkus on OpenShift for a bank with thousands of active users. Legacy URL redirects, rollback guides and ADS documentation. Result: zero downtime, zero tickets.',
     proj2_type: 'Production · Financial Architecture',
     proj2_name: 'Saga Pattern — Banking Reversals',
-    proj2_desc: 'Critical double reversal bug in real transactions. Diagnosed the NestJS → MuleSoft → Oracle chain, implemented Saga architecture with orchestrator and automatic reconciliation. Resolved with zero data loss.',
+    proj2_desc: 'Inconsistent reversals across distributed transactions. Diagnosed the NestJS → MuleSoft → Oracle chain and implemented a Saga pattern with an orchestrator and automatic reconciliation, with zero data loss.',
     proj3_type: 'Production · Architecture Modernization',
     proj3_name: 'PL/SQL Monolith → 18+ Microservices',
     proj3_desc: 'The transactional core relied on tightly coupled PL/SQL stored procedures, impossible to scale or test. Progressive migration to 18+ NestJS and .NET microservices with DDD, API Gateway and CI/CD on OpenShift.',
@@ -679,7 +679,7 @@ const translations = {
     proj3_pv5: 'Testable and maintainable vs. original PL/SQL monolith',
     proj4_type: 'In progress · Payment integration',
     proj4_name: 'QR payments for affiliates',
-    proj4_desc: 'The endpoint generated the QR code without leaving a trace, and every merchant collects into a shared pooled account: the statement could not attribute a deposit to its merchant. I designed the data model and the direct confirmation endpoint from the wallet, separating the credited and debited accounts. Every payment is now traceable to its origin.',
+    proj4_desc: 'The endpoint generated the QR code without leaving a trace: payments had no traceability per merchant. I designed the data model and the direct confirmation endpoint from the wallet, separating the credited and debited accounts. Every payment is now traceable to its origin.',
     proj5_type: 'In progress · Progressive migration',
     proj5_name: 'Per-user canary release — 38 gateway routes',
     proj5_desc: 'Migrating 38 routes from an NGINX gateway to new services without switching off the legacy stack or exposing every agent at once. I built a route catalog in the database and an admin panel where each route stores its legacy and new destination, with switching enabled agent by agent. Without an explicit assignment the destination is always legacy: rolling back means removing the assignment.',
@@ -700,7 +700,7 @@ const translations = {
     why_title: 'Backend engineering for critical systems and evolving teams.',
     why1_num: '01 — Production Ownership',
     why1_title: 'I take responsibility for systems where each transaction matters.',
-    why1_text: 'I work with banking integrations and real money flows. <strong>I diagnosed and resolved a double reversal in production.</strong>',
+    why1_text: 'I work with banking integrations and real money flows. <strong>I diagnosed and resolved transactional incidents in production.</strong>',
     why2_num: '02 — Zero-Downtime Migration',
     why2_title: '50k records migrated. Zero downtime.',
     why2_text: 'I migrated Keycloak at an active bank, with legacy URL redirects and rollback guides. <strong>The service stayed available.</strong>',
@@ -735,13 +735,13 @@ const translations = {
     exp2_date: 'May 2021 — July 2021',
     exp2_p1: 'Feature development and maintenance for enterprise management platform with SQL Server and .NET',
     exp2_p2: 'Production bug resolution and query optimization in high-volume transactional workflows',
-    exp3_date: 'January 2021 — March 2024',
+    exp3_date: 'January 2019 — February 2021',
     exp3_company: 'Independent projects · International clients',
     exp3_p1: 'Design and delivery of REST APIs with .NET Core and Node.js for international clients',
     exp3_p2: 'Full project lifecycle management from requirements analysis to deployment',
     exp3_p3: 'Management of multiple concurrent projects with on-time delivery',
     education_tag: 'Education',
-    education_status: 'Systems Engineering — coursework completed, thesis in progress',
+    education_status: 'B.S. Systems Engineering — 10th semester',
 
     // Contact & Footer
     contact_tag: 'Contact',

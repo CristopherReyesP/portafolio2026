@@ -18,22 +18,22 @@ Backend Software Engineer with 5+ years of experience designing, building and de
 - Migrated Keycloak from v11 to v19 (WildFly to Quarkus) on OpenShift, with legacy URL redirects and rollback runbooks: zero downtime.
 - Progressively modernized Oracle PL/SQL stored procedures into domain-driven (DDD) NestJS and .NET microservices orchestrated through an API Gateway.
 - Migrated 38 gateway routes progressively using a database-backed route catalog and per-agent switching, with instant rollback.
-- Diagnosed and fixed a double-reversal defect affecting live transactions (Saga pattern).
+- Resolved inconsistent reversals across distributed transactions (Saga pattern).
 - Optimized complex Oracle SQL queries and stored procedures through indexing and query refactoring on critical transactional endpoints.
 - Deploy containerized services to OpenShift with CI/CD pipelines for builds, tests and production releases.
 - Work with stakeholders, QA and external vendors on requirements, end-to-end testing, code review and technical documentation (API specs, database schemas and runbooks).
-
-### Freelance Backend Developer — Self-employed
-*January 2021 – March 2024 · Remote*
-
-- Designed and delivered REST APIs with .NET Core and Node.js for clients, including international clients, from requirements analysis to server deployment.
-- Managed the full lifecycle of concurrent projects and delivered on schedule.
 
 ### Software Developer — OneSolutions
 *May 2021 – July 2021 · Guatemala*
 
 - Built and supported billing and reporting modules for an enterprise platform using SQL Server and .NET.
 - Fixed production bugs and optimized queries in high-volume transactional flows.
+
+### Freelance Backend Developer — Self-employed
+*January 2019 – February 2021 · Remote*
+
+- Designed and delivered REST APIs with .NET Core and Node.js for clients, including international clients, from requirements analysis to server deployment.
+- Managed the full lifecycle of concurrent projects and delivered on schedule.
 
 ## Technical Skills
 
@@ -46,7 +46,7 @@ Backend Software Engineer with 5+ years of experience designing, building and de
 
 ## Education
 
-**B.S. in Information Systems and Computer Science Engineering** — Universidad Mariano Gálvez de Guatemala · All coursework completed (10 semesters); thesis in progress.
+**B.S. in Information Systems and Computer Science Engineering** — Universidad Mariano Gálvez de Guatemala · Currently in the 10th semester.
 
 **High School Diploma in Business Administration** (Perito en Administración de Empresas) — Instituto José Rodríguez Cerna
 
