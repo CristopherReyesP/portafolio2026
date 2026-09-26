@@ -22,6 +22,7 @@ sources=(
   components/why.css
   components/experience.css
   components/blog.css
+  components/article.css
   components/contact.css
   components/footer.css
   components/mascot.css

@@ -9,13 +9,15 @@ if (document.getElementById('terminal')) {
   initTerminalFab();
 }
 initBlogList();
+if (document.querySelector('[data-article]')) initArticle();
 initCursor();
 initScrollProgress();
 //initKeyboardNav();
 initRevealOnScroll();
 initCounters();
 initCardSpotlight();
-if (!document.querySelector('[data-blog-list]')) initActiveNav();
+// Blog pages keep a static active Blog link (no home sections to track).
+if (!document.body.classList.contains('blog-page')) initActiveNav();
 initSectionRail();
 initMagneticButtons();
 initGallery();

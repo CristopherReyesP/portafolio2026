@@ -452,6 +452,14 @@ const translations = {
     blog_lead: 'Lo que aprendo construyendo sistemas reales.',
     blog_read_time: 'min de lectura', blog_all: 'VER TODOS LOS ARTÍCULOS →',
 
+    // Blog article template
+    article_back: '← VOLVER AL BLOG', article_toc: 'EN ESTE ARTÍCULO',
+    article_tags: 'Categoría y etiquetas', article_share: 'Compartir artículo',
+    article_copy: 'COPIAR ENLACE', article_copied: 'Enlace copiado',
+    article_copy_error: 'No se pudo copiar el enlace', article_linkedin: 'COMPARTIR EN LINKEDIN',
+    article_related: 'EXPERIENCIA RELACIONADA', article_related_cta: 'Ver caso →',
+    article_important: 'IMPORTANTE',
+
     // Contact & Footer
     contact_tag: 'Contacto',
     contact_title: 'Hablemos.',
@@ -924,6 +932,14 @@ const translations = {
     blog_tag: 'BLOG', blog_title: 'Engineering notes.',
     blog_lead: 'What I learn building real systems.',
     blog_read_time: 'min read', blog_all: 'SEE ALL ARTICLES →',
+
+    // Blog article template
+    article_back: '← BACK TO BLOG', article_toc: 'IN THIS ARTICLE',
+    article_tags: 'Category and tags', article_share: 'Share article',
+    article_copy: 'COPY LINK', article_copied: 'Link copied',
+    article_copy_error: 'Could not copy the link', article_linkedin: 'SHARE ON LINKEDIN',
+    article_related: 'RELATED EXPERIENCE', article_related_cta: 'View case →',
+    article_important: 'IMPORTANT',
 
     // Contact & Footer
     contact_tag: 'Contact',
