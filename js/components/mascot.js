@@ -19,6 +19,7 @@ function initMascot() {
   var lastSurface = 'bottom';
   var mouseMoveCount = 0;
   var running = true;
+  var entranceActive = false;
 
   // --- Perimeter system ---
   // The mascot walks along the viewport edges: bottom → right → top → left
@@ -297,7 +298,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'scared', 'dizzy', 'dance', 'scare', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('dance');
     state.lastAction = Date.now();
@@ -314,7 +315,7 @@ function initMascot() {
     summoned = true;
     state.sleeping = false;
     state.idle = true;
-    el.classList.remove('hidden', 'sleeping', 'walking');
+    el.classList.remove('hidden', 'sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'dizzy', 'scare', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('scare');
     state.lastAction = Date.now();
@@ -334,7 +335,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy');
     el.classList.add('love');
     state.lastAction = Date.now();
@@ -356,7 +357,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('puff');
     state.lastAction = Date.now();
@@ -375,7 +376,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('wave');
 
@@ -405,7 +406,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('angry');
     state.lastAction = Date.now();
@@ -416,6 +417,27 @@ function initMascot() {
     }, 2000);
   };
   
+  window.mascotPolice = function () {
+    summoned = true;
+    state.sleeping = false;
+    state.idle = true;
+    el.classList.remove('hidden', 'sleeping', 'walking', 'running');
+    el.classList.remove('climbing', 'climbing-wall', 'jump', 'spin', 'scared', 'dizzy', 'dance', 'scare', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt', 'rainbow', 'extasis', 'entering', 'dropping');
+    // A hack attempt cuts the entrance short, so the alert bubble is not dropped while paused
+    if (entranceActive) {
+      entranceActive = false;
+      state.paused = menuOpen || drag.active;
+    }
+    el.classList.add('police');
+    state.lastAction = Date.now();
+    state.idleTimer = Date.now() + 3500;
+    clearTimeout(state.policeTimer);
+    state.policeTimer = setTimeout(function () {
+      el.classList.remove('police');
+      state.idleTimer = Date.now();
+    }, 3500);
+  };
+
   // Expose pushhead function for terminal command
   window.mascotPushHead = function () {
     summoned = true;
@@ -424,7 +446,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'melt');
     el.classList.add('pushhead');
     state.lastAction = Date.now();
@@ -443,7 +465,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping');
+    el.classList.remove('sleeping', 'police');
     if (el.classList.contains('rainbow')) {
       el.classList.remove('rainbow');
       clearTimeout(rainbowTimer);
@@ -470,7 +492,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
     el.classList.remove('climbing', 'climbing-wall', 'jump', 'dance', 'scare', 'dizzy', 'love', 'puff', 'wave', 'angry', 'pushhead', 'extasis');
     el.classList.add('melt');
     state.lastAction = Date.now();
@@ -490,7 +512,7 @@ function initMascot() {
     if (el.classList.contains('hidden')) {
       el.classList.remove('hidden');
     }
-    el.classList.remove('sleeping');
+    el.classList.remove('sleeping', 'police');
     if (el.classList.contains('extasis')) {
       el.classList.remove('extasis');
       clearTimeout(state.extasisTimer);
@@ -514,7 +536,7 @@ function initMascot() {
     summoned = true;
     state.sleeping = false;
     if (el.classList.contains('hidden')) el.classList.remove('hidden');
-    el.classList.remove('sleeping', 'walking');
+    el.classList.remove('sleeping', 'walking', 'police');
 
     // Remove existing clone if any
     var existing = document.querySelector('.mascot-clone');
@@ -867,7 +889,7 @@ function initMascot() {
       }
     }
 
-    if (state.sleeping || state.paused) {
+    if (state.sleeping || state.paused || el.classList.contains('police')) {
       requestAnimationFrame(tick);
       return;
     }
@@ -951,23 +973,27 @@ function initMascot() {
     el.classList.add('entering');
     el.classList.remove('hidden');
     window.mascotWake();
+    entranceActive = true;
 
     function endEntrance() {
+      entranceActive = false;
       el.classList.remove('entering', 'dropping');
       state.paused = menuOpen || drag.active;
       state.idleTimer = Date.now();
     }
 
     setTimeout(function () {
+      if (!entranceActive) return;
       el.classList.remove('entering');
       if (el.classList.contains('hidden')) { endEntrance(); return; }
       el.classList.add('dropping');
       setTimeout(function () {
+        if (!entranceActive) return;
         el.classList.remove('dropping');
         if (el.classList.contains('hidden')) { endEntrance(); return; }
         window.mascotWave();
         // Stay put while waving; normal wandering resumes afterwards
-        setTimeout(endEntrance, 2500);
+        setTimeout(function () { if (entranceActive) endEntrance(); }, 2500);
       }, 400);
     }, 650);
   }

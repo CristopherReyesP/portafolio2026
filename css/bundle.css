@@ -1530,22 +1530,29 @@ footer { padding: 28px 60px; border-top: 1px solid var(--border); display: flex;
   box-shadow: 0 8px 35px rgba(255,80,80,0.7);
   background: #ff5555;
 }
-.mascot.angry .mascot-eye {
+.mascot.angry .mascot-eye,
+.mascot.police .mascot-eye {
   background: #0a0a0f;
   transform: scaleY(0.6);
 }
 .mascot.angry .mascot-eye::before,
-.mascot.angry .mascot-eye::after {
+.mascot.police .mascot-eye::before,
+.mascot.angry .mascot-eye::after,
+.mascot.police .mascot-eye::after {
   content: ''; position: absolute;
   width: 12px; height: 3px;
   background: #0a0a0f;
   top: -3px;
   transform: rotate(15deg);
 }
-.mascot.angry .mascot-eye.left::before { left: -2px; transform: rotate(-25deg); }
-.mascot.angry .mascot-eye.right::after { right: -2px; transform: rotate(25deg); }
+.mascot.angry .mascot-eye.left::before,
+.mascot.police .mascot-eye.left::before { left: -2px; transform: rotate(-25deg); }
+.mascot.angry .mascot-eye.right::after,
+.mascot.police .mascot-eye.right::after { right: -2px; transform: rotate(25deg); }
 .mascot.angry .mascot-eye.left::after,
-.mascot.angry .mascot-eye.right::before { display: none; }
+.mascot.police .mascot-eye.left::after,
+.mascot.angry .mascot-eye.right::before,
+.mascot.police .mascot-eye.right::before { display: none; }
 .mascot.angry .mascot-mouth {
   width: 12px; height: 4px;
   border: none; border-radius: 0 0 50% 50%;
@@ -1776,6 +1783,67 @@ footer { padding: 28px 60px; border-top: 1px solid var(--border); display: flex;
 .mascot-tip.visible {
   opacity: 1;
   transform: translateX(-50%) translateY(-4px);
+}
+
+/* Police alert: one red/blue cycle per second, confined to the blob. */
+.mascot-police-cap { display: none; }
+.mascot.police .mascot-police-cap {
+  display: block;
+  position: absolute; top: -12px; left: 5px;
+  width: 38px; height: 18px;
+  background: #172640;
+  border: 2px solid #304865;
+  border-radius: 50% 50% 15% 15%;
+  z-index: 2;
+  pointer-events: none;
+}
+.mascot-police-cap::before {
+  content: ''; position: absolute;
+  left: -4px; bottom: -5px;
+  width: 42px; height: 6px;
+  background: #0b1528; border-radius: 50%;
+}
+.mascot-police-cap::after {
+  content: ''; position: absolute;
+  top: 4px; left: 14px;
+  width: 7px; height: 9px;
+  background: #f5c75e;
+  clip-path: polygon(0 0, 100% 0, 90% 65%, 50% 100%, 10% 65%);
+}
+.mascot-siren {
+  position: absolute; top: -11px; left: 12px;
+  width: 10px; height: 10px;
+  border: 1px solid #dce8ff; border-radius: 5px 5px 1px 1px;
+  background: linear-gradient(90deg, #ff5555 50%, #5099ff 50%);
+  animation: mascotPoliceGlow 1s steps(1, end) infinite;
+}
+.mascot.police .mascot-body {
+  animation: mascotPoliceGlow 1s steps(1, end) infinite, mascotPoliceStop 0.7s ease-out;
+}
+.mascot.police .mascot-shadow { animation: none; }
+/* Stern cop face: the eyes clip their content, so let the brows show; flat mouth */
+.mascot.police .mascot-eye { overflow: visible; }
+.mascot.police .mascot-mouth {
+  width: 9px; height: 0; top: 16px;
+  background: none; border-bottom: 2px solid #0a0a0f; border-radius: 0;
+}
+.mascot.police .mascot-tip { bottom: calc(100% + 30px); }
+@keyframes mascotPoliceGlow {
+  0%, 100% { box-shadow: -5px 0 14px rgba(255,70,70,0.8); }
+  50% { box-shadow: 5px 0 14px rgba(65,135,255,0.8); }
+}
+@keyframes mascotPoliceStop {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px) scaleY(1.05); }
+  65% { transform: translateY(0) scaleY(0.94); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mascot.police .mascot-body,
+  .mascot.police .mascot-siren {
+    animation: none;
+    box-shadow: -5px 0 12px rgba(255,70,70,0.65), 5px 0 12px rgba(65,135,255,0.65);
+  }
+  .mascot.police .mascot-shadow { animation: none; }
 }
 
 /* === components/keyboard.css === */
