@@ -27,6 +27,7 @@ test('blog lists real-project articles first, then articles, then notes', () => 
   ctx.BLOG_NOTES = [{ slug: 'note-newest', type: 'note', date: '2026-12-31' }];
   vm.runInContext(fs.readFileSync(new URL('js/components/blog.js', root), 'utf8'), ctx);
   assert.deepEqual(Array.from(ctx.getBlogEntries(), e => e.slug), ['case-old', 'plain-new', 'note-newest']);
+  assert.deepEqual(Array.from(ctx.getBlogEntries('recent'), e => e.slug), ['note-newest', 'plain-new', 'case-old']);
 });
 
 test('generated files are up to date with content/', () => {
