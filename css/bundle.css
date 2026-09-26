@@ -482,7 +482,9 @@ nav {
 .t-dot.r { background: #ff5f57; } .t-dot.y { background: #febc2e; } .t-dot.g { background: #28c840; }
 .terminal-title { margin-left: 8px; font-size: 11px; color: var(--muted); }
 .terminal-body { padding: 24px; font-size: 13px; line-height: 2; max-height: 340px; overflow-y: auto; }
-.hero-terminal .terminal-body { height: 300px; max-height: none; }
+/* Fits its content up to 300px (then scrolls), so no empty strip sits under the prompt.
+   Phones keep a fixed height: the centered one-column hero would jump as output grows. */
+.hero-terminal .terminal-body { max-height: 300px; }
 /* Space Mono lacks box-drawing glyphs: one system mono font for the whole art keeps it aligned.
    48 columns ≈ 29em, so the font scales with the terminal width to fit narrow screens. */
 .hero-terminal { container-type: inline-size; --banner-pad: 24px; }
