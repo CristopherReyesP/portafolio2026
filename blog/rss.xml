@@ -7,11 +7,59 @@
     <language>es</language>
     <lastBuildDate>Sat, 26 Sep 2026 00:00:00 +0000</lastBuildDate>
     <item>
+      <title>Claude Code: cuando el sandbox no te deja ver algo</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/claude-code-sandbox-usb-gh.html</link>
+      <description>Si adb no ve el teléfono o gh auth login no conecta, el problema puede ser el sandbox y no la red ni el cable.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/claude-code-sandbox-usb-gh.html</guid>
+      <category>IA</category>
+    </item>
+    <item>
+      <title>node-oracledb: maxLifetimeSession no te salva de ORA-02399</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-maxlifetimesession-thick.html</link>
+      <description>En Thick mode el pool no jubiló una sesión vencida. Contra CONNECT_TIME e IDLE_TIME, la defensa es reintentar en tu código.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-maxlifetimesession-thick.html</guid>
+      <category>Oracle</category>
+    </item>
+    <item>
+      <title>node-oracledb: NJS-116 y el verificador de contraseña 0x939</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-njs-116-thick-mode.html</link>
+      <description>Si Thin mode no puede autenticar por el verificador de contraseña, cambia a Thick mode con Instant Client.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-njs-116-thick-mode.html</guid>
+      <category>Oracle</category>
+    </item>
+    <item>
+      <title>OpenShift: reiniciar un deployment sin borrar pods a mano</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/openshift-reiniciar-deployment-sin-borrar-pods.html</link>
+      <description>Un solo comando para que OpenShift levante pods nuevos y baje los viejos, sin hacer oc delete pod.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/openshift-reiniciar-deployment-sin-borrar-pods.html</guid>
+      <category>OpenShift</category>
+    </item>
+    <item>
+      <title>Oracle: convertir ORA-00054 en un HTTP 409</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-ora-00054-a-http-409.html</link>
+      <description>Con FOR UPDATE NOWAIT, una fila ocupada falla en milisegundos. Traduce ese error a 409 Conflict en vez de dejar que salga como 500.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-ora-00054-a-http-409.html</guid>
+      <category>Oracle</category>
+    </item>
+    <item>
       <title>Oracle: SELECT FOR UPDATE WAIT vs NOWAIT</title>
       <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-select-for-update-wait-nowait.html</link>
       <description>Cómo bloquear una fila como máximo unos segundos (o fallar al instante) cuando otra transacción ya la tiene bloqueada.</description>
       <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
       <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-select-for-update-wait-nowait.html</guid>
+      <category>Oracle</category>
+    </item>
+    <item>
+      <title>Oracle: validar un INSERT sin ejecutarlo con DBMS_SQL.PARSE</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-validar-insert-sin-ejecutarlo.html</link>
+      <description>Comprueba la sintaxis y los objetos de un DML contra la base real sin insertar nada ni consumir secuencias.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-validar-insert-sin-ejecutarlo.html</guid>
       <category>Oracle</category>
     </item>
     <item>

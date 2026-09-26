@@ -7,7 +7,7 @@ tags:
   - Oracle
   - NestJS
   - Locks
-status: draft
+status: published
 created: 2026-09-26
 updated: 2026-09-26
 excerpt: "Con FOR UPDATE NOWAIT, una fila ocupada falla en milisegundos. Traduce ese error a 409 Conflict en vez de dejar que salga como 500."

@@ -7,7 +7,7 @@ tags:
   - Oracle
   - node-oracledb
   - Connection pool
-status: draft
+status: published
 created: 2026-09-26
 updated: 2026-09-26
 excerpt: "En Thick mode el pool no jubiló una sesión vencida. Contra CONNECT_TIME e IDLE_TIME, la defensa es reintentar en tu código."

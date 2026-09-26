@@ -7,7 +7,7 @@ tags:
   - OpenShift
   - Kubernetes
   - oc
-status: draft
+status: published
 created: 2026-09-26
 updated: 2026-09-26
 excerpt: "Un solo comando para que OpenShift levante pods nuevos y baje los viejos, sin hacer oc delete pod."

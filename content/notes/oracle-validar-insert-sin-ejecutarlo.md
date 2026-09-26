@@ -7,7 +7,7 @@ tags:
   - Oracle
   - PL/SQL
   - DBMS_SQL
-status: draft
+status: published
 created: 2026-09-26
 updated: 2026-09-26
 excerpt: "Comprueba la sintaxis y los objetos de un DML contra la base real sin insertar nada ni consumir secuencias."

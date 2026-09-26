@@ -4,26 +4,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{TITLE}} · Cristopher Reyes</title>
-<meta name="description" content="{{DESCRIPTION}}">
+<title>node-oracledb: NJS-116 y el verificador de contraseña 0x939 · Cristopher Reyes</title>
+<meta name="description" content="Si Thin mode no puede autenticar por el verificador de contraseña, cambia a Thick mode con Instant Client.">
 <meta name="author" content="Cristopher Reyes">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="{{URL}}">
+<link rel="canonical" href="https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-njs-116-thick-mode.html">
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="{{TITLE}}">
-<meta property="og:description" content="{{DESCRIPTION}}">
-<meta property="og:url" content="{{URL}}">
+<meta property="og:title" content="node-oracledb: NJS-116 y el verificador de contraseña 0x939">
+<meta property="og:description" content="Si Thin mode no puede autenticar por el verificador de contraseña, cambia a Thick mode con Instant Client.">
+<meta property="og:url" content="https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-njs-116-thick-mode.html">
 <meta property="og:image" content="https://cristopherreyesp.github.io/portafolio2026/og-image.png">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{TITLE}}">
-<meta name="twitter:description" content="{{DESCRIPTION}}">
+<meta name="twitter:title" content="node-oracledb: NJS-116 y el verificador de contraseña 0x939">
+<meta name="twitter:description" content="Si Thin mode no puede autenticar por el verificador de contraseña, cambia a Thick mode con Instant Client.">
 <meta name="twitter:image" content="https://cristopherreyesp.github.io/portafolio2026/og-image.png">
-<meta property="article:published_time" content="{{CREATED}}T00:00:00Z">
-<meta property="article:modified_time" content="{{UPDATED}}T00:00:00Z">
+<meta property="article:published_time" content="2026-09-26T00:00:00Z">
+<meta property="article:modified_time" content="2026-09-26T00:00:00Z">
 <script type="application/ld+json">
-{{LD_JSON}}
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "node-oracledb: NJS-116 y el verificador de contraseña 0x939",
+  "description": "Si Thin mode no puede autenticar por el verificador de contraseña, cambia a Thick mode con Instant Client.",
+  "datePublished": "2026-09-26",
+  "dateModified": "2026-09-26",
+  "author": {
+    "@type": "Person",
+    "name": "Cristopher Reyes",
+    "url": "https://cristopherreyesp.github.io/portafolio2026/"
+  },
+  "mainEntityOfPage": "https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-njs-116-thick-mode.html",
+  "url": "https://cristopherreyesp.github.io/portafolio2026/blog/notes/node-oracledb-njs-116-thick-mode.html",
+  "inLanguage": "es",
+  "keywords": [
+    "Oracle",
+    "Node.js",
+    "node-oracledb"
+  ],
+  "image": "https://cristopherreyesp.github.io/portafolio2026/og-image.png"
+}
 </script>
 <link rel="alternate" type="application/rss+xml" title="Notas de ingeniería" href="../rss.xml">
 
@@ -111,32 +132,47 @@
 </header>
 
 <main>
-<article id="article" class="article article--{{TYPE}}" lang="es" data-article="{{SLUG}}" aria-labelledby="article-title">
+<article id="article" class="article article--note" lang="es" data-article="node-oracledb-njs-116-thick-mode" aria-labelledby="article-title">
   <header class="article-header">
     <a class="article-back" href="../" data-i18n="article_back">← VOLVER AL BLOG</a>
-    <p class="note-kind" data-i18n="{{TYPE_KEY}}_long">{{TYPE_LABEL}}</p>
+    <p class="note-kind" data-i18n="kb_type_note_long">NOTA TÉCNICA</p>
     <ul class="article-chips" aria-label="Categoría y etiquetas" data-i18n-aria-label="article_tags">
-{{CHIPS}}
+      <li><a class="chip" href="../?cat=oracle">Oracle</a></li>
+      <li><span class="chip purple">Node.js</span></li>
+      <li><span class="chip purple">node-oracledb</span></li>
     </ul>
-    <h1 class="article-title" id="article-title">{{TITLE}}</h1>
-    <p class="article-lead">{{DESCRIPTION}}</p>
+    <h1 class="article-title" id="article-title">node-oracledb: NJS-116 y el verificador de contraseña 0x939</h1>
+    <p class="article-lead">Si Thin mode no puede autenticar por el verificador de contraseña, cambia a Thick mode con Instant Client.</p>
     <div class="blog-meta article-meta">
-      <time datetime="{{CREATED}}" data-blog-date>{{CREATED_LONG}}</time>
-      <span>{{MINUTES}} <span data-i18n="blog_read_time">min de lectura</span></span>
-      <span><span data-i18n="note_reviewed">Última revisión:</span> <time datetime="{{UPDATED}}" data-blog-date>{{UPDATED_LONG}}</time></span>
+      <time datetime="2026-09-26" data-blog-date>26 de septiembre de 2026</time>
+      <span>1 <span data-i18n="blog_read_time">min de lectura</span></span>
+      <span><span data-i18n="note_reviewed">Última revisión:</span> <time datetime="2026-09-26" data-blog-date>26 de septiembre de 2026</time></span>
     </div>
   </header>
 
   <div class="article-layout">
     <div class="article-content">
-{{CONTENT}}
+      <h2>Problema</h2>
+      <p>La conexión falla al autenticar con:</p>
+      <pre class="article-code" data-lang="text"><code>NJS-116: password verifier type 0x939 is not supported by node-oracledb in Thin mode</code></pre>
+      <p>El usuario de base de datos solo tiene un verificador de contraseña 10G. El modo Thin (el predeterminado, sin librerías de Oracle) solo soporta verificadores 11G o posteriores.</p>
+      <h2>Solución</h2>
+      <p>Instala Oracle Instant Client y activa Thick mode <strong>antes</strong> de crear cualquier pool o conexión:</p>
+      <pre class="article-code" data-lang="javascript"><code>const oracledb = require(&#39;oracledb&#39;);
+
+oracledb.initOracleClient({ libDir: &#39;/opt/oracle/instantclient_23_26&#39; });</code></pre>
+      <p>En macOS hay que pasar <code>libDir</code> de forma explícita.</p>
+      <h2>Alternativa</h2>
+      <p>Pedir al DBA que regenere la contraseña del usuario con un verificador 11G o 12C. Así sigues en Thin mode, sin librerías nativas en la imagen.</p>
+      <h2>Cuándo usarlo</h2>
+      <ul><li>Bases antiguas o usuarios creados hace años que nunca cambiaron de verificador.</li><li>Si producción ya corre en Thick mode, conviene probar en local también en Thick: los dos modos no se comportan igual.</li></ul>
     </div>
   </div>
 
   <div class="article-end">
     <div class="article-share" role="group" aria-label="Compartir artículo" data-i18n-aria-label="article_share">
       <button type="button" class="article-share-btn" data-article-copy data-i18n="article_copy" hidden>COPIAR ENLACE</button>
-      <a class="article-share-btn" data-article-linkedin href="https://www.linkedin.com/sharing/share-offsite/?url={{LINKEDIN}}" target="_blank" rel="noopener" data-i18n="article_linkedin">COMPARTIR EN LINKEDIN</a>
+      <a class="article-share-btn" data-article-linkedin href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcristopherreyesp.github.io%2Fportafolio2026%2Fblog%2Fnotes%2Fnode-oracledb-njs-116-thick-mode.html" target="_blank" rel="noopener" data-i18n="article_linkedin">COMPARTIR EN LINKEDIN</a>
       <p class="article-share-status" data-article-status role="status" aria-live="polite" aria-atomic="true"></p>
     </div>
     <a class="article-related panel" data-article-related href="../" hidden></a>

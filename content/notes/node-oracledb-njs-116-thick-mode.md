@@ -7,7 +7,7 @@ tags:
   - Oracle
   - Node.js
   - node-oracledb
-status: draft
+status: published
 created: 2026-09-26
 updated: 2026-09-26
 excerpt: "Si Thin mode no puede autenticar por el verificador de contraseña, cambia a Thick mode con Instant Client."

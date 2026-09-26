@@ -7,7 +7,7 @@ tags:
   - Claude Code
   - Sandbox
   - macOS
-status: draft
+status: published
 created: 2026-09-26
 updated: 2026-09-26
 excerpt: "Si adb no ve el teléfono o gh auth login no conecta, el problema puede ser el sandbox y no la red ni el cable."
