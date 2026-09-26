@@ -447,10 +447,11 @@ const translations = {
 
     // Blog
     blog_search: 'Buscar en mis notas...', blog_filters: 'Filtrar por categoría',
-    blog_types: 'Filtrar por tipo', blog_filter_all_categories: 'TODAS LAS CATEGORÍAS', blog_type_articles: 'ARTÍCULOS', blog_type_notes: 'NOTAS',
+    blog_types: 'Filtrar por tipo', blog_type_all: 'Todo', blog_type_articles: 'Artículos', blog_type_notes: 'Notas',
+    blog_categories: 'Categorías', blog_clear: 'Limpiar filtros ✕',
     blog_filter_oracle: 'ORACLE', blog_filter_nestjs: 'NESTJS', blog_filter_openshift: 'OPENSHIFT',
     blog_filter_keycloak: 'KEYCLOAK',
-    blog_learning_filter: 'Evidencia de aprendizaje:', blog_learning_clear: 'Quitar filtro ✕',
+    blog_learning_filter: 'Foco:',
     kb_type_article: 'ARTÍCULO', kb_type_note: 'NOTA',
     kb_type_article_long: 'ARTÍCULO', kb_type_note_long: 'NOTA TÉCNICA',
     note_reviewed: 'Última revisión:', note_related: 'Relacionado',
@@ -957,10 +958,11 @@ const translations = {
 
     // Blog
     blog_search: 'Search my notes...', blog_filters: 'Filter by category',
-    blog_types: 'Filter by type', blog_filter_all_categories: 'ALL CATEGORIES', blog_type_articles: 'ARTICLES', blog_type_notes: 'NOTES',
+    blog_types: 'Filter by type', blog_type_all: 'All', blog_type_articles: 'Articles', blog_type_notes: 'Notes',
+    blog_categories: 'Categories', blog_clear: 'Clear filters ✕',
     blog_filter_oracle: 'ORACLE', blog_filter_nestjs: 'NESTJS', blog_filter_openshift: 'OPENSHIFT',
     blog_filter_keycloak: 'KEYCLOAK',
-    blog_learning_filter: 'Learning evidence:', blog_learning_clear: 'Clear filter ✕',
+    blog_learning_filter: 'Focus:',
     kb_type_article: 'ARTICLE', kb_type_note: 'NOTE',
     kb_type_article_long: 'ARTICLE', kb_type_note_long: 'TECHNICAL NOTE',
     note_reviewed: 'Last reviewed:', note_related: 'Related',

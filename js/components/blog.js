@@ -64,6 +64,7 @@ function renderBlogArt(category) {
 
 // /blog/: type (all/article/note) × category × learning focus × text search.
 // State lives in the URL (?type=note&cat=oracle&learning=distributed-systems&q=lock).
+// Categories are toggle chips (click again to clear); counts reflect the other filters.
 function initBlogList() {
   const grid = document.querySelector('[data-blog-list]');
   if (!grid || !window.BLOG_POSTS) return;
@@ -72,46 +73,54 @@ function initBlogList() {
   const typeFilters = document.querySelectorAll('[data-blog-type]');
   const categoryGroup = document.querySelector('[data-blog-categories]');
   const learningBox = document.getElementById('blogLearning');
+  const clear = document.querySelector('[data-blog-clear]');
   const count = document.getElementById('blogCount');
   const empty = document.getElementById('blogEmpty');
   const normalize = text => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const fullText = window.BLOG_SEARCH || {};
+  const haystack = new Map(entries.map(post => [post, normalize([post.title, post.excerpt, post.category,
+    ...post.categoryKey, ...post.tags, fullText[post.slug] || ''].join(' '))]));
 
-  // Category buttons: only keys used by at least one entry, in BLOG_CATEGORIES order.
+  // Category chips: only keys used by at least one entry, in BLOG_CATEGORIES order.
   const used = new Set(entries.flatMap(entry => entry.categoryKey));
   const categories = Object.keys(BLOG_CATEGORIES).filter(key => used.has(key));
-  categoryGroup.innerHTML = ['all', ...categories].map(key => {
-    const label = key === 'all' ? 'blog_filter_all_categories' : BLOG_CATEGORIES[key];
-    return `<button type="button" data-blog-filter="${key}" data-i18n="${label}" aria-pressed="false" aria-controls="blogGrid">${escapeBlogText(translations.es[label])}</button>`;
-  }).join('');
+  categoryGroup.innerHTML = categories.map(key => `<button type="button" class="blog-cat" data-blog-filter="${key}" aria-pressed="false" aria-controls="blogGrid"><span data-i18n="${BLOG_CATEGORIES[key]}">${escapeBlogText(translations.es[BLOG_CATEGORIES[key]])}</span> <span class="blog-n" data-blog-cat-count></span></button>`).join('');
   const filters = categoryGroup.querySelectorAll('[data-blog-filter]');
 
   const params = new URLSearchParams(window.location.search);
-  let category = categories.includes(params.get('cat')) ? params.get('cat') : 'all';
+  let category = categories.includes(params.get('cat')) ? params.get('cat') : null;
   let type = ['article', 'note'].includes(params.get('type')) ? params.get('type') : 'all';
   const focuses = window.LEARNING_FOCUSES || [];
   let learning = focuses.some(focus => focus.id === params.get('learning')) ? params.get('learning') : null;
   search.value = params.get('q') || '';
   let resultCount = 0;
 
-  function syncPressed() {
-    filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.blogFilter === category)));
-    typeFilters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.blogType === type)));
+  const matches = (post, skip) => (skip === 'type' || type === 'all' || post.type === type)
+    && (skip === 'cat' || !category || post.categoryKey.includes(category))
+    && (!learning || (post.learning || []).includes(learning))
+    && haystack.get(post).includes(normalize(search.value.trim()));
+
+  function syncControls() {
+    typeFilters.forEach(button => {
+      const key = button.dataset.blogType;
+      button.setAttribute('aria-pressed', String(key === type));
+      button.querySelector('[data-blog-type-count]').textContent = entries.filter(post => matches(post, 'type') && (key === 'all' || post.type === key)).length;
+    });
+    filters.forEach(button => {
+      const key = button.dataset.blogFilter;
+      const n = entries.filter(post => matches(post, 'cat') && post.categoryKey.includes(key)).length;
+      button.setAttribute('aria-pressed', String(key === category));
+      button.querySelector('[data-blog-cat-count]').textContent = n;
+      button.classList.toggle('is-empty', n === 0 && key !== category);
+    });
+    clear.hidden = !(type !== 'all' || category || learning || search.value.trim());
   }
 
   function renderLearning() {
-    if (!learningBox) return;
     const focus = focuses.find(item => item.id === learning);
     learningBox.hidden = !focus;
     if (!focus) return;
-    learningBox.innerHTML = `<span data-i18n="blog_learning_filter">${escapeBlogText(translations[currentLang].blog_learning_filter)}</span>
-  <strong>${escapeBlogText(focus.title[currentLang] || focus.title.es)}</strong>
-  <button type="button" data-blog-learning-clear data-i18n="blog_learning_clear">${escapeBlogText(translations[currentLang].blog_learning_clear)}</button>`;
-    learningBox.querySelector('[data-blog-learning-clear]').addEventListener('click', () => {
-      learning = null;
-      renderResults();
-      search.focus();
-    });
+    learningBox.innerHTML = `<span data-i18n="blog_learning_filter">${escapeBlogText(translations[currentLang].blog_learning_filter)}</span> <strong>${escapeBlogText(focus.title[currentLang] || focus.title.es)}</strong>`;
   }
 
   function updateCount() {
@@ -124,34 +133,35 @@ function initBlogList() {
     const url = new URL(window.location.href);
     const setParam = (key, value) => (value ? url.searchParams.set(key, value) : url.searchParams.delete(key));
     setParam('type', type === 'all' ? '' : type);
-    setParam('cat', category === 'all' ? '' : category);
+    setParam('cat', category);
     setParam('learning', learning);
     setParam('q', search.value.trim() ? search.value : '');
     window.history.replaceState(null, '', url.pathname + url.search + url.hash);
-    const query = normalize(search.value.trim());
-    const posts = entries.filter(post => {
-      const text = normalize([post.title, post.excerpt, post.category, ...post.categoryKey, ...post.tags, fullText[post.slug] || ''].join(' '));
-      return (type === 'all' || post.type === type)
-        && (category === 'all' || post.categoryKey.includes(category))
-        && (!learning || (post.learning || []).includes(learning))
-        && text.includes(query);
-    });
+    const posts = entries.filter(post => matches(post));
     resultCount = posts.length;
     grid.innerHTML = posts.map(post => renderBlogCard(post, '../', true)).join('');
     empty.hidden = resultCount !== 0;
-    syncPressed();
+    syncControls();
     // Apply the active language to the new cards, labels and the result count.
     setLang(currentLang);
   }
 
   filters.forEach(button => button.addEventListener('click', () => {
-    category = button.dataset.blogFilter;
+    category = category === button.dataset.blogFilter ? null : button.dataset.blogFilter;
     renderResults();
   }));
   typeFilters.forEach(button => button.addEventListener('click', () => {
     type = button.dataset.blogType;
     renderResults();
   }));
+  clear.addEventListener('click', () => {
+    type = 'all';
+    category = null;
+    learning = null;
+    search.value = '';
+    renderResults();
+    search.focus();
+  });
   search.addEventListener('input', renderResults);
   search.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
@@ -159,6 +169,16 @@ function initBlogList() {
       renderResults();
     }
   });
+  // "/" jumps to the search box (unless already typing somewhere).
+  document.addEventListener('keydown', event => {
+    if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+    event.preventDefault();
+    search.focus();
+  });
   document.addEventListener('languagechange', updateCount);
   renderResults();
+  // Mobile: the chip row scrolls sideways; bring a category from the URL into view.
+  const active = categoryGroup.querySelector('[aria-pressed="true"]');
+  if (active) categoryGroup.scrollLeft = active.offsetLeft - categoryGroup.offsetLeft - 16;
 }
