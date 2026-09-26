@@ -585,9 +585,14 @@ function initTerminalDrag() {
     terminal.style.translate = `${x}px ${y}px`;
   }
 
+  // Blocks text selection on the bar. Canceling pointerdown instead would also suppress
+  // mousemove until release, freezing the custom cursor and the mascot's eyes
+  bar.addEventListener('mousedown', (e) => {
+    if (e.button === 0) e.preventDefault();
+  });
+
   bar.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
-    e.preventDefault();
     // offsetLeft/offsetTop ignore transforms, so they give the untouched grid slot
     const left = terminal.offsetLeft;
     const top = terminal.offsetTop;
