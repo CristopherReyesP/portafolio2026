@@ -587,6 +587,8 @@ function initTerminalWindow() {
   function place(x, y) {
     offset = { x, y };
     terminal.style.translate = `${x}px ${y}px`;
+    // Out of its slot the window can cover the hero text: it turns opaque (see terminal.css)
+    terminal.classList.toggle('detached', x !== 0 || y !== 0 || natural !== null);
   }
 
   function resizeTo(width, height) {
@@ -595,7 +597,7 @@ function initTerminalWindow() {
     // Keep the margin box at its natural size so the centered grid never shifts
     terminal.style.marginRight = `${natural.w - width}px`;
     terminal.style.marginBottom = `${natural.h - height}px`;
-    terminal.classList.add('resized');
+    terminal.classList.add('resized', 'detached');
   }
 
   function restore() {
@@ -606,7 +608,7 @@ function initTerminalWindow() {
     terminal.style.height = '';
     terminal.style.marginRight = '';
     terminal.style.marginBottom = '';
-    terminal.classList.remove('resized');
+    terminal.classList.remove('resized', 'detached');
     natural = null;
   }
 

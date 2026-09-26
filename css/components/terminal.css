@@ -29,6 +29,8 @@
 .terminal-resize-nw { top: 0; left: 0; cursor: nwse-resize; }
 .terminal-resize-se { bottom: 0; right: 0; cursor: nwse-resize; }
 .terminal-resize-sw { bottom: 0; left: 0; cursor: nesw-resize; }
+/* Moved or resized, the window may sit over the hero text: opaque glass keeps both readable */
+.hero-terminal.detached { background: rgba(19, 19, 31, 0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .hero-terminal.resized { display: flex; flex-direction: column; }
 .hero-terminal.resized .terminal-body { flex: 1; min-height: 0; max-height: none; }
 .terminal-bar { background: rgba(255,255,255,0.04); padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
