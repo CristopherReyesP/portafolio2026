@@ -447,7 +447,7 @@ function initTerminal() {
   // The typed text lives in its own span (with a block cursor) instead of the input,
   // so the input stays empty and usable; output lines are separate blocks revealed one
   // by one, so none of them outgrows the hero h1 as the LCP element.
-  const INTRO_COMMANDS = ['whoami', 'experience --summary', 'stack --core', 'location'];
+  const INTRO_COMMANDS = ['whoami', 'stack --core', 'location'];
   const intro = { state: 'idle', timer: 0, typed: null, lines: [], output: null, echoed: false, command: 0 };
   const placeholder = terminalInput.getAttribute('placeholder');
 
