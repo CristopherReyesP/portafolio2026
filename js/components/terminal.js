@@ -30,10 +30,10 @@ const helpEntries = [
   ['pomodoro', 'terminal_help_pomodoro'], ['clear', 'terminal_help_clear']
 ];
 
-// Production project names are the page's own proj*_name keys; in-progress ones get a tag
+// Production project names are the page's own case*_name keys; in-progress ones get a tag
 const productionProjects = [
-  ['proj1_name', false], ['proj2_name', false], ['proj3_name', false],
-  ['proj4_name', true], ['proj5_name', true]
+  ['case1_name', false], ['case2_name', false], ['case3_name', false],
+  ['case4_name', false], ['case5_name', false]
 ];
 // Personal project titles are not translated on the page either
 const personalProjects = ['Hormigas — Simulador de colonia', 'Cobros — Sistema de Gestión'];

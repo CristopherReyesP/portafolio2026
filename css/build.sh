@@ -16,6 +16,8 @@ sources=(
   components/terminal.css
   components/skills.css
   components/projects.css
+  components/diagrams.css
+  components/cases.css
   components/services.css
   components/why.css
   components/experience.css

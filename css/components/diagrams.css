@@ -1,0 +1,219 @@
+/* ============================================================
+   CONCEPTUAL DIAGRAMS — HTML/CSS boxes and arrows, no images.
+   .flow        vertical chain of nodes, arrows and splits
+   .flow-row    horizontal chain (column when the diagram is narrow)
+   .saga        step row with a dashed compensation path underneath
+   Narrow layouts follow the diagram's own width (container "diagram"),
+   so phones and tight two-column cards both get the stacked version.
+   ============================================================ */
+.case-diagram {
+  container: diagram / inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+  background:
+    radial-gradient(rgb(var(--accent-rgb) / 0.08) 1px, transparent 1px) 0 0 / 18px 18px,
+    rgb(var(--bg-rgb) / 0.35);
+}
+.case-diagram-cap {
+  align-self: flex-start;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Vertical chain */
+.flow { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+.flow-node {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 120px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: rgb(var(--bg-rgb) / 0.6);
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.flow-node svg { width: 18px; height: 18px; flex: none; color: var(--accent); }
+.flow-node small {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.flow-node.is-key { border-color: var(--border-active); box-shadow: var(--glow); }
+.flow-node.is-legacy { border-style: dashed; color: var(--text-secondary); }
+.flow-node.is-success { border-color: rgb(var(--accent-rgb) / 0.5); color: var(--accent); }
+
+/* Arrow: hairline with a small accent chevron at its end */
+.flow-arrow {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 1px;
+  height: 22px;
+  background: var(--border-strong);
+}
+.flow-arrow::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--accent);
+}
+.flow-arrow.is-h { align-self: center; width: 18px; height: 1px; }
+.flow-arrow.is-h::after {
+  left: auto;
+  right: -1px;
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 4px solid transparent;
+  border-right: 0;
+  border-left: 5px solid var(--accent);
+}
+
+/* Split: one arrow fans out to --cols nodes through a bracket.
+   The bracket runs between the centers of the first and last column. */
+.flow-split {
+  --cols: 2;
+  --split-gap: 10px;
+  --split-edge: calc((100% - (var(--cols) - 1) * var(--split-gap)) / var(--cols) / 2);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: var(--split-gap);
+  width: 100%;
+  max-width: 420px;
+  padding-top: 14px;
+}
+.flow-split::before,
+.flow-split::after {
+  content: '';
+  position: absolute;
+  left: var(--split-edge);
+  right: var(--split-edge);
+  height: 1px;
+  background: var(--border-strong);
+}
+.flow-split::before { top: 0; }
+.flow-split::after { bottom: 0; display: none; }
+.flow-split > *::before,
+.flow-split > *::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  height: 14px;
+  background: var(--border-strong);
+}
+.flow-split > *::before { top: -15px; }
+.flow-split > *::after { bottom: -15px; display: none; }
+/* When the chain continues below, the columns join again */
+.flow-split:has(+ .flow-arrow) { padding-bottom: 14px; }
+.flow-split:has(+ .flow-arrow)::after,
+.flow-split:has(+ .flow-arrow) > *::after { display: block; }
+
+/* Horizontal chain */
+.flow-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Saga: equal-width steps so the compensation path can find step 1 and 4.
+   Each arrow takes 26px (18px + 4px margins); with 5 steps and 4 arrows a
+   step is (100% - 104px) / 5 wide. */
+.saga { position: relative; width: 100%; display: flex; flex-direction: column; gap: 6px; }
+.saga-steps { list-style: none; display: flex; align-items: center; }
+.saga-steps > .flow-node { flex: 1 1 0; min-width: 0; padding: 8px 6px; }
+.saga-steps > .flow-arrow.is-h { flex: 0 0 18px; margin: 0 4px; }
+.saga-comp { position: relative; height: 30px; }
+/* Dashed U from step 4 back to step 1: legs up, line along the bottom */
+.saga-comp::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 14px;
+  left: calc((100% - 104px) / 10);
+  right: calc(30% - 5.2px);
+  border: 1px dashed rgb(var(--purple-rgb) / 0.55);
+  border-top: 0;
+}
+/* Left-pointing chevron near the left end of the path */
+.saga-comp::after {
+  content: '';
+  position: absolute;
+  top: 9.5px;
+  left: calc((100% - 104px) / 10 + 8px);
+  border: 4px solid transparent;
+  border-left: 0;
+  border-right: 5px solid var(--purple);
+}
+.saga-comp .chip {
+  position: absolute;
+  top: 14px;
+  left: calc(40% - 2.6px);
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  background: linear-gradient(rgb(var(--purple-rgb) / 0.07), rgb(var(--purple-rgb) / 0.07)), var(--bg-secondary);
+}
+.saga-note { font-size: 11px; line-height: 1.6; color: var(--text-muted); text-align: center; }
+
+/* Narrow diagram (phones, tight cards): chains stack vertically */
+@container diagram (max-width: 500px) {
+  .flow-row { flex-direction: column; flex-wrap: nowrap; gap: 0; }
+  .flow-row .flow-arrow.is-h,
+  .saga-steps > .flow-arrow.is-h { width: 1px; height: 22px; flex: none; margin: 0; }
+  .flow-row .flow-arrow.is-h::after,
+  .saga-steps > .flow-arrow.is-h::after {
+    left: 50%;
+    right: auto;
+    top: auto;
+    bottom: -1px;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-bottom: 0;
+    border-top: 5px solid var(--accent);
+  }
+
+  /* Steps get a fixed height so the path can reach the centers of step 1 (19px)
+     and step 4 (3 x 38px + 3 x 22px + 19px = 199px). */
+  .saga-steps { flex-direction: column; }
+  .saga-steps > .flow-node { flex: none; width: 140px; height: 38px; justify-content: center; }
+  .saga-comp { position: absolute; top: 19px; left: calc(50% + 70px); width: 24px; height: 180px; }
+  .saga-comp::before { left: 0; right: 0; top: 0; height: auto; bottom: 0; border: 1px dashed rgb(var(--purple-rgb) / 0.55); border-left: 0; }
+  .saga-comp::after { top: -4.5px; left: 0; }
+  .saga-comp .chip { top: 50%; left: 100%; writing-mode: vertical-rl; padding: 10px 3px; }
+  .saga-note { margin-top: 6px; }
+}
+@container diagram (max-width: 400px) {
+  .flow-split { --split-gap: 8px; }
+  .flow-split .flow-node { min-width: 0; padding: 8px 4px; }
+  .flow-split .flow-node small { font-size: 8.5px; letter-spacing: 0.3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-node { transition: none; }
+}
