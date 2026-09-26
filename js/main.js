@@ -9,6 +9,7 @@ if (document.getElementById('terminal')) {
   initTerminalFab();
 }
 initBlogList();
+if (document.querySelector('[data-learning]')) initLearning();
 if (document.querySelector('[data-article]')) initArticle();
 initCursor();
 initScrollProgress();

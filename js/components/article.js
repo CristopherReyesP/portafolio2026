@@ -1,5 +1,5 @@
 // Blog post enhancements: generated table of contents with the active section,
-// copy-link/LinkedIn share and the related case card from window.BLOG_POSTS.
+// copy-link/LinkedIn share and the related case card from the blog manifests.
 // Posts only need their <h2>s and the article markup; without JavaScript the
 // content still reads top to bottom (no TOC, no copy button).
 // Depends on blog.js (escapeBlogText), posts.js and the i18n globals.
@@ -121,15 +121,15 @@ function initArticleShare(article) {
   });
 }
 
-// relatedCase is the id of the case title on the home page (e.g. case2-name);
-// its translation key is the same id with an underscore (case2_name).
+// relatedProject (relatedCase in posts.js) is the id of the case title on the home page
+// (e.g. case2-name); its translation key is the same id with an underscore (case2_name).
 function initArticleRelated(article) {
   const card = article.querySelector('[data-article-related]');
-  const post = (window.BLOG_POSTS || []).find(item => item.slug === article.dataset.article);
-  if (!card || !post || !post.relatedCase) return;
-  const nameKey = post.relatedCase.replace(/-/g, '_');
+  const post = getBlogEntries().find(item => item.slug === article.dataset.article);
+  if (!card || !post || !post.relatedProject) return;
+  const nameKey = post.relatedProject.replace(/-/g, '_');
   const copy = translations[currentLang];
-  card.href = '../../#' + encodeURIComponent(post.relatedCase);
+  card.href = '../../#' + encodeURIComponent(post.relatedProject);
   card.innerHTML = `<span class="article-related-label" data-i18n="article_related">${escapeBlogText(copy.article_related)}</span>
   <span class="article-related-name" data-i18n="${nameKey}">${escapeBlogText(copy[nameKey] || '')}</span>
   <span class="article-related-cta" data-i18n="article_related_cta">${escapeBlogText(copy.article_related_cta)}</span>`;

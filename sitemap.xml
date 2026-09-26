@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cristopherreyesp.github.io/portafolio2026/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-09-26</lastmod>
   </url>
   <url>
     <loc>https://cristopherreyesp.github.io/portafolio2026/blog/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-09-26</lastmod>
+  </url>
+  <url>
+    <loc>https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-select-for-update-wait-nowait.html</loc>
+    <lastmod>2026-09-26</lastmod>
   </url>
   <url>
     <loc>https://cristopherreyesp.github.io/portafolio2026/blog/posts/patron-saga-sistemas-pagos.html</loc>

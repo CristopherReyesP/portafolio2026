@@ -21,6 +21,7 @@ sources=(
   components/cases.css
   components/why.css
   components/experience.css
+  components/learning.css
   components/blog.css
   components/article.css
   components/contact.css

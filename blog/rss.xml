@@ -5,7 +5,15 @@
     <link>https://cristopherreyesp.github.io/portafolio2026/blog/</link>
     <description>Notas de ingeniería: arquitectura, microservicios, bases de datos e IA. Lo que aprendo construyendo sistemas reales.</description>
     <language>es</language>
-    <lastBuildDate>Fri, 25 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 26 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Oracle: SELECT FOR UPDATE WAIT vs NOWAIT</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-select-for-update-wait-nowait.html</link>
+      <description>Cómo bloquear una fila como máximo unos segundos (o fallar al instante) cuando otra transacción ya la tiene bloqueada.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/notes/oracle-select-for-update-wait-nowait.html</guid>
+      <category>Oracle</category>
+    </item>
     <item>
       <title>Patrón Saga en sistemas de pagos: qué hacer cuando una transacción falla a mitad</title>
       <link>https://cristopherreyesp.github.io/portafolio2026/blog/posts/patron-saga-sistemas-pagos.html</link>

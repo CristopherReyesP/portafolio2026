@@ -129,3 +129,42 @@
   .blog-listing .blog-grid { grid-template-columns: minmax(0, 1fr); }
   .blog-listing { padding-top: 130px; }
 }
+
+/* Knowledge base: article vs note label, the note card and the learning filter. */
+.blog-card-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.blog-type {
+  padding: 2px 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.blog-card--note .blog-type { border-color: rgb(var(--purple-rgb) / 0.5); color: var(--purple); }
+.blog-learning {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.blog-learning[hidden] { display: none; }
+.blog-learning strong { color: var(--accent); }
+.blog-learning button {
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.blog-learning button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Note pages (blog/notes/): kind label and related links. */
+.note-kind { margin-bottom: var(--space-3); color: var(--purple); font-size: 11px; letter-spacing: 2px; }
+.article-content .note-related { list-style: none; padding-left: 0; }
+.note-related-kind { margin-right: var(--space-2); color: var(--text-muted); font-size: 10px; letter-spacing: 1px; }

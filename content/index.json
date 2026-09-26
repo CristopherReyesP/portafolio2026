@@ -1,0 +1,111 @@
+{
+  "generated": "scripts/build-content.mjs",
+  "entries": [
+    {
+      "slug": "patron-saga-sistemas-pagos",
+      "type": "article",
+      "title": "Patrón Saga en sistemas de pagos: qué hacer cuando una transacción falla a mitad",
+      "category": "Arquitectura",
+      "tags": [
+        "Saga",
+        "Sistemas distribuidos",
+        "Backend",
+        "Transacciones",
+        "Idempotencia"
+      ],
+      "status": "published",
+      "created": "2026-09-25",
+      "updated": "2026-09-25",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "blog/posts/patron-saga-sistemas-pagos.html"
+    },
+    {
+      "slug": "timeout-no-significa-fallo",
+      "type": "article",
+      "title": "Timeout no significa fallo: uno de los problemas más peligrosos en sistemas distribuidos",
+      "category": "Arquitectura",
+      "tags": [],
+      "status": "published",
+      "created": "2026-09-25",
+      "updated": "2026-09-25",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "blog/posts/timeout-no-significa-fallo.html"
+    },
+    {
+      "slug": "migrar-monolito-microservicios",
+      "type": "article",
+      "title": "Migrar un monolito a microservicios sin detener producción",
+      "category": "Microservicios",
+      "tags": [],
+      "status": "published",
+      "created": "2026-09-25",
+      "updated": "2026-09-25",
+      "learning": [
+        "cloud-platform"
+      ],
+      "source": "blog/posts/migrar-monolito-microservicios.html"
+    },
+    {
+      "slug": "oracle-jobs-automatizacion",
+      "type": "article",
+      "title": "Jobs de Oracle para automatizar procesos operativos",
+      "category": "Bases de datos",
+      "tags": [],
+      "status": "published",
+      "created": "2026-09-25",
+      "updated": "2026-09-25",
+      "learning": [],
+      "source": "blog/posts/oracle-jobs-automatizacion.html"
+    },
+    {
+      "slug": "claude-code-backend",
+      "type": "article",
+      "title": "Cómo estoy usando Claude Code en proyectos de desarrollo",
+      "category": "IA / Herramientas",
+      "tags": [],
+      "status": "published",
+      "created": "2026-09-25",
+      "updated": "2026-09-25",
+      "learning": [
+        "ai-engineering"
+      ],
+      "source": "blog/posts/claude-code-backend.html"
+    },
+    {
+      "slug": "agentes-ia-local",
+      "type": "article",
+      "title": "Agentes de IA locales: dónde tienen sentido realmente",
+      "category": "IA",
+      "tags": [],
+      "status": "published",
+      "created": "2026-09-25",
+      "updated": "2026-09-25",
+      "learning": [
+        "ai-engineering"
+      ],
+      "source": "blog/posts/agentes-ia-local.html"
+    },
+    {
+      "slug": "oracle-select-for-update-wait-nowait",
+      "type": "note",
+      "title": "Oracle: SELECT FOR UPDATE WAIT vs NOWAIT",
+      "category": "Oracle",
+      "tags": [
+        "Oracle",
+        "Concurrencia",
+        "Locks"
+      ],
+      "status": "published",
+      "created": "2026-09-26",
+      "updated": "2026-09-26",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "content/notes/oracle-select-for-update-wait-nowait.md"
+    }
+  ]
+}
