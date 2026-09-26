@@ -25,13 +25,14 @@
    Phones keep a fixed height: the centered one-column hero would jump as output grows. */
 .hero-terminal .terminal-body { max-height: 300px; }
 /* Space Mono lacks box-drawing glyphs: one system mono font for the whole art keeps it aligned.
-   Kept small and muted so the hero name stays the focal point. */
+   Kept small and slightly dimmed so the hero name stays the focal point. */
 .hero-terminal { container-type: inline-size; --banner-pad: 24px; }
 .terminal-banner {
   margin: 0; padding: 20px var(--banner-pad) 0; overflow: hidden; white-space: pre;
   font-family: ui-monospace, Menlo, Consolas, 'DejaVu Sans Mono', 'Courier New', monospace;
   font-size: min(5.5px, calc((100cqi - 2 * var(--banner-pad)) / 60)); line-height: 1.1;
-  color: var(--muted); opacity: 0.6;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0.75; width: fit-content;
 }
 .t-comment { color: var(--muted); } .t-key { color: var(--accent2); } .t-str { color: var(--accent); }
 .t-num { color: #ff9966; } .t-bool { color: var(--accent3); } .t-bracket { color: var(--muted); }
