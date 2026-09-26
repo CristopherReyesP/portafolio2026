@@ -234,6 +234,13 @@ const translations = {
       wave: ['¡Hola, hola! 👋', '*saluda con su mano invisible*'],
       rainbow: ['✨ A R C O Í R I S ✨ Si ya estaba encendido, lo acabo de apagar: soy un interruptor, no un mago.'],
       away: ['Me encantaría, pero todavía no estoy en pantalla. Escribe "pet" para invocarme.'],
+      hacker: [
+        '🚨 ¡Alto, hacker! Suelta el teclado y aléjate lentamente del DROP TABLE.',
+        'Incidente reportado… a nadie. Soy un blob, no una central de emergencias.',
+        'Buen intento. Mi contraseña es… espera, casi caigo. Mejor prueba con "help".',
+        '¿Trabajas en seguridad? Escribe "contact". El interrogatorio puede esperar.',
+        'Travesura detectada. Tu sentencia: mirar mi gorra durante tres segundos y medio.'
+      ],
       // Unknown questions: refused like a heavily restricted AI, always pointing to what it can answer
       fallback: [
         'Lo siento, pero no puedo ayudarte con eso. Mis directrices solo me permiten hablar de Cristopher: su experiencia, su stack, sus proyectos o cómo contactarlo.',
@@ -256,6 +263,7 @@ const translations = {
       languages: 'Pregúntale a él 🙂', salary: 'Mejor escríbele 📧', ai: '¿IA? Solo if/else.',
       petWho: '¡Soy el blob!', greeting: '¡Hola! 👋', howAreYou: '¡Todo en verde!', thanks: '¡De nada! 💚',
       joke: 'Ba dum tss 🥁', goodbye: '¡Chao! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
+      hacker: '🚨 ¡ALTO, HACKER!',
       fallback: '🔒 No tengo permitido eso'
     },
     // Occasional hints that there is no real AI behind the answers
@@ -602,6 +610,13 @@ const translations = {
       wave: ['Hi, hi! 👋', '*waves with its invisible hand*'],
       rainbow: ['✨ R A I N B O W ✨ If it was already on, I just turned it off: I am a toggle, not a wizard.'],
       away: ['I would love to, but I am not on screen yet. Type "pet" to summon me.'],
+      hacker: [
+        '🚨 Stop, hacker! Drop the keyboard and slowly step away from the DROP TABLE.',
+        'Incident reported… to nobody. I am a blob, not an emergency dispatcher.',
+        'Nice try. My password is… wait, you almost got me. Try "help" instead.',
+        'Work in security? Type "contact". The interrogation can wait.',
+        'Mischief detected. Your sentence: admire my cap for three and a half seconds.'
+      ],
       // Unknown questions: refused like a heavily restricted AI, always pointing to what it can answer
       fallback: [
         'I\'m sorry, but I can\'t help with that. My guidelines only allow me to talk about Cristopher: his experience, stack, projects or how to reach him.',
@@ -624,6 +639,7 @@ const translations = {
       languages: 'Ask him directly 🙂', salary: 'Better email him 📧', ai: 'AI? Just if/else.',
       petWho: 'I\'m the blob!', greeting: 'Hi! 👋', howAreYou: 'All green!', thanks: 'You\'re welcome! 💚',
       joke: 'Ba dum tss 🥁', goodbye: 'Bye! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
+      hacker: '🚨 STOP, HACKER!',
       fallback: '🔒 I\'m not allowed to'
     },
     // Occasional hints that there is no real AI behind the answers
