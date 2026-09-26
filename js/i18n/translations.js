@@ -244,6 +244,9 @@ const translations = {
       wave: ['¡Hola, hola! 👋', '*saluda con su mano invisible*'],
       rainbow: ['✨ A R C O Í R I S ✨ Si ya estaba encendido, lo acabo de apagar: soy un interruptor, no un mago.'],
       away: ['Me encantaría, pero todavía no estoy en pantalla. Escribe "pet" para invocarme.'],
+      // Blog (titles, links and per-article answers come from js/blog/posts.js)
+      blogList: ['Tiene {count} artículos en su blog:', 'En el blog hay {count} artículos:'],
+      blogTopic: ['Esto es lo que escribió sobre eso:', 'Sobre eso tiene estos artículos:'],
       hacker: [
         '🚨 ¡Alto, hacker! Suelta el teclado y aléjate lentamente del DROP TABLE.',
         'Incidente reportado… a nadie. Soy un blob, no una central de emergencias.',
@@ -263,6 +266,7 @@ const translations = {
     pet_thinking: 'pensando',
     pet_copy: 'Copiar respuesta',
     pet_copied: 'Copiado',
+    pet_blog_read: 'Leer artículo →', pet_blog_all: 'Ver el blog →',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend para sistemas que no pueden fallar.', experience: 'Más de 5 años en producción.',
@@ -274,6 +278,7 @@ const translations = {
       petWho: '¡Soy el blob!', greeting: '¡Hola! 👋', howAreYou: '¡Todo en verde!', thanks: '¡De nada! 💚',
       joke: 'Ba dum tss 🥁', goodbye: '¡Chao! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
       hacker: '🚨 ¡ALTO, HACKER!',
+      blogPost: 'Lo explica en su blog 📝', blogList: '{count} artículos en el blog 📝', blogTopic: 'Mira estos artículos 📝',
       fallback: '🔒 No tengo permitido eso'
     },
     // Occasional hints that there is no real AI behind the answers
@@ -726,6 +731,9 @@ const translations = {
       wave: ['Hi, hi! 👋', '*waves with its invisible hand*'],
       rainbow: ['✨ R A I N B O W ✨ If it was already on, I just turned it off: I am a toggle, not a wizard.'],
       away: ['I would love to, but I am not on screen yet. Type "pet" to summon me.'],
+      // Blog (titles, links and per-article answers come from js/blog/posts.js)
+      blogList: ['He has {count} articles on his blog, written in Spanish:', 'There are {count} articles on the blog (in Spanish):'],
+      blogTopic: ['Here is what he wrote about that (in Spanish):', 'He has these articles on that (in Spanish):'],
       hacker: [
         '🚨 Stop, hacker! Drop the keyboard and slowly step away from the DROP TABLE.',
         'Incident reported… to nobody. I am a blob, not an emergency dispatcher.',
@@ -745,6 +753,7 @@ const translations = {
     pet_thinking: 'thinking',
     pet_copy: 'Copy answer',
     pet_copied: 'Copied',
+    pet_blog_read: 'Read article (in Spanish) →', pet_blog_all: 'Open the blog →',
     // Short version for the mascot's speech bubble
     pet_bubbles: {
       who: 'Backend systems that cannot fail.', experience: '5+ years in production.',
@@ -756,6 +765,7 @@ const translations = {
       petWho: 'I\'m the blob!', greeting: 'Hi! 👋', howAreYou: 'All green!', thanks: 'You\'re welcome! 💚',
       joke: 'Ba dum tss 🥁', goodbye: 'Bye! 👋', dance: '💃', love: '💚', wave: '👋', rainbow: '✨',
       hacker: '🚨 STOP, HACKER!',
+      blogPost: 'He wrote about it 📝', blogList: '{count} articles on the blog 📝', blogTopic: 'Check these articles 📝',
       fallback: '🔒 I\'m not allowed to'
     },
     // Occasional hints that there is no real AI behind the answers

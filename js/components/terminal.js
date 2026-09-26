@@ -292,6 +292,50 @@ function addCopyButton(line, answer, text) {
   line.appendChild(button);
 }
 
+// Blog answers: the article list and links show up once the answer is typed. Hrefs, titles
+// and labels come from posts.js / translations.js, never from the input, and go in as text.
+function petLink(href, text) {
+  const link = document.createElement('a');
+  link.className = 't-link';
+  link.href = href;
+  link.textContent = text;
+  return link;
+}
+
+function appendPetLinks(line, reply) {
+  const items = reply.items || [];
+  const links = reply.links || [];
+  if (!items.length && !links.length) return;
+  const block = document.createElement('div');
+  block.className = 'pet-links';
+  items.forEach((item) => {
+    const row = document.createElement('div');
+    const arrow = document.createElement('span');
+    arrow.className = 't-str';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '▸ ';
+    const title = petLink(item.href, item.title);
+    title.lang = 'es';
+    const category = document.createElement('span');
+    category.className = 't-dim';
+    category.textContent = ` · ${item.category}`;
+    row.append(arrow, title, category);
+    block.appendChild(row);
+  });
+  links.forEach((link) => {
+    const row = document.createElement('div');
+    row.appendChild(petLink(link.href, link.label));
+    block.appendChild(row);
+  });
+  line.appendChild(block);
+}
+
+function petCopyText(reply) {
+  const items = (reply.items || []).map((item) => `- ${item.title} (${item.category}): ${new URL(item.href, location.href).href}`);
+  const links = (reply.links || []).map((link) => `${link.label} ${new URL(link.href, location.href).href}`);
+  return [reply.text].concat(items, links).join('\n');
+}
+
 function printPetReply(reply, output, body) {
   const line = document.createElement('div');
   line.className = 'terminal-output pet-reply';
@@ -327,7 +371,8 @@ function printPetReply(reply, output, body) {
     thinking.remove();
     react();
     segments.forEach(([el, text]) => { el.textContent = text; });
-    addCopyButton(line, answer, reply.text);
+    appendPetLinks(line, reply);
+    addCopyButton(line, answer, petCopyText(reply));
     line.removeAttribute('aria-busy');
     petTyping.delete(output);
     setPetBusy();
