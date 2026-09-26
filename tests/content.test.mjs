@@ -17,6 +17,19 @@ function load() {
   return ctx;
 }
 
+test('blog lists real-project articles first, then articles, then notes', () => {
+  const ctx = load();
+  ctx.document = { querySelector: () => null };
+  ctx.BLOG_POSTS = [
+    { slug: 'plain-new', date: '2026-09-30' },
+    { slug: 'case-old', date: '2026-01-01', relatedCase: 'case1-name' },
+  ];
+  ctx.BLOG_NOTES = [{ slug: 'note-newest', type: 'note', date: '2026-12-31' }];
+  vm.runInContext(fs.readFileSync(new URL('js/components/blog.js', root), 'utf8'), ctx);
+  assert.deepEqual(Array.from(ctx.getBlogEntries(), e => e.slug), ['case-old', 'plain-new', 'note-newest']);
+  assert.deepEqual(Array.from(ctx.getBlogEntries('recent'), e => e.slug), ['note-newest', 'plain-new', 'case-old']);
+});
+
 test('generated files are up to date with content/', () => {
   const files = ['js/blog/notes.js', 'js/blog/search-index.js', 'content/index.json', 'sitemap.xml', 'blog/rss.xml'];
   const before = files.map(f => fs.readFileSync(new URL(f, root), 'utf8'));

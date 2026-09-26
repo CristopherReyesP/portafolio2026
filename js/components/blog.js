@@ -16,13 +16,24 @@ function escapeBlogText(text) {
   return String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
 }
 
-// Articles and notes in one list, newest first (articles first on the same day).
-function getBlogEntries() {
+// Best work first for someone evaluating the author: articles from a real project (linked
+// from a case on the home page), then other articles, then short notes; newest first in each.
+function getBlogRank(entry) {
+  if (entry.type === 'note') return 2;
+  return entry.relatedProject ? 0 : 1;
+}
+
+// relevance is the default everywhere; the /blog/ listing can switch to recent (?sort=recent).
+const BLOG_ORDERS = {
+  relevance: (a, b) => getBlogRank(a) - getBlogRank(b) || b.date.localeCompare(a.date),
+  recent: (a, b) => b.date.localeCompare(a.date) || getBlogRank(a) - getBlogRank(b)
+};
+
+function getBlogEntries(order = 'relevance') {
   const posts = (window.BLOG_POSTS || []).map(post => ({ ...post, type: post.type || 'article',
     path: `blog/posts/${post.slug}.html`, relatedProject: post.relatedProject || post.relatedCase || null }));
   const notes = window.BLOG_NOTES || [];
-  return [...posts, ...notes].sort((a, b) => b.date.localeCompare(a.date)
-    || (a.type === b.type ? 0 : a.type === 'article' ? -1 : 1));
+  return [...posts, ...notes].sort(BLOG_ORDERS[order] || BLOG_ORDERS.relevance);
 }
 
 // base: relative path from the current page to the site root ('' on the home page)
@@ -39,11 +50,13 @@ function renderBlogCard(post, base, withArt = false) {
 </article>`;
 }
 
+// Home page: articles only, so the few cards shown there are the strongest content.
 function initBlogLatest() {
   const grid = document.querySelector('[data-blog-latest]');
   if (!grid || !window.BLOG_POSTS) return;
   const count = Number(grid.dataset.blogLatest) || 4;
-  grid.innerHTML = getBlogEntries().slice(0, count).map(post => renderBlogCard(post, '')).join('');
+  grid.innerHTML = getBlogEntries().filter(post => post.type === 'article').slice(0, count)
+    .map(post => renderBlogCard(post, '')).join('');
 }
 
 initBlogLatest();
@@ -62,8 +75,8 @@ function renderBlogArt(category) {
   return `<div class="blog-art"><svg viewBox="0 0 220 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${shapes[category] || shapes.arquitectura}</svg></div>`;
 }
 
-// /blog/: type (all/article/note) × category × learning focus × text search.
-// State lives in the URL (?type=note&cat=oracle&learning=distributed-systems&q=lock).
+// /blog/: type (all/article/note) × category × learning focus × text search, plus sort order.
+// State lives in the URL (?type=note&cat=oracle&learning=distributed-systems&q=lock&sort=recent).
 // Categories are toggle chips (click again to clear); counts reflect the other filters.
 function initBlogList() {
   const grid = document.querySelector('[data-blog-list]');
@@ -71,6 +84,7 @@ function initBlogList() {
   const entries = getBlogEntries();
   const search = document.getElementById('blogSearch');
   const typeFilters = document.querySelectorAll('[data-blog-type]');
+  const sortButtons = document.querySelectorAll('[data-blog-sort]');
   const categoryGroup = document.querySelector('[data-blog-categories]');
   const learningBox = document.getElementById('blogLearning');
   const clear = document.querySelector('[data-blog-clear]');
@@ -90,6 +104,7 @@ function initBlogList() {
   const params = new URLSearchParams(window.location.search);
   let category = categories.includes(params.get('cat')) ? params.get('cat') : null;
   let type = ['article', 'note'].includes(params.get('type')) ? params.get('type') : 'all';
+  let sort = params.get('sort') === 'recent' ? 'recent' : 'relevance';
   const focuses = window.LEARNING_FOCUSES || [];
   let learning = focuses.some(focus => focus.id === params.get('learning')) ? params.get('learning') : null;
   search.value = params.get('q') || '';
@@ -106,6 +121,7 @@ function initBlogList() {
       button.setAttribute('aria-pressed', String(key === type));
       button.querySelector('[data-blog-type-count]').textContent = entries.filter(post => matches(post, 'type') && (key === 'all' || post.type === key)).length;
     });
+    sortButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.blogSort === sort)));
     filters.forEach(button => {
       const key = button.dataset.blogFilter;
       const n = entries.filter(post => matches(post, 'cat') && post.categoryKey.includes(key)).length;
@@ -136,8 +152,9 @@ function initBlogList() {
     setParam('cat', category);
     setParam('learning', learning);
     setParam('q', search.value.trim() ? search.value : '');
+    setParam('sort', sort === 'recent' ? sort : '');
     window.history.replaceState(null, '', url.pathname + url.search + url.hash);
-    const posts = entries.filter(post => matches(post));
+    const posts = entries.filter(post => matches(post)).sort(BLOG_ORDERS[sort]);
     resultCount = posts.length;
     grid.innerHTML = posts.map(post => renderBlogCard(post, '../', true)).join('');
     empty.hidden = resultCount !== 0;
@@ -152,6 +169,11 @@ function initBlogList() {
   }));
   typeFilters.forEach(button => button.addEventListener('click', () => {
     type = button.dataset.blogType;
+    renderResults();
+  }));
+  // Sorting is not a filter: "clear filters" keeps the chosen order.
+  sortButtons.forEach(button => button.addEventListener('click', () => {
+    sort = button.dataset.blogSort;
     renderResults();
   }));
   clear.addEventListener('click', () => {

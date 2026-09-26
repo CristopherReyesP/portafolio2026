@@ -1746,16 +1746,30 @@ header nav {
   gap: var(--space-5);
   align-items: start;
 }
+/* Each card spans 8 shared rows (header, art, name, topics, cycle, stats, toggle, evidence)
+   through subgrid, so cards in the same row line up even when one has fewer topic chips. */
 .learning-card {
   --tone: var(--accent);
   --tone-rgb: var(--accent-rgb);
+  --pad-bottom: var(--space-6);
   min-width: 0;
-  padding: var(--space-5) var(--space-6) var(--space-6);
-  display: flex;
-  flex-direction: column;
+  /* bottom: the empty evidence row still adds one gap, so subtract it here */
+  padding: var(--space-5) var(--space-6) calc(var(--pad-bottom) - var(--space-5));
+  display: grid;
+  grid-row: span 8;
+  grid-template-rows: subgrid;
+  align-content: start;
   gap: var(--space-5);
   overflow: hidden;
   border-top: 2px solid rgb(var(--tone-rgb) / 0.7);
+}
+/* While a card shows its evidence, every card takes its own height again, so the other
+   cards do not stretch into empty space next to the open panel. */
+.learning-grid:has(.learning-toggle[aria-expanded="true"]) .learning-card {
+  display: flex;
+  flex-direction: column;
+  grid-row: auto;
+  padding-bottom: var(--pad-bottom);
 }
 .learning-card--cyan { --tone: var(--accent-secondary); --tone-rgb: var(--accent-secondary-rgb); }
 .learning-card--purple { --tone: var(--purple); --tone-rgb: var(--purple-rgb); }
@@ -1824,7 +1838,7 @@ header nav {
   text-transform: uppercase;
   overflow-wrap: anywhere;
 }
-.learning-topics { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.learning-topics { list-style: none; display: flex; flex-wrap: wrap; align-content: flex-start; gap: var(--space-2); }
 .learning-card .learning-topics .chip {
   border-color: rgb(var(--tone-rgb) / 0.35);
   color: var(--tone);
@@ -1919,7 +1933,8 @@ header nav {
 }
 @media (max-width: 700px) {
   .learning-grid { grid-template-columns: minmax(0, 1fr); }
-  .learning-card { padding: var(--space-4) var(--space-5) var(--space-5); }
+  /* One card per row: nothing to line up, so each card uses its own height */
+  .learning-card { --pad-bottom: var(--space-5); display: flex; flex-direction: column; grid-row: auto; padding: var(--space-4) var(--space-5) var(--pad-bottom); }
   .learning-art { margin: 0 calc(var(--space-5) * -1); padding-inline: var(--space-5); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2102,6 +2117,10 @@ button[aria-pressed="true"] .blog-n { color: inherit; opacity: 0.75; }
   cursor: pointer;
 }
 .blog-clear:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* Sort order: same segmented control as the type filter, smaller, at the end of the row */
+.blog-sort { display: flex; align-items: center; gap: var(--space-3); margin-left: auto; }
+.blog-sort .blog-types button { min-height: 32px; padding: 0 var(--space-3); font-size: 11px; }
+.blog-sort + .blog-clear { margin-left: 0; }
 .blog-clear[hidden] { display: none; }
 #blogGrid { margin-top: var(--space-6); }
 .blog-empty { padding: var(--space-6); color: var(--text-secondary); }
@@ -2146,6 +2165,7 @@ button[aria-pressed="true"] .blog-n { color: inherit; opacity: 0.75; }
   .blog-controls { padding: var(--space-4); }
   .blog-types { display: flex; width: 100%; }
   .blog-types button { flex: 1; padding: 0 var(--space-2); }
+  .blog-sort { width: 100%; margin-left: 0; }
   .blog-cat-row { flex-direction: column; align-items: stretch; gap: var(--space-2); }
   .blog-cats {
     flex-wrap: nowrap;

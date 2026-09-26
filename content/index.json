@@ -90,6 +90,94 @@
       "source": "blog/posts/agentes-ia-local.html"
     },
     {
+      "slug": "claude-code-sandbox-usb-gh",
+      "type": "note",
+      "title": "Claude Code: cuando el sandbox no te deja ver algo",
+      "category": "IA",
+      "tags": [
+        "Claude Code",
+        "Sandbox",
+        "macOS"
+      ],
+      "status": "published",
+      "created": "2026-09-26",
+      "updated": "2026-09-26",
+      "learning": [
+        "ai-engineering"
+      ],
+      "source": "content/notes/claude-code-sandbox-usb-gh.md"
+    },
+    {
+      "slug": "node-oracledb-maxlifetimesession-thick",
+      "type": "note",
+      "title": "node-oracledb: maxLifetimeSession no te salva de ORA-02399",
+      "category": "Oracle",
+      "tags": [
+        "Oracle",
+        "node-oracledb",
+        "Connection pool"
+      ],
+      "status": "published",
+      "created": "2026-09-26",
+      "updated": "2026-09-26",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "content/notes/node-oracledb-maxlifetimesession-thick.md"
+    },
+    {
+      "slug": "node-oracledb-njs-116-thick-mode",
+      "type": "note",
+      "title": "node-oracledb: NJS-116 y el verificador de contraseña 0x939",
+      "category": "Oracle",
+      "tags": [
+        "Oracle",
+        "Node.js",
+        "node-oracledb"
+      ],
+      "status": "published",
+      "created": "2026-09-26",
+      "updated": "2026-09-26",
+      "learning": [],
+      "source": "content/notes/node-oracledb-njs-116-thick-mode.md"
+    },
+    {
+      "slug": "openshift-reiniciar-deployment-sin-borrar-pods",
+      "type": "note",
+      "title": "OpenShift: reiniciar un deployment sin borrar pods a mano",
+      "category": "OpenShift",
+      "tags": [
+        "OpenShift",
+        "Kubernetes",
+        "oc"
+      ],
+      "status": "published",
+      "created": "2026-09-26",
+      "updated": "2026-09-26",
+      "learning": [
+        "cloud-platform"
+      ],
+      "source": "content/notes/openshift-reiniciar-deployment-sin-borrar-pods.md"
+    },
+    {
+      "slug": "oracle-ora-00054-a-http-409",
+      "type": "note",
+      "title": "Oracle: convertir ORA-00054 en un HTTP 409",
+      "category": "Oracle",
+      "tags": [
+        "Oracle",
+        "NestJS",
+        "Locks"
+      ],
+      "status": "published",
+      "created": "2026-09-26",
+      "updated": "2026-09-26",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "content/notes/oracle-ora-00054-a-http-409.md"
+    },
+    {
       "slug": "oracle-select-for-update-wait-nowait",
       "type": "note",
       "title": "Oracle: SELECT FOR UPDATE WAIT vs NOWAIT",
@@ -106,6 +194,22 @@
         "distributed-systems"
       ],
       "source": "content/notes/oracle-select-for-update-wait-nowait.md"
+    },
+    {
+      "slug": "oracle-validar-insert-sin-ejecutarlo",
+      "type": "note",
+      "title": "Oracle: validar un INSERT sin ejecutarlo con DBMS_SQL.PARSE",
+      "category": "Oracle",
+      "tags": [
+        "Oracle",
+        "PL/SQL",
+        "DBMS_SQL"
+      ],
+      "status": "published",
+      "created": "2026-09-26",
+      "updated": "2026-09-26",
+      "learning": [],
+      "source": "content/notes/oracle-validar-insert-sin-ejecutarlo.md"
     }
   ]
 }
