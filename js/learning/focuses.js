@@ -3,9 +3,11 @@
 // link themselves to a focus with `learning: [id]`. `projects` are ids of case titles on
 // the home page (translation key = id with "_" instead of "-").
 // status: reinforcing | active | exploring (labels in translations.js: learning_status_*).
+// tone: accent | cyan | purple — the card color; its illustration is keyed by id in learning.js.
 window.LEARNING_FOCUSES = [
   {
     "id": "distributed-systems",
+    "tone": "accent",
     "title": { "es": "Sistemas distribuidos", "en": "Distributed systems" },
     "status": ["reinforcing"],
     "topics": {
@@ -16,6 +18,7 @@ window.LEARNING_FOCUSES = [
   },
   {
     "id": "cloud-platform",
+    "tone": "cyan",
     "title": { "es": "Cloud & Platform", "en": "Cloud & Platform" },
     "status": ["active", "reinforcing"],
     "topics": {
@@ -26,6 +29,7 @@ window.LEARNING_FOCUSES = [
   },
   {
     "id": "ai-engineering",
+    "tone": "purple",
     "title": { "es": "AI Engineering", "en": "AI Engineering" },
     "status": ["exploring"],
     "topics": {
