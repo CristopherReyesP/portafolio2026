@@ -334,11 +334,8 @@ function printPetReply(reply, output, body) {
     body.scrollTop = body.scrollHeight;
   }
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    finish();
-    return;
-  }
-
+  // Typing stays on with reduced motion: text appearing is not motion, and the blinking
+  // cursor is already disabled by the CSS media query.
   // Screen readers wait for the full answer instead of reading it letter by letter
   line.setAttribute('aria-busy', 'true');
   petTyping.set(output, finish);
@@ -447,7 +444,7 @@ function initTerminal() {
   // The typed text lives in its own span (with a block cursor) instead of the input,
   // so the input stays empty and usable; output lines are separate blocks revealed one
   // by one, so none of them outgrows the hero h1 as the LCP element.
-  const INTRO_COMMANDS = ['whoami', 'experience --summary', 'stack --core', 'location'];
+  const INTRO_COMMANDS = ['whoami', 'stack --core', 'location'];
   const intro = { state: 'idle', timer: 0, typed: null, lines: [], output: null, echoed: false, command: 0 };
   const placeholder = terminalInput.getAttribute('placeholder');
 
@@ -541,7 +538,8 @@ function initTerminal() {
   function startIntro() {
     if (intro.state !== 'idle') return;
     const userIsTyping = document.activeElement === terminalInput || terminalInput.value !== '';
-    if (userIsTyping || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Reduced motion keeps the typed intro too (see the pet reply note); only the cursor blink stops
+    if (userIsTyping) {
       finishIntro();
       return;
     }
