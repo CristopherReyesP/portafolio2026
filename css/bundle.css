@@ -363,25 +363,21 @@ nav {
   opacity: 0; animation: fadeUp 0.8s 0.3s ease forwards;
   position: relative;
 }
-/* Filled, one step dimmer than line 1: the name reads as one heavy block */
-.hero-name .line2 { color: rgba(232,232,240,0.78); -webkit-text-stroke: 1px transparent; display: inline-block; }
+.hero-name .line2 { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.6); display: inline-block; }
 .hero-name:hover .line2 {
   animation: glitch 0.4s linear;
 }
 @keyframes glitch {
-  0% { transform: translate(0); -webkit-text-stroke-color: transparent; }
+  0% { transform: translate(0); -webkit-text-stroke-color: rgba(255,255,255,0.6); }
   20% { transform: translate(-2px, 1px); -webkit-text-stroke-color: var(--accent3); }
   40% { transform: translate(2px, -1px); -webkit-text-stroke-color: var(--accent2); }
   60% { transform: translate(-1px, -1px); -webkit-text-stroke-color: var(--accent); }
   80% { transform: translate(1px, 1px); -webkit-text-stroke-color: var(--accent3); }
-  100% { transform: translate(0); -webkit-text-stroke-color: transparent; }
+  100% { transform: translate(0); -webkit-text-stroke-color: rgba(255,255,255,0.6); }
 }
 
 .hero-title { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--muted); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.45s ease forwards; }
-.hero-title span { color: var(--text); font-style: italic; font-family: 'Space Mono', monospace; font-size: 18px; }
-/* The CV button is the only strong accent in the hero */
-.hero .section-tag { color: var(--muted); }
-.hero .section-tag::before { background: var(--muted); }
+.hero-title span { color: var(--accent2); font-style: italic; font-family: 'Space Mono', monospace; font-size: 18px; }
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards; }
 
 /* MAGNETIC BUTTONS */
@@ -507,13 +503,14 @@ nav {
    Phones keep a fixed height: the centered one-column hero would jump as output grows. */
 .hero-terminal .terminal-body { max-height: 300px; }
 /* Space Mono lacks box-drawing glyphs: one system mono font for the whole art keeps it aligned.
-   Kept small and muted so the hero name stays the focal point. */
+   Kept small and slightly dimmed so the hero name stays the focal point. */
 .hero-terminal { container-type: inline-size; --banner-pad: 24px; }
 .terminal-banner {
   margin: 0; padding: 20px var(--banner-pad) 0; overflow: hidden; white-space: pre;
   font-family: ui-monospace, Menlo, Consolas, 'DejaVu Sans Mono', 'Courier New', monospace;
   font-size: min(5.5px, calc((100cqi - 2 * var(--banner-pad)) / 60)); line-height: 1.1;
-  color: var(--muted); opacity: 0.6;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0.75; width: fit-content;
 }
 .t-comment { color: var(--muted); } .t-key { color: var(--accent2); } .t-str { color: var(--accent); }
 .t-num { color: #ff9966; } .t-bool { color: var(--accent3); } .t-bracket { color: var(--muted); }
