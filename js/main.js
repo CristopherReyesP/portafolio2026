@@ -2,17 +2,20 @@
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!prefersReducedMotion) initStars();
 initI18n();
-initTerminal();
-initTerminalTilt();
-initTerminalWindow();
-initTerminalFab();
+if (document.getElementById('terminal')) {
+  initTerminal();
+  initTerminalTilt();
+  initTerminalWindow();
+  initTerminalFab();
+}
+initBlogList();
 initCursor();
 initScrollProgress();
 //initKeyboardNav();
 initRevealOnScroll();
 initCounters();
 initCardSpotlight();
-initActiveNav();
+if (!document.querySelector('[data-blog-list]')) initActiveNav();
 initSectionRail();
 initMagneticButtons();
 initGallery();

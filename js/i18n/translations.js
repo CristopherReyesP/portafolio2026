@@ -441,6 +441,13 @@ const translations = {
     education_status: 'Ingeniería en Sistemas — 10.º semestre',
 
     // Blog
+    blog_search: 'Buscar artículos...', blog_filters: 'Filtrar por categoría',
+    blog_filter_all: 'TODOS', blog_filter_architecture: 'ARQUITECTURA',
+    blog_filter_microservices: 'MICROSERVICIOS', blog_filter_databases: 'BASES DE DATOS',
+    blog_filter_ai: 'IA', blog_filter_tools: 'HERRAMIENTAS', blog_filter_devops: 'DEVOPS',
+    blog_result_one: '{count} artículo', blog_result_many: '{count} artículos',
+    blog_empty: 'No hay artículos que coincidan.', blog_menu: 'Menú',
+    blog_nav: 'Navegación principal', blog_top: 'Volver arriba',
     blog_tag: 'BLOG', blog_title: 'Notas de ingeniería.',
     blog_lead: 'Lo que aprendo construyendo sistemas reales.',
     blog_read_time: 'min de lectura', blog_all: 'VER TODOS LOS ARTÍCULOS →',
@@ -907,6 +914,13 @@ const translations = {
     education_status: 'B.S. Systems Engineering — 10th semester',
 
     // Blog
+    blog_search: 'Search articles...', blog_filters: 'Filter by category',
+    blog_filter_all: 'ALL', blog_filter_architecture: 'ARCHITECTURE',
+    blog_filter_microservices: 'MICROSERVICES', blog_filter_databases: 'DATABASES',
+    blog_filter_ai: 'AI', blog_filter_tools: 'TOOLS', blog_filter_devops: 'DEVOPS',
+    blog_result_one: '{count} article', blog_result_many: '{count} articles',
+    blog_empty: 'No articles match.', blog_menu: 'Menu',
+    blog_nav: 'Main navigation', blog_top: 'Back to top',
     blog_tag: 'BLOG', blog_title: 'Engineering notes.',
     blog_lead: 'What I learn building real systems.',
     blog_read_time: 'min read', blog_all: 'SEE ALL ARTICLES →',
