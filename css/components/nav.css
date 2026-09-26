@@ -71,6 +71,7 @@ header nav {
 @media (max-width: 900px) {
   header nav { padding: 16px var(--section-pad-x); }
   .nav-links { display: none; }
+  header nav a, .lang-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
   .lang-toggle { position: absolute; right: var(--section-pad-x); top: 50%; transform: translateY(-50%); margin: 0; }
 }
 @media (prefers-reduced-motion: reduce) {

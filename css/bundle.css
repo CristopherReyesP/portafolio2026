@@ -122,6 +122,22 @@ body::before {
 /* Keyboard focus: one consistent ring across links, buttons and inputs */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
 
+/* Skip navigation stays above the fixed header when focused. */
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--section-pad-x);
+  z-index: 10002;
+  padding: var(--space-3) var(--space-4);
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-4)));
+}
+.skip-link:focus { transform: translateY(0); }
+
 /* SECTIONS */
 /* Content stays centered at --content-max; the padding grows on wide screens */
 section {
@@ -290,8 +306,12 @@ section {
   50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
 }
 @media (max-width: 900px) {
-  .cursor, canvas { display: none; }
+  .cursor { display: none; }
   body { cursor: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
 }
 
 /* === components/pomodoro.css === */
@@ -514,6 +534,7 @@ header nav {
 @media (max-width: 900px) {
   header nav { padding: 16px var(--section-pad-x); }
   .nav-links { display: none; }
+  header nav a, .lang-btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
   .lang-toggle { position: absolute; right: var(--section-pad-x); top: 50%; transform: translateY(-50%); margin: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -529,7 +550,7 @@ header nav {
    ============================================================ */
 .section-rail { display: none; }
 
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
   .section-rail {
     display: block;
     position: fixed;
@@ -605,8 +626,7 @@ header nav {
 .section-rail a:hover .rail-num,
 .section-rail a:focus-visible .rail-num { color: var(--text); }
 .section-rail a:hover .rail-label,
-.section-rail a:focus-visible .rail-label,
-.section-rail a.active .rail-label { opacity: 1; transform: translate(0, -50%); }
+.section-rail a:focus-visible .rail-label { opacity: 1; transform: translate(0, -50%); }
 .section-rail a.active::before { opacity: 1; transform: scale(1); }
 .section-rail a.active .rail-num,
 .section-rail a.active .rail-label { color: var(--accent); }
@@ -700,7 +720,7 @@ header nav {
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 .btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; flex: none; }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .hero { grid-template-columns: 1fr; padding: 104px 20px 56px; gap: 40px; }
   .hero-terminal { min-width: 0; }
   .hero-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -714,50 +734,37 @@ header nav {
 @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
 
 /* === components/brands.css === */
-/* BRANDS STRIP — production context, sits between the hero and the stats bar */
+/* Quiet production-context strip between the hero and stack. */
 .brands {
-  /* No rules of its own: the hero flows straight into the strip, and the
-     stats bar below already draws the one intentional divider. Bordering
-     here doubled that line and put a hard seam under the hero. */
-  padding: 64px 60px 72px;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--section-pad-x);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
 }
 .brands-tag {
-  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 28px;
-  display: flex; align-items: center; gap: 12px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
-.brands-tag::before {
-  content: ''; width: 24px; height: 1px; background: var(--accent);
-}
-.brands-row {
-  display: flex; align-items: center; gap: 36px; flex-wrap: wrap;
-}
+.brands-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-5); }
 .brand-logo {
-  height: 30px; width: auto; opacity: 0.85;
+  height: 26px;
+  width: auto;
+  max-width: 100%;
+  opacity: 0.7;
+  filter: grayscale(1) brightness(1.6);
   transition: opacity 0.3s;
 }
 .brand-logo:hover { opacity: 1; }
-.brand-word {
-  font-family: 'Orbitron', sans-serif; font-weight: 700;
-  font-size: 20px; letter-spacing: 0.5px;
-  color: var(--text); opacity: 0.7;
-  transition: opacity 0.3s;
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo { transition: none; }
 }
-.brand-word:hover { opacity: 1; }
-.brand-sep {
-  width: 1px; height: 22px; background: var(--border);
-}
-@media (max-width: 700px) {
-  .brands { padding: 40px 24px; }
-  .brands-row { gap: 24px; }
-  .brand-sep { display: none; }
-}
-
-/* Square marks read smaller than horizontal wordmarks at the same height. */
-.brand-logo-sq { height: 38px; }
-
-/* Two-line lockup: needs more height than a single-line mark to stay legible. */
-.brand-logo-stack { height: 48px; }
 
 /* === components/terminal.css === */
 .hero-terminal {
@@ -976,6 +983,10 @@ header nav {
   opacity: 0;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .t-cursor { animation: none; }
+}
+
 /* === components/skills.css === */
 .skills-grid {
   display: grid;
@@ -1002,6 +1013,7 @@ header nav {
 .stack-card-head svg { width: 22px; height: 22px; flex: none; color: var(--accent); }
 .stack-card-title {
   min-width: 0;
+  overflow-wrap: anywhere;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 15px;
@@ -1520,7 +1532,7 @@ header nav {
 }
 .case-tech p { font-size: 12px; line-height: 1.7; color: var(--text-secondary); }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .cases-compact { grid-template-columns: minmax(0, 1fr); }
   .case-body { grid-template-columns: minmax(0, 1fr); }
   .case-card--reverse .case-diagram { order: 0; }
@@ -1819,6 +1831,11 @@ header nav {
 @media (min-width: 1000px) {
   .contact-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; }
 }
+@media (max-width: 900px) {
+  .contact-list > div { align-items: center; }
+  .contact-list a { display: inline-flex; align-items: center; min-height: 40px; max-width: 100%; overflow-wrap: anywhere; }
+  .contact-actions a { min-height: 40px; }
+}
 @media (max-width: 600px) {
   .contact-terminal-body { padding: 16px; font-size: 12px; }
   .contact-actions .btn-primary, .contact-actions .btn-secondary { flex: 1 1 auto; justify-content: center; }
@@ -1901,6 +1918,7 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .footer-icon { width: 40px; height: 40px; }
   .scroll-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
 }
 @media (max-width: 700px) {

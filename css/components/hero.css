@@ -79,7 +79,7 @@
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 .btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; flex: none; }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .hero { grid-template-columns: 1fr; padding: 104px 20px 56px; gap: 40px; }
   .hero-terminal { min-width: 0; }
   .hero-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }

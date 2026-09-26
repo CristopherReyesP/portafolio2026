@@ -213,3 +213,7 @@
 .matrix-canvas.fade {
   opacity: 0;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .t-cursor { animation: none; }
+}

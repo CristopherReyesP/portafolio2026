@@ -65,6 +65,7 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .footer-icon { width: 40px; height: 40px; }
   .scroll-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
 }
 @media (max-width: 700px) {

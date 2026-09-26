@@ -119,6 +119,22 @@ body::before {
 /* Keyboard focus: one consistent ring across links, buttons and inputs */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
 
+/* Skip navigation stays above the fixed header when focused. */
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--section-pad-x);
+  z-index: 10002;
+  padding: var(--space-3) var(--space-4);
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-4)));
+}
+.skip-link:focus { transform: translateY(0); }
+
 /* SECTIONS */
 /* Content stays centered at --content-max; the padding grows on wide screens */
 section {

@@ -100,6 +100,11 @@
 @media (min-width: 1000px) {
   .contact-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 56px; }
 }
+@media (max-width: 900px) {
+  .contact-list > div { align-items: center; }
+  .contact-list a { display: inline-flex; align-items: center; min-height: 40px; max-width: 100%; overflow-wrap: anywhere; }
+  .contact-actions a { min-height: 40px; }
+}
 @media (max-width: 600px) {
   .contact-terminal-body { padding: 16px; font-size: 12px; }
   .contact-actions .btn-primary, .contact-actions .btn-secondary { flex: 1 1 auto; justify-content: center; }

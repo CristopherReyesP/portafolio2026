@@ -1,5 +1,6 @@
 const translations = {
   es: {
+    skip_link: 'Saltar al contenido',
     // Nav
     nav_skills: 'Stack', nav_projects: 'Proyectos', nav_why: 'Cómo trabajo',
     nav_exp: 'Experiencia', nav_cta: 'Contacto',
@@ -285,8 +286,6 @@ const translations = {
     ],
 
     // Stats
-    stat1: 'Años en sistemas de producción', stat2: 'Microservicios bancarios activos',
-    stat3: 'Registros migrados sin pérdida', stat4: 'Downtime en migraciones críticas',
 
     // Skills
     skills_tag: "Stack",
@@ -446,7 +445,6 @@ const translations = {
     contact_title: 'Hablemos.',
     contact_kicker: 'Construyamos sistemas confiables.',
     contact_sub: 'Busco roles remotos internacionales de tiempo completo en ingeniería backend. Trabajo desde Guatemala (GMT-6) y puedo conversar con reclutadores y líderes de ingeniería.',
-    contact_mail: 'Enviar correo',
     contact_calendly: 'Agendar reunión',
     contact_freelance: 'También disponible para proyectos freelance puntuales: APIs y microservicios, auth y seguridad, optimización de bases de datos.',
     contact_start: 'Iniciar conversación',
@@ -463,6 +461,7 @@ const translations = {
     rail_5: 'Cómo trabajo', rail_6: 'Experiencia', rail_7: 'Contacto',
   },
   en: {
+    skip_link: 'Skip to content',
     // Nav
     nav_skills: 'Stack', nav_projects: 'Projects', nav_why: 'How I work',
     nav_exp: 'Experience', nav_cta: 'Contact',
@@ -748,8 +747,6 @@ const translations = {
     ],
 
     // Stats
-    stat1: 'Years in production systems', stat2: 'Active banking microservices',
-    stat3: 'Records migrated with zero loss', stat4: 'Downtime on critical migrations',
 
     // Skills
     skills_tag: "Stack",
@@ -909,7 +906,6 @@ const translations = {
     contact_title: 'Let\'s talk.',
     contact_kicker: 'Let\'s build reliable systems.',
     contact_sub: 'I am seeking full-time international remote backend engineering roles. Based in Guatemala (GMT-6), I am available to speak with recruiters and engineering managers.',
-    contact_mail: 'Send email',
     contact_calendly: 'Schedule a meeting',
     contact_freelance: 'Also available for scoped freelance work: APIs and microservices, auth and security, database optimization.',
     contact_start: 'Start a conversation',

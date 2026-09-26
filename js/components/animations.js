@@ -88,7 +88,7 @@ function initActiveNav() {
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(section => {
-      if (scrollY >= section.offsetTop - 200) current = section.getAttribute('id');
+      if (scrollY >= section.offsetTop - 200) current = section.dataset.nav || section.getAttribute('id');
     });
     navLinks.forEach(link => {
       link.classList.remove('active');

@@ -100,7 +100,7 @@
 }
 .case-tech p { font-size: 12px; line-height: 1.7; color: var(--text-secondary); }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .cases-compact { grid-template-columns: minmax(0, 1fr); }
   .case-body { grid-template-columns: minmax(0, 1fr); }
   .case-card--reverse .case-diagram { order: 0; }

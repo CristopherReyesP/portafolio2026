@@ -5,7 +5,7 @@
    ============================================================ */
 .section-rail { display: none; }
 
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
   .section-rail {
     display: block;
     position: fixed;
@@ -81,8 +81,7 @@
 .section-rail a:hover .rail-num,
 .section-rail a:focus-visible .rail-num { color: var(--text); }
 .section-rail a:hover .rail-label,
-.section-rail a:focus-visible .rail-label,
-.section-rail a.active .rail-label { opacity: 1; transform: translate(0, -50%); }
+.section-rail a:focus-visible .rail-label { opacity: 1; transform: translate(0, -50%); }
 .section-rail a.active::before { opacity: 1; transform: scale(1); }
 .section-rail a.active .rail-num,
 .section-rail a.active .rail-label { color: var(--accent); }
