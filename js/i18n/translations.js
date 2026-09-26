@@ -1,7 +1,7 @@
 const translations = {
   es: {
     // Nav
-    nav_skills: 'Skills', nav_projects: 'Proyectos', nav_why: 'Por qué yo',
+    nav_skills: 'Stack', nav_projects: 'Proyectos', nav_why: 'Cómo trabajo',
     nav_exp: 'Experiencia', nav_cta: 'Contacto',
 
     // Hero
@@ -418,15 +418,6 @@ const translations = {
     why_note: 'Coordino con QA y stakeholders para entregar cambios verificables, y dejo documentación clara para quienes mantienen el sistema.',
 
     // Services
-    svc_tag: 'También disponible para freelance', svc_title: 'Proyectos puntuales de backend',
-    svc_sub: 'Además de buscar un rol remoto de tiempo completo, puedo colaborar en proyectos acotados de APIs, seguridad y bases de datos.',
-    svc_cta: 'Hablemos &rarr;',
-    svc1_name: 'APIs & Microservicios',
-    svc1_desc: 'APIs REST/GraphQL con NestJS o .NET. Microservicios, OAuth 2.0 y documentación Swagger incluida.',
-    svc3_name: 'Auth & Seguridad',
-    svc3_desc: 'Migración e implementación de Keycloak, Azure AD, flujos OAuth 2.0 y RBAC empresarial.',
-    svc4_name: 'Optimización de bases de datos',
-    svc4_desc: 'Optimización de queries, stored procedures, jobs programados y debugging de problemas críticos en producción.',
 
     // Experience
     exp_tag: 'Experiencia', exp_title: 'Trayectoria profesional',
@@ -452,15 +443,28 @@ const translations = {
 
     // Contact & Footer
     contact_tag: 'Contacto',
-    contact_title: 'Hablemos de tu equipo',
+    contact_title: 'Hablemos.',
+    contact_kicker: 'Construyamos sistemas confiables.',
     contact_sub: 'Busco roles remotos internacionales de tiempo completo en ingeniería backend. Trabajo desde Guatemala (GMT-6) y puedo conversar con reclutadores y líderes de ingeniería.',
     contact_mail: 'Enviar correo',
     contact_calendly: 'Agendar reunión',
+    contact_freelance: 'También disponible para proyectos freelance puntuales: APIs y microservicios, auth y seguridad, optimización de bases de datos.',
+    contact_start: 'Iniciar conversación',
+    contact_status: 'Estado',
+    contact_status_value: 'Disponible para roles remotos',
+    contact_location: 'Ubicación',
     footer_role: 'Desarrollador Backend',
+    footer_tagline: 'Construyendo sistemas que no pueden fallar.',
+    footer_linkedin: 'Perfil de LinkedIn',
+    footer_github: 'Perfil de GitHub',
+    footer_email: 'Enviar correo',
+    rail_label: 'Secciones',
+    rail_1: 'Inicio', rail_2: 'Stack', rail_3: 'Casos reales', rail_4: 'Otros proyectos',
+    rail_5: 'Cómo trabajo', rail_6: 'Experiencia', rail_7: 'Contacto',
   },
   en: {
     // Nav
-    nav_skills: 'Skills', nav_projects: 'Projects', nav_why: 'Why me',
+    nav_skills: 'Stack', nav_projects: 'Projects', nav_why: 'How I work',
     nav_exp: 'Experience', nav_cta: 'Contact',
 
     // Hero
@@ -877,15 +881,6 @@ const translations = {
     why_note: 'I coordinate with QA and stakeholders to ship verifiable changes, and leave clear documentation for whoever maintains the system.',
 
     // Services
-    svc_tag: 'Also available for freelance', svc_title: 'Focused backend projects',
-    svc_sub: 'While seeking a full-time remote role, I can also help with defined API, security, and database projects.',
-    svc_cta: 'Get in touch &rarr;',
-    svc1_name: 'APIs & Microservices',
-    svc1_desc: 'REST/GraphQL APIs with NestJS or .NET. Microservices, OAuth 2.0 and Swagger documentation included.',
-    svc3_name: 'Auth & Security',
-    svc3_desc: 'Keycloak and Azure AD migration and implementation, OAuth 2.0 flows and enterprise RBAC.',
-    svc4_name: 'Database Optimization',
-    svc4_desc: 'Query optimization, stored procedures, scheduled jobs and debugging critical production issues.',
 
     // Experience
     exp_tag: 'Experience', exp_title: 'Professional track record',
@@ -911,10 +906,23 @@ const translations = {
 
     // Contact & Footer
     contact_tag: 'Contact',
-    contact_title: 'Let\'s talk about your team',
+    contact_title: 'Let\'s talk.',
+    contact_kicker: 'Let\'s build reliable systems.',
     contact_sub: 'I am seeking full-time international remote backend engineering roles. Based in Guatemala (GMT-6), I am available to speak with recruiters and engineering managers.',
     contact_mail: 'Send email',
     contact_calendly: 'Schedule a meeting',
+    contact_freelance: 'Also available for scoped freelance work: APIs and microservices, auth and security, database optimization.',
+    contact_start: 'Start a conversation',
+    contact_status: 'Status',
+    contact_status_value: 'Open to remote roles',
+    contact_location: 'Location',
     footer_role: 'Backend Engineer',
+    footer_tagline: 'Building systems that can\'t fail.',
+    footer_linkedin: 'LinkedIn profile',
+    footer_github: 'GitHub profile',
+    footer_email: 'Send email',
+    rail_label: 'Sections',
+    rail_1: 'Home', rail_2: 'Stack', rail_3: 'Real cases', rail_4: 'Other projects',
+    rail_5: 'How I work', rail_6: 'Experience', rail_7: 'Contact',
   }
 };

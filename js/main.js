@@ -12,6 +12,7 @@ initRevealOnScroll();
 initCounters();
 initCardSpotlight();
 initActiveNav();
+initSectionRail();
 initMagneticButtons();
 initGallery();
 
