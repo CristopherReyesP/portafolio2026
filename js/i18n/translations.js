@@ -394,13 +394,16 @@ const translations = {
     brands_tag: 'Sistemas en producción para',
 
     // Personal projects
-    personal_tag: 'Proyectos personales',
+    personal_tag: 'Otros proyectos',
+    personal_title: 'Proyectos personales.<br><span class="text-outline">Exploración técnica.</span>',
+    personal_badge: 'Proyecto personal',
     personal_sub: 'Fuera del banco, diseño y construyo productos propios de principio a fin.',
-    ants_type: 'Indie Game Dev · Jugable en el navegador',
+    ants_type: 'Experimento · Simulación en el navegador',
     ants_desc: 'Simulador de gestión de una colonia: las obreras recolectan, las exploradoras abren rutas y las soldados defienden el nido de las oleadas. Motor propio sobre canvas con arquitectura ECS, ciclo día/noche, excavación de túneles e IA distinta por rol. Sin librería de juego: el game loop, el renderer y el atlas de sprites son míos.',
-    ants_play: 'Jugar ahora',
+    ants_play: 'Probar proyecto',
     ants_code: 'Ver el código',
     cobros_type: 'Fullstack · Aplicación de escritorio',
+    cobros_download: 'Descargar',
     cobros_desc: 'Sistema de cobros local empaquetado en un solo .exe de 14MB. Gestión de clientes, registro de deudas, procesamiento de pagos y generación de reportes PDF/Excel. Arquitectura hexagonal en Go, frontend React embebido y SQLite — sin instalar nada, solo ejecutar.',
 
     // Why me
@@ -850,13 +853,16 @@ const translations = {
     brands_tag: 'Systems running in production for',
 
     // Personal projects
-    personal_tag: 'Side projects',
+    personal_tag: 'Other projects',
+    personal_title: 'Side projects.<br><span class="text-outline">Technical exploration.</span>',
+    personal_badge: 'Side project',
     personal_sub: 'Outside the bank, I design and build my own products from scratch.',
-    ants_type: 'Indie Game Dev · Playable in the browser',
+    ants_type: 'Experiment · Browser simulation',
     ants_desc: 'A colony management simulator: workers forage, scouts open routes and soldiers defend the nest against waves. Custom canvas engine with an ECS architecture, day/night cycle, tunnel excavation and role-specific AI. No game library: the game loop, the renderer and the sprite atlas are mine.',
-    ants_play: 'Play now',
+    ants_play: 'Try the project',
     ants_code: 'View the code',
     cobros_type: 'Fullstack · Desktop Application',
+    cobros_download: 'Download',
     cobros_desc: 'Local billing system packaged as a single 14MB .exe. Client management, debt tracking, payment processing and PDF/Excel report generation. Hexagonal architecture in Go, embedded React frontend and SQLite — no installation, no dependencies, just run it.',
 
     // Why me
