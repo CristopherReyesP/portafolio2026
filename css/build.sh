@@ -21,6 +21,7 @@ sources=(
   components/cases.css
   components/why.css
   components/experience.css
+  components/blog.css
   components/contact.css
   components/footer.css
   components/mascot.css

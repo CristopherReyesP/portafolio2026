@@ -3,7 +3,7 @@ const translations = {
     skip_link: 'Saltar al contenido',
     // Nav
     nav_skills: 'Stack', nav_projects: 'Proyectos', nav_why: 'Cómo trabajo',
-    nav_exp: 'Experiencia', nav_cta: 'Contacto',
+    nav_exp: 'Experiencia', nav_blog: 'Blog', nav_cta: 'Contacto',
 
     // Hero
     hero_eyebrow: "Backend Software Engineer",
@@ -440,6 +440,11 @@ const translations = {
     education_tag: 'Educación',
     education_status: 'Ingeniería en Sistemas — 10.º semestre',
 
+    // Blog
+    blog_tag: 'BLOG', blog_title: 'Notas de ingeniería.',
+    blog_lead: 'Lo que aprendo construyendo sistemas reales.',
+    blog_read_time: 'min de lectura', blog_all: 'VER TODOS LOS ARTÍCULOS →',
+
     // Contact & Footer
     contact_tag: 'Contacto',
     contact_title: 'Hablemos.',
@@ -458,13 +463,13 @@ const translations = {
     footer_email: 'Enviar correo',
     rail_label: 'Secciones',
     rail_1: 'Inicio', rail_2: 'Stack', rail_3: 'Casos reales', rail_4: 'Otros proyectos',
-    rail_5: 'Cómo trabajo', rail_6: 'Experiencia', rail_7: 'Contacto',
+    rail_5: 'Cómo trabajo', rail_6: 'Experiencia', rail_7: 'Blog', rail_8: 'Contacto',
   },
   en: {
     skip_link: 'Skip to content',
     // Nav
     nav_skills: 'Stack', nav_projects: 'Projects', nav_why: 'How I work',
-    nav_exp: 'Experience', nav_cta: 'Contact',
+    nav_exp: 'Experience', nav_blog: 'Blog', nav_cta: 'Contact',
 
     // Hero
     hero_eyebrow: "Backend Software Engineer",
@@ -901,6 +906,11 @@ const translations = {
     education_tag: 'Education',
     education_status: 'B.S. Systems Engineering — 10th semester',
 
+    // Blog
+    blog_tag: 'BLOG', blog_title: 'Engineering notes.',
+    blog_lead: 'What I learn building real systems.',
+    blog_read_time: 'min read', blog_all: 'SEE ALL ARTICLES →',
+
     // Contact & Footer
     contact_tag: 'Contact',
     contact_title: 'Let\'s talk.',
@@ -919,6 +929,6 @@ const translations = {
     footer_email: 'Send email',
     rail_label: 'Sections',
     rail_1: 'Home', rail_2: 'Stack', rail_3: 'Real cases', rail_4: 'Other projects',
-    rail_5: 'How I work', rail_6: 'Experience', rail_7: 'Contact',
+    rail_5: 'How I work', rail_6: 'Experience', rail_7: 'Blog', rail_8: 'Contact',
   }
 };

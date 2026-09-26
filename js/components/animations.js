@@ -92,7 +92,7 @@ function initActiveNav() {
     });
     navLinks.forEach(link => {
       link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      if ((link.dataset.nav || link.getAttribute('href').slice(1)) === current) link.classList.add('active');
     });
   });
 }
