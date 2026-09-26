@@ -18,22 +18,22 @@ Backend Software Engineer con más de 5 años de experiencia diseñando, desarro
 - Migración de Keycloak v11 a v19 (WildFly a Quarkus) en OpenShift, con redirects de URLs legacy y guías de rollback: cero downtime.
 - Modernización progresiva de stored procedures Oracle PL/SQL hacia microservicios NestJS y .NET con diseño por dominio (DDD), orquestados mediante API Gateway.
 - Migración progresiva de 38 rutas de gateway con catálogo de rutas en base de datos y conmutación por agente, con rollback inmediato.
-- Diagnóstico y corrección de un defecto de doble reversa en transacciones reales (patrón Saga).
+- Resolución de inconsistencias en reversas de transacciones distribuidas (patrón Saga).
 - Optimización de consultas SQL complejas y stored procedures en Oracle mediante indexación y refactorización de queries en endpoints transaccionales críticos.
 - Despliegue de servicios containerizados en OpenShift con pipelines CI/CD para builds, pruebas y despliegues a producción.
 - Colaboración con stakeholders, QA y proveedores externos en levantamiento de requisitos, pruebas end-to-end, code review y documentación técnica (especificaciones de API, esquemas de BD y runbooks).
-
-### Desarrollador Backend Freelance — Independiente
-*Enero 2021 – Marzo 2024 · Remoto*
-
-- Diseño y entrega de APIs REST con .NET Core y Node.js para clientes, incluidos clientes internacionales, desde el análisis de requisitos hasta el despliegue en servidor.
-- Gestión del ciclo de vida completo de proyectos concurrentes con entregas a tiempo.
 
 ### Desarrollador de Software — OneSolutions
 *Mayo 2021 – Julio 2021 · Guatemala*
 
 - Desarrollo y soporte de módulos de facturación y reportería de una plataforma empresarial con SQL Server y .NET.
 - Resolución de bugs en producción y optimización de queries en flujos de alto volumen transaccional.
+
+### Desarrollador Backend Freelance — Independiente
+*Enero 2019 – Febrero 2021 · Remoto*
+
+- Diseño y entrega de APIs REST con .NET Core y Node.js para clientes, incluidos clientes internacionales, desde el análisis de requisitos hasta el despliegue en servidor.
+- Gestión del ciclo de vida completo de proyectos concurrentes con entregas a tiempo.
 
 ## Habilidades técnicas
 
@@ -46,7 +46,7 @@ Backend Software Engineer con más de 5 años de experiencia diseñando, desarro
 
 ## Educación
 
-**Ingeniería en Sistemas de Información y Ciencias de la Computación** — Universidad Mariano Gálvez de Guatemala · Pensum cerrado (10 semestres completados), tesis en curso.
+**Ingeniería en Sistemas de Información y Ciencias de la Computación** — Universidad Mariano Gálvez de Guatemala · 10.º semestre.
 
 **Perito en Administración de Empresas** — Instituto José Rodríguez Cerna
 
