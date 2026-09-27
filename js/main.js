@@ -70,3 +70,14 @@ if ('requestIdleCallback' in window) {
 } else {
   setTimeout(initParticles, 200);
 }
+
+// Decorative hero globe (desktop only): it lazy-loads Three.js, so it waits for idle time too.
+// Blog pages load main.js without the hero scripts, hence both guards.
+var initGlobe = function() {
+  if (typeof initHeroGlobe === 'function' && document.querySelector('.hero-globe')) initHeroGlobe();
+};
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initGlobe);
+} else {
+  setTimeout(initGlobe, 400);
+}

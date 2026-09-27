@@ -720,7 +720,41 @@ header nav {
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 .btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; flex: none; }
 
+/* Decorative globe behind the terminal (js/components/globe.js). The wrapper ends at the
+   viewport's right edge (even when the hero is narrower than the viewport) and clips the canvas. */
+.hero-globe {
+  --globe-size: clamp(600px, 52vw, 860px);
+  position: absolute; z-index: -1; top: 0; bottom: 0;
+  right: min(0px, calc((100% - 100vw) / 2));
+  width: calc(var(--globe-size) * 0.62);   /* ~65% of the sphere stays on screen */
+  overflow: hidden; pointer-events: none;
+  opacity: 0; transition: opacity 1.6s ease;
+  -webkit-mask-image: linear-gradient(to right, rgb(0 0 0 / 0.55), #000 40%);
+  mask-image: linear-gradient(to right, rgb(0 0 0 / 0.55), #000 40%);
+}
+.hero-globe.is-ready { opacity: 1; }
+/* Hero padding is 128px top / 72px bottom, so the terminal's center sits 28px below 50%. */
+.hero-globe::before, .hero-globe canvas {
+  position: absolute; left: 0; top: calc(50% + 28px);
+  width: var(--globe-size); height: var(--globe-size);
+  transform: translateY(-50%);
+}
+.hero-globe canvas { display: block; }
+/* Mouse users can drag the sphere (the JS ignores presses outside its silhouette). */
+.hero-globe.is-interactive canvas { pointer-events: auto; }
+/* Moderate atmosphere halo over a page-colored disc that hides the particles and stars behind
+   the sphere. The JS sizes the sphere to 80% of the canvas radius. */
+.hero-globe::before {
+  content: ''; border-radius: 50%;
+  background:
+    radial-gradient(circle closest-side,
+      rgb(var(--accent-secondary-rgb) / 0.045) 0%, rgb(var(--accent-secondary-rgb) / 0.02) 62%,
+      rgb(var(--accent-secondary-rgb) / 0.09) 79%, rgb(var(--accent-secondary-rgb) / 0.03) 86%, transparent 100%),
+    radial-gradient(circle closest-side, var(--bg-primary) 79.5%, transparent 80.5%);
+}
+
 @media (max-width: 1024px) {
+  .hero-globe { display: none; }
   .hero { grid-template-columns: 1fr; padding: 104px 20px 56px; gap: 40px; }
   .hero-terminal { min-width: 0; }
   .hero-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -731,7 +765,10 @@ header nav {
   .hero-metric svg { display: none; }
   .hero-metric-num { font-size: 18px; }
 }
-@media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .status-dot { animation: none; }
+  .hero-globe { transition: none; }
+}
 
 /* === components/brands.css === */
 /* Quiet production-context strip between the hero and stack. */
