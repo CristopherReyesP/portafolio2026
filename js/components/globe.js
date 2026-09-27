@@ -482,9 +482,13 @@ function initHeroGlobe() {
       const dy = event.clientY - (rect.top + rect.height / 2);
       return dx * dx + dy * dy <= radius * radius;
     };
+    // Blocks text selection while dragging. Canceling pointerdown instead would also suppress
+    // mousemove until release, freezing the custom cursor and the mascot's eyes
+    const onMouseDown = (event) => {
+      if (event.button === 0 && insideSphere(event)) event.preventDefault();
+    };
     const onDragStart = (event) => {
       if (event.button !== 0 || !finePointer.matches || !insideSphere(event)) return;
-      event.preventDefault();   // no text selection while dragging
       dragging = true;
       spinVelocity = 0;
       dragVelocity = 0;
@@ -560,6 +564,7 @@ function initHeroGlobe() {
       document.removeEventListener('visibilitychange', sync);
       reducedMotion.removeEventListener('change', onMotionChange);
       canvas.removeEventListener('webglcontextlost', destroy);
+      canvas.removeEventListener('mousedown', onMouseDown);
       canvas.removeEventListener('pointerdown', onDragStart);
       canvas.removeEventListener('pointermove', onCanvasMove);
       canvas.removeEventListener('pointerup', onDragEnd);
@@ -591,6 +596,7 @@ function initHeroGlobe() {
     // Mouse-only: on touch screens the canvas keeps pointer-events:none so scrolling is untouched.
     if (finePointer.matches) {
       container.classList.add('is-interactive');
+      canvas.addEventListener('mousedown', onMouseDown);
       canvas.addEventListener('pointerdown', onDragStart);
       canvas.addEventListener('pointermove', onCanvasMove);
       canvas.addEventListener('pointerup', onDragEnd);
