@@ -99,12 +99,15 @@
   transform: translateY(-50%);
 }
 .hero-globe canvas { display: block; }
-/* Moderate atmosphere halo; the JS sizes the sphere to 80% of the canvas radius. */
+/* Moderate atmosphere halo over a page-colored disc that hides the particles and stars behind
+   the sphere. The JS sizes the sphere to 80% of the canvas radius. */
 .hero-globe::before {
   content: ''; border-radius: 50%;
-  background: radial-gradient(circle closest-side,
-    rgb(var(--accent-secondary-rgb) / 0.045) 0%, rgb(var(--accent-secondary-rgb) / 0.02) 62%,
-    rgb(var(--accent-secondary-rgb) / 0.09) 79%, rgb(var(--accent-secondary-rgb) / 0.03) 86%, transparent 100%);
+  background:
+    radial-gradient(circle closest-side,
+      rgb(var(--accent-secondary-rgb) / 0.045) 0%, rgb(var(--accent-secondary-rgb) / 0.02) 62%,
+      rgb(var(--accent-secondary-rgb) / 0.09) 79%, rgb(var(--accent-secondary-rgb) / 0.03) 86%, transparent 100%),
+    radial-gradient(circle closest-side, var(--bg-primary) 79.5%, transparent 80.5%);
 }
 
 @media (max-width: 1024px) {
