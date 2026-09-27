@@ -1,6 +1,7 @@
 // Decorative hero globe: a point-cloud Earth behind the hero terminal, desktop only (>1024px).
 // It lazy-loads the local Three.js build (js/vendor) and the land mask with import() at idle
 // time; any failure (no WebGL, blocked module, lost context) leaves the hero untouched.
+// With a mouse, the sphere can be dragged to rotate it; auto-rotation resumes a few seconds later.
 const GLOBE_SCRIPT_URL = document.currentScript ? document.currentScript.src : document.baseURI;
 
 function initHeroGlobe() {
@@ -17,6 +18,15 @@ function initHeroGlobe() {
   const PARALLAX_PITCH = 0.022;
   const PARALLAX_EASE = 2.5;
   const MAX_FRAME_DT = 0.1;
+
+  // Drag to rotate (fine pointers only)
+  const DRAG_TURN = Math.PI;               // radians per sphere diameter dragged
+  const DRAG_PITCH_MAX = 1.1;              // total tilt limit, so the poles never flip over
+  const INERTIA_DAMPING = 2.2;             // how fast a flick slows down (1/s)
+  const RESUME_DELAY = 3;                  // seconds after release before auto-rotation returns
+  const RESUME_EASE = 0.6;                 // how gently spin and tilt return (1/s)
+  const MAX_FLICK_SPEED = 6;               // rad/s
+  const FLICK_WINDOW = 0.08;               // holding still longer than this before release drops the flick
 
   // Look
   const CAMERA_FOV = 30;
@@ -329,7 +339,6 @@ function initHeroGlobe() {
     const root = new THREE.Group();   // tilt + parallax
     root.rotation.set(TILT_X, 0, TILT_Z);
     const spin = new THREE.Group();   // rotation around the (tilted) axis
-    spin.rotation.y = SPIN_START;
     root.add(spin);
     scene.add(root);
 
@@ -378,8 +387,21 @@ function initHeroGlobe() {
     let visible = !('IntersectionObserver' in window);
     let ready = false;
     let elapsed = 0;
+    // Spin state: auto-rotation, drag and inertia all go through spinAngle/spinVelocity.
+    let spinAngle = SPIN_START;
+    let spinVelocity = SPIN_SPEED;
+    let userPitch = 0;                 // tilt added by dragging, eased back when auto-rotation resumes
+    let releasedAt = -Infinity;        // in `elapsed` seconds
+    let dragging = false;
+    let dragVelocity = 0;
+    let lastX = 0;
+    let lastY = 0;
+    let lastMoveAt = 0;
+    // Parallax offsets (radians) and their targets
+    let parallaxYaw = 0;
+    let parallaxPitch = 0;
     let targetYaw = 0;
-    let targetPitch = TILT_X;
+    let targetPitch = 0;
 
     const render = () => {
       renderer.render(scene, camera);
@@ -388,18 +410,32 @@ function initHeroGlobe() {
       container.classList.add('is-ready');
     };
 
+    const applyRotation = () => {
+      spin.rotation.y = spinAngle;
+      root.rotation.set(TILT_X + parallaxPitch + userPitch, parallaxYaw, TILT_Z);
+    };
+
     const loop = makeLoop((dt) => {
       elapsed += dt;
-      spin.rotation.y = SPIN_START + elapsed * SPIN_SPEED;
+      if (!dragging) {
+        // After a release the flick decays; once RESUME_DELAY passes, spin and tilt ease back.
+        const resting = elapsed - releasedAt > RESUME_DELAY;
+        const target = resting && !reducedMotion.matches ? SPIN_SPEED : 0;
+        spinVelocity += (target - spinVelocity) * (1 - Math.exp(-dt * (resting ? RESUME_EASE : INERTIA_DAMPING)));
+        spinAngle += spinVelocity * dt;
+        if (resting) userPitch -= userPitch * (1 - Math.exp(-dt * RESUME_EASE));
+      }
       const k = 1 - Math.exp(-dt * PARALLAX_EASE);
-      root.rotation.y += (targetYaw - root.rotation.y) * k;
-      root.rotation.x += (targetPitch - root.rotation.x) * k;
+      parallaxYaw += (targetYaw - parallaxYaw) * k;
+      parallaxPitch += (targetPitch - parallaxPitch) * k;
+      applyRotation();
       uTime.value = elapsed;
       render();
     });
 
+    // Reduced motion keeps the globe still, but a drag is the user's own motion, so it renders.
     const sync = () => {
-      if (visible && !document.hidden && !reducedMotion.matches) loop.start();
+      if (visible && !document.hidden && (!reducedMotion.matches || dragging)) loop.start();
       else loop.stop();
     };
 
@@ -421,13 +457,72 @@ function initHeroGlobe() {
 
     const resetParallax = () => {
       targetYaw = 0;
-      targetPitch = TILT_X;
+      targetPitch = 0;
     };
     const onPointerMove = (event) => {
-      if (!finePointer.matches || reducedMotion.matches) return;
+      if (dragging || !finePointer.matches || reducedMotion.matches) return;
       const viewport = document.documentElement;
       targetYaw = (event.clientX / viewport.clientWidth * 2 - 1) * PARALLAX_YAW;
-      targetPitch = TILT_X + (event.clientY / viewport.clientHeight * 2 - 1) * PARALLAX_PITCH;
+      targetPitch = (event.clientY / viewport.clientHeight * 2 - 1) * PARALLAX_PITCH;
+    };
+
+    // Drag to rotate. The custom cursor (js/components/cursor.js) grows over the sphere.
+    const cursorStar = document.getElementById('cursor');
+    let grabbable = false;
+    const setGrabbable = (value) => {
+      if (grabbable === value) return;
+      grabbable = value;
+      if (cursorStar) cursorStar.classList.toggle('hover', value);
+    };
+    // Only the sphere is draggable, not the empty corners of the square canvas.
+    const insideSphere = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      const radius = rect.width / 2 * SPHERE_FILL;
+      const dx = event.clientX - (rect.left + rect.width / 2);
+      const dy = event.clientY - (rect.top + rect.height / 2);
+      return dx * dx + dy * dy <= radius * radius;
+    };
+    const onDragStart = (event) => {
+      if (event.button !== 0 || !finePointer.matches || !insideSphere(event)) return;
+      event.preventDefault();   // no text selection while dragging
+      dragging = true;
+      spinVelocity = 0;
+      dragVelocity = 0;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      lastMoveAt = event.timeStamp;
+      canvas.setPointerCapture(event.pointerId);
+      setGrabbable(true);
+      sync();
+    };
+    const onCanvasMove = (event) => {
+      if (!dragging) {
+        setGrabbable(finePointer.matches && insideSphere(event));
+        return;
+      }
+      const scale = DRAG_TURN / (canvas.clientWidth * SPHERE_FILL);
+      const yaw = (event.clientX - lastX) * scale;
+      spinAngle += yaw;
+      userPitch = clamp(userPitch + (event.clientY - lastY) * scale, -DRAG_PITCH_MAX - TILT_X, DRAG_PITCH_MAX - TILT_X);
+      const moveDt = (event.timeStamp - lastMoveAt) / 1000;
+      if (moveDt > 0.001) dragVelocity = dragVelocity * 0.6 + (yaw / moveDt) * 0.4;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      lastMoveAt = event.timeStamp;
+    };
+    const onDragEnd = (event) => {
+      if (!dragging) return;
+      dragging = false;
+      // A flick keeps spinning; holding still before letting go (or reduced motion) drops it.
+      const flick = !reducedMotion.matches && (event.timeStamp - lastMoveAt) / 1000 < FLICK_WINDOW;
+      spinVelocity = flick ? clamp(dragVelocity, -MAX_FLICK_SPEED, MAX_FLICK_SPEED) : 0;
+      releasedAt = elapsed;
+      if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+      setGrabbable(event.type === 'pointerup' && insideSphere(event));
+      sync();
+    };
+    const onCanvasLeave = () => {
+      if (!dragging) setGrabbable(false);
     };
 
     const applyMotionPreference = () => {
@@ -436,7 +531,9 @@ function initHeroGlobe() {
       uPulse.value = still ? 0 : 1;
       if (still) {
         resetParallax();
-        root.rotation.set(TILT_X, 0, TILT_Z);
+        parallaxYaw = 0;
+        parallaxPitch = 0;
+        applyRotation();
       }
     };
     const onMotionChange = () => {
@@ -463,6 +560,13 @@ function initHeroGlobe() {
       document.removeEventListener('visibilitychange', sync);
       reducedMotion.removeEventListener('change', onMotionChange);
       canvas.removeEventListener('webglcontextlost', destroy);
+      canvas.removeEventListener('pointerdown', onDragStart);
+      canvas.removeEventListener('pointermove', onCanvasMove);
+      canvas.removeEventListener('pointerup', onDragEnd);
+      canvas.removeEventListener('pointercancel', onDragEnd);
+      canvas.removeEventListener('pointerleave', onCanvasLeave);
+      setGrabbable(false);
+      container.classList.remove('is-interactive');
       [dots, arcs, nodes].forEach((object) => {
         object.geometry.dispose();
         object.material.dispose();
@@ -472,6 +576,7 @@ function initHeroGlobe() {
       container.classList.remove('is-ready');
     }
 
+    applyRotation();
     applyMotionPreference();
     onResize();
     if (io) io.observe(container);
@@ -483,6 +588,15 @@ function initHeroGlobe() {
     reducedMotion.addEventListener('change', onMotionChange);
     // No pagehide teardown: the page may come back from the back/forward cache.
     canvas.addEventListener('webglcontextlost', destroy);
+    // Mouse-only: on touch screens the canvas keeps pointer-events:none so scrolling is untouched.
+    if (finePointer.matches) {
+      container.classList.add('is-interactive');
+      canvas.addEventListener('pointerdown', onDragStart);
+      canvas.addEventListener('pointermove', onCanvasMove);
+      canvas.addEventListener('pointerup', onDragEnd);
+      canvas.addEventListener('pointercancel', onDragEnd);
+      canvas.addEventListener('pointerleave', onCanvasLeave);
+    }
     sync();
   }
 

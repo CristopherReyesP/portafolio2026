@@ -740,6 +740,8 @@ header nav {
   transform: translateY(-50%);
 }
 .hero-globe canvas { display: block; }
+/* Mouse users can drag the sphere (the JS ignores presses outside its silhouette). */
+.hero-globe.is-interactive canvas { pointer-events: auto; }
 /* Moderate atmosphere halo over a page-colored disc that hides the particles and stars behind
    the sphere. The JS sizes the sphere to 80% of the canvas radius. */
 .hero-globe::before {
