@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+  Source of og-image.png (social preview, 1200x630). Regenerate from the repo root with any Chromium browser:
+  "$CHROME" --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 \
+    --virtual-time-budget=5000 --screenshot=og-image.png scripts/templates/og-image.html
+  Keep claims generic here: no metrics (they belong next to the project they came from).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>og-image</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=block" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080d; --text: #e6edf3; --text-secondary: #aab7c4; --text-muted: #8190a0;
+    --accent: #1fe0b0; --accent-rgb: 31 224 176; --purple: #8f82ff; --purple-rgb: 143 130 255;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative; padding: 72px 80px; color: var(--text); font-family: 'Space Mono', monospace;
+    background:
+      radial-gradient(700px 500px at 0% 0%, rgb(var(--accent-rgb) / 0.10), transparent 60%),
+      radial-gradient(700px 500px at 100% 100%, rgb(var(--purple-rgb) / 0.10), transparent 60%),
+      linear-gradient(rgb(255 255 255 / 0.03) 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(90deg, rgb(255 255 255 / 0.03) 1px, transparent 1px) 0 0 / 40px 40px,
+      var(--bg);
+  }
+  .eyebrow { font-size: 22px; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); }
+  .name { margin-top: 20px; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 104px; line-height: 1.02; }
+  .name span { color: var(--accent); }
+  .title { margin-top: 26px; font-size: 30px; color: var(--text-secondary); }
+  .title em { color: var(--purple); }
+  .stack { display: flex; gap: 12px; margin-top: 30px; }
+  .stack li {
+    list-style: none; padding: 8px 16px; font-size: 20px; font-weight: 700; color: var(--text);
+    border: 1px solid rgb(var(--accent-rgb) / 0.4); border-radius: 6px; background: rgb(var(--accent-rgb) / 0.07);
+  }
+  .foot {
+    position: absolute; left: 80px; right: 80px; bottom: 56px;
+    display: flex; justify-content: space-between; align-items: center; font-size: 18px; color: var(--text-muted);
+  }
+  .status { display: flex; align-items: center; gap: 12px; color: var(--text); }
+  .status::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+  .mark {
+    position: absolute; top: 64px; right: 80px; width: 96px; height: 96px; border-radius: 14px;
+    display: grid; place-items: center; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 44px;
+    color: var(--accent); border: 1px solid rgb(var(--accent-rgb) / 0.4); background: rgb(var(--accent-rgb) / 0.06);
+  }
+</style>
+</head>
+<body>
+  <div class="mark" aria-hidden="true">CR</div>
+  <p class="eyebrow">Backend Software Engineer</p>
+  <h1 class="name">Cristopher<br><span>Reyes.</span></h1>
+  <p class="title">Reliable backend for systems <em>that can't fail</em></p>
+  <ul class="stack"><li>NestJS</li><li>.NET</li><li>Oracle</li><li>OpenShift</li></ul>
+  <div class="foot">
+    <span class="status">Open to remote roles · Guatemala · GMT-6</span>
+    <span>cristopherreyesp.github.io/portafolio2026</span>
+  </div>
+</body>
+</html>
