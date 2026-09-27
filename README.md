@@ -16,6 +16,7 @@ Plain HTML, CSS and vanilla JavaScript — no framework, no dependencies.
 - `resume/` — downloadable CVs (ES/EN); `resume/build.sh` regenerates them from `resume/src/`
 - `js/learning/focuses.js` — the (max 3) learning focuses shown on the home page; evidence links itself via `learning: [id]`
 - `content/` — Markdown notes/articles and drafts; `node scripts/build-content.mjs` builds note pages, the blog search index, `sitemap.xml` and `blog/rss.xml` (see `content/README.md`)
+- `og-image.png` — social preview (1200×630) used by `og:image`/`twitter:image`; its source and render command are in `scripts/templates/og-image.html`
 - `.claude/skills/portfolio-knowledge/` — Claude Code skill that turns Engram memories into sanitized drafts (never publishes); local setup in `ENGRAM-TODO.md`
 
 ## Tests

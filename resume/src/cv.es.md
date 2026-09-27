@@ -17,7 +17,7 @@ Backend Software Engineer con más de 5 años de experiencia diseñando, desarro
 - Desarrollo y mantenimiento de 18+ microservicios backend con NestJS y .NET (C#) para procesamiento de transacciones bancarias en canales móvil y web, con requerimientos de alta disponibilidad y cumplimiento regulatorio.
 - Migración de Keycloak v11 a v19 (WildFly a Quarkus) en OpenShift, con redirects de URLs legacy y guías de rollback: cero downtime.
 - Modernización progresiva de stored procedures Oracle PL/SQL hacia microservicios NestJS y .NET con diseño por dominio (DDD), orquestados mediante API Gateway.
-- Migración progresiva de 38 rutas de gateway con catálogo de rutas en base de datos y conmutación por agente, con rollback inmediato.
+- Migración progresiva de monolito a microservicios desde el API Gateway: catálogo de 38 rutas en base de datos, conmutación por agente, legacy como destino por defecto y rollback sin redeploy quitando la asignación.
 - Resolución de inconsistencias en reversas de transacciones distribuidas (patrón Saga).
 - Optimización de consultas SQL complejas y stored procedures en Oracle mediante indexación y refactorización de queries en endpoints transaccionales críticos.
 - Despliegue de servicios containerizados en OpenShift con pipelines CI/CD para builds, pruebas y despliegues a producción.
