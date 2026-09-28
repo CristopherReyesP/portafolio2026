@@ -11,6 +11,10 @@ function setLang(lang) {
     const key = el.dataset.i18nAriaLabel;
     if (translations[lang][key]) el.setAttribute('aria-label', translations[lang][key]);
   });
+  document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+    const key = el.dataset.i18nAlt;
+    if (translations[lang][key]) el.setAttribute('alt', translations[lang][key]);
+  });
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
     const key = el.dataset.i18nHtml;
     if (translations[lang][key]) el.innerHTML = translations[lang][key];
