@@ -22,7 +22,7 @@ The site presents my backend work for recruiters and engineering teams:
 - `index.html` — single-page layout and SEO metadata
 - `css/components/` — one stylesheet per section, bundled into `css/bundle.css`
 - `css/build.sh` — regenerates `css/bundle.css`; run it after editing any CSS file
-- `js/components/` — interactive pieces (terminal, keyboard, pomodoro, animations)
+- `js/components/` — interactive pieces (terminal, pomodoro, animations)
 - `js/i18n/` — Spanish / English translations
 - `js/learning/focuses.js` — the (max 3) learning focuses shown on the home page; evidence links itself via `learning: [id]`
 - `content/` — Markdown notes, articles and drafts (see `content/README.md`)

@@ -103,7 +103,10 @@ function initGallery() {
     const thumbs = gallery.querySelectorAll('.gallery-thumb');
     thumbs.forEach(thumb => {
       thumb.addEventListener('click', () => {
+        const image = thumb.querySelector('img');
         main.src = thumb.dataset.src;
+        main.alt = image.alt;
+        main.dataset.i18nAlt = image.dataset.i18nAlt;
         thumbs.forEach(t => t.classList.remove('active'));
         thumb.classList.add('active');
       });

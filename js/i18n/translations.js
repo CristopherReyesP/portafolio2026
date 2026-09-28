@@ -6,6 +6,7 @@ const translations = {
     nav_exp: 'Experiencia', nav_blog: 'Blog', nav_cta: 'Contacto',
 
     // Hero
+    hero_label: 'Presentación',
     hero_eyebrow: "Backend Software Engineer",
     hero_metrics_label: "Métricas clave",
     hero_metric1: "Microservicios en producción",
@@ -19,6 +20,7 @@ const translations = {
     hero_title: "Backend confiable para sistemas<br><span>que no pueden fallar</span>",
     hero_availability: "Disponible para roles remotos · Guatemala · GMT-6",
     hero_btn1: "Ver casos reales", hero_btn_cta: 'Descargar CV', cv_href: 'resume/CV_Cristopher_Reyes.pdf',
+    terminal_open: 'Abrir terminal',
     terminal_command: 'Comando',
     terminal_whoami1: "<span class=\"t-name\">Cristopher Reyes</span>",
     terminal_whoami2: "<span class=\"t-response\">Backend Software Engineer</span>",
@@ -396,6 +398,7 @@ const translations = {
     case5_fact1: 'Registros migrados',
     case5_fact2: 'Downtime',
     case5_diagram_cap: 'Migración',
+    brands_label: 'Contextos de producción',
     brands_tag: 'Sistemas en producción para',
 
     // Personal projects
@@ -403,10 +406,17 @@ const translations = {
     personal_title: 'Proyectos personales.<br><span class="text-outline">Exploración técnica.</span>',
     personal_badge: 'Proyecto personal',
     personal_sub: 'Fuera del banco, diseño y construyo productos propios de principio a fin.',
+    ants_gallery_colony: 'Simulador de hormigas: colonia',
+    ants_gallery_expansion: 'Simulador de hormigas: expansión',
+    ants_gallery_wave: 'Simulador de hormigas: oleada',
     ants_type: 'Experimento · Simulación en el navegador',
     ants_desc: 'Simulador de gestión de una colonia: las obreras recolectan, las exploradoras abren rutas y las soldados defienden el nido de las oleadas. Motor propio sobre canvas con arquitectura ECS, ciclo día/noche, excavación de túneles e IA distinta por rol. Sin librería de juego: el game loop, el renderer y el atlas de sprites son míos.',
     ants_play: 'Probar proyecto',
     ants_code: 'Ver el código',
+    cobros_gallery_dashboard: 'Sistema de cobros: dashboard',
+    cobros_gallery_clients: 'Sistema de cobros: clientes',
+    cobros_gallery_debts: 'Sistema de cobros: deudas',
+    cobros_gallery_report: 'Sistema de cobros: reporte PDF',
     cobros_type: 'Fullstack · Aplicación de escritorio',
     cobros_download: 'Descargar',
     cobros_desc: 'Sistema de cobros local empaquetado en un solo .exe de 14MB. Gestión de clientes, registro de deudas, procesamiento de pagos y generación de reportes PDF/Excel. Arquitectura hexagonal en Go, frontend React embebido y SQLite — sin instalar nada, solo ejecutar.',
@@ -519,6 +529,7 @@ const translations = {
     nav_exp: 'Experience', nav_blog: 'Blog', nav_cta: 'Contact',
 
     // Hero
+    hero_label: 'Introduction',
     hero_eyebrow: "Backend Software Engineer",
     hero_metrics_label: "Key metrics",
     hero_metric1: "Microservices in production",
@@ -532,6 +543,7 @@ const translations = {
     hero_title: "Reliable backend for systems<br><span>that can't fail</span>",
     hero_availability: "Open to remote roles · Guatemala · GMT-6",
     hero_btn1: "See real cases", hero_btn_cta: 'Download CV', cv_href: 'resume/CV_Cristopher_Reyes_EN.pdf',
+    terminal_open: 'Open terminal',
     terminal_command: 'Command',
     terminal_whoami1: "<span class=\"t-name\">Cristopher Reyes</span>",
     terminal_whoami2: "<span class=\"t-response\">Backend Software Engineer</span>",
@@ -909,6 +921,7 @@ const translations = {
     case5_fact1: 'Records migrated',
     case5_fact2: 'Downtime',
     case5_diagram_cap: 'Migration',
+    brands_label: 'Production contexts',
     brands_tag: 'Systems running in production for',
 
     // Personal projects
@@ -916,10 +929,17 @@ const translations = {
     personal_title: 'Side projects.<br><span class="text-outline">Technical exploration.</span>',
     personal_badge: 'Side project',
     personal_sub: 'Outside the bank, I design and build my own products from scratch.',
+    ants_gallery_colony: 'Ant simulator: colony',
+    ants_gallery_expansion: 'Ant simulator: expansion',
+    ants_gallery_wave: 'Ant simulator: wave',
     ants_type: 'Experiment · Browser simulation',
     ants_desc: 'A colony management simulator: workers forage, scouts open routes and soldiers defend the nest against waves. Custom canvas engine with an ECS architecture, day/night cycle, tunnel excavation and role-specific AI. No game library: the game loop, the renderer and the sprite atlas are mine.',
     ants_play: 'Try the project',
     ants_code: 'View the code',
+    cobros_gallery_dashboard: 'Billing system: dashboard',
+    cobros_gallery_clients: 'Billing system: clients',
+    cobros_gallery_debts: 'Billing system: debts',
+    cobros_gallery_report: 'Billing system: PDF report',
     cobros_type: 'Fullstack · Desktop Application',
     cobros_download: 'Download',
     cobros_desc: 'Local billing system packaged as a single 14MB .exe. Client management, debt tracking, payment processing and PDF/Excel report generation. Hexagonal architecture in Go, embedded React frontend and SQLite — no installation, no dependencies, just run it.',
