@@ -1,4 +1,14 @@
-let currentLang = 'es';
+let currentLang = (() => {
+  const queryLang = new URLSearchParams(location.search).get('lang');
+  if (queryLang === 'es' || queryLang === 'en') return queryLang;
+  try {
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang === 'es' || savedLang === 'en') return savedLang;
+  } catch {
+    // Storage may be unavailable in restricted browsing contexts.
+  }
+  return 'es';
+})();
 
 function setLang(lang) {
   currentLang = lang;
@@ -37,8 +47,25 @@ function setLang(lang) {
   document.dispatchEvent(new Event('languagechange'));
 }
 
+function persistLanguage() {
+  try {
+    localStorage.setItem('lang', currentLang);
+  } catch {
+    // Keep language switching available when storage is blocked.
+  }
+  const url = new URL(location.href);
+  if (currentLang === 'en') url.searchParams.set('lang', 'en');
+  else url.searchParams.delete('lang');
+  history.replaceState(history.state, '', url.href);
+}
+
 function initI18n() {
   document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+    btn.addEventListener('click', () => {
+      setLang(btn.dataset.lang);
+      persistLanguage();
+    });
   });
+  if (currentLang !== 'es') setLang(currentLang);
+  persistLanguage();
 }
