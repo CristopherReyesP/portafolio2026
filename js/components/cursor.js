@@ -18,6 +18,7 @@ function initCursor() {
   window.addEventListener('resize', resize);
 
   const trail = [];
+  let drawing = false;
 
   function draw() {
     ctx.clearRect(0, 0, w, h);
@@ -38,9 +39,16 @@ function initCursor() {
 
     if (trail._fading && trail.length > 0) trail.shift();
 
+    // Stop once the trail has faded out; the next mousemove restarts the loop.
+    drawing = trail.length > 0;
+    if (drawing) requestAnimationFrame(draw);
+  }
+
+  function startDrawing() {
+    if (drawing) return;
+    drawing = true;
     requestAnimationFrame(draw);
   }
-  draw();
 
   document.addEventListener('mousemove', (e) => {
     star.style.left = e.clientX + 'px';
@@ -54,6 +62,7 @@ function initCursor() {
     trail._fading = false;
     clearTimeout(trail._fadeTimer);
     trail._fadeTimer = setTimeout(() => { trail._fading = true; }, 250);
+    startDrawing();
   });
 
   const targets = document.querySelectorAll('a, button, .btn-primary, .btn-secondary, .skill-tag, .project-card, .service-card, .why-card, .contact-link, .nav-cta, .lang-btn, .terminal-input, .pomo-adjust-btn, .pomo-close, #pomoMainBtn, #pomoResetBtn');
