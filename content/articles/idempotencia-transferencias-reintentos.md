@@ -8,7 +8,7 @@ tags:
   - Sistemas distribuidos
   - NestJS
   - Oracle
-status: draft
+status: published
 created: 2026-09-27
 updated: 2026-09-27
 excerpt: "Un cliente que no recibe respuesta va a reintentar. Guardar la clave de idempotencia en la misma transacción que el débito, con una restricción UNIQUE, hace que ese reintento nunca cobre dos veces."
@@ -116,7 +116,7 @@ Guardar la clave en la transferencia tiene costos, y conviene decirlos:
 
 - **Las claves no expiran.** Cada clave queda atada a su transferencia para siempre. Muchas APIs de pago las expiran después de un tiempo; acá no.
 - **La respuesta se reconstruye, no se cachea.** Un reintento arma la respuesta a partir de la transferencia guardada. Si el formato de la respuesta cambiara entre versiones, un reintento podría verse distinto que la respuesta original.
-- **Sin reconciliador, `409` puede durar.** Una transferencia que quedó en `DEBITED` porque el otro banco no confirmó el resultado responde `409` hasta que un proceso la resuelva, y ese proceso todavía no existe.
+- **Sin reconciliador, el 409 puede durar.** Una transferencia que quedó en `DEBITED` porque el otro banco no confirmó el resultado responde `409` hasta que un proceso la resuelva, y ese proceso todavía no existe.
 
 A cambio, no hay infraestructura extra y la consistencia entre la clave y el débito la da la base de datos, no el código.
 

@@ -7,6 +7,14 @@
     <language>es</language>
     <lastBuildDate>Sun, 27 Sep 2026 00:00:00 +0000</lastBuildDate>
     <item>
+      <title>Idempotencia en transferencias: cómo un reintento no debita dos veces</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/posts/idempotencia-transferencias-reintentos.html</link>
+      <description>Un cliente que no recibe respuesta va a reintentar. Guardar la clave de idempotencia en la misma transacción que el débito, con una restricción UNIQUE, hace que ese reintento nunca cobre dos veces.</description>
+      <pubDate>Sun, 27 Sep 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/posts/idempotencia-transferencias-reintentos.html</guid>
+      <category>Arquitectura</category>
+    </item>
+    <item>
       <title>Claude Code: cuando el sandbox no te deja ver algo</title>
       <link>https://cristopherreyesp.github.io/portafolio2026/blog/notes/claude-code-sandbox-usb-gh.html</link>
       <description>Si adb no ve el teléfono o gh auth login no conecta, el problema puede ser el sandbox y no la red ni el cable.</description>

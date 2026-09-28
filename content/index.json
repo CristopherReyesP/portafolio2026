@@ -222,13 +222,13 @@
         "NestJS",
         "Oracle"
       ],
-      "status": "draft",
+      "status": "published",
       "created": "2026-09-27",
       "updated": "2026-09-27",
       "learning": [
         "distributed-systems"
       ],
-      "source": "content/drafts/idempotencia-transferencias-reintentos.md"
+      "source": "content/articles/idempotencia-transferencias-reintentos.md"
     }
   ]
 }
