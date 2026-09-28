@@ -27,7 +27,7 @@ window.BLOG_POSTS = [
     ],
     "date": "2026-09-25",
     "minutes": 3,
-    "updated": "2026-09-25",
+    "updated": "2026-09-27",
     "learning": ["distributed-systems"],
     "relatedCase": "case2-name",
     "brain": [
