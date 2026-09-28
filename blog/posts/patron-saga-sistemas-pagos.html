@@ -27,7 +27,7 @@
   "headline": "Patrón Saga en sistemas de pagos: qué hacer cuando una transacción falla a mitad",
   "description": "En sistemas distribuidos no podemos depender de una única transacción de base de datos. Saga permite coordinar operaciones y compensarlas cuando algo falla.",
   "datePublished": "2026-09-25",
-  "dateModified": "2026-09-25",
+  "dateModified": "2026-09-27",
   "author": {
     "@type": "Person",
     "name": "Cristopher Reyes",
@@ -306,6 +306,10 @@ revertirCrédito()</code></pre>
       <p>En sistemas críticos, el camino feliz es apenas una parte del diseño.</p>
       <p>La verdadera arquitectura comienza cuando preguntamos:</p>
       <p>¿qué ocurre si este paso falla?</p>
+      <div class="article-note" role="note">
+        <p>Estas ideas están implementadas en un servicio NestJS de ejemplo: una transferencia que debita una cuenta en Oracle, pide el crédito a otro banco y compensa el débito si ese crédito falla. Usa claves de idempotencia, <code>FOR UPDATE NOWAIT</code> y consulta el estado real antes de compensar un timeout, con tests contra un Oracle real.</p>
+        <p><a href="https://github.com/CristopherReyesP/transfers-saga" target="_blank" rel="noopener" data-i18n="case2_sample">IMPLEMENTACIÓN DE EJEMPLO ↗</a></p>
+      </div>
     </div>
   </div>
 
