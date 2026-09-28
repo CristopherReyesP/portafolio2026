@@ -8,7 +8,7 @@ tags:
   - Timeouts
   - Sistemas distribuidos
   - NestJS
-status: draft
+status: published
 created: 2026-09-28
 updated: 2026-09-28
 excerpt: "Si el crédito remoto da timeout y compensas de inmediato, puedes pagar dos veces. Antes de revertir, la Saga tiene que preguntar qué pasó realmente."

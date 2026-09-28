@@ -241,13 +241,13 @@
         "Sistemas distribuidos",
         "NestJS"
       ],
-      "status": "draft",
+      "status": "published",
       "created": "2026-09-28",
       "updated": "2026-09-28",
       "learning": [
         "distributed-systems"
       ],
-      "source": "content/drafts/timeout-saga-no-compensar-a-ciegas.md"
+      "source": "content/articles/timeout-saga-no-compensar-a-ciegas.md"
     }
   ]
 }
