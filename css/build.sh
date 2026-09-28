@@ -27,7 +27,6 @@ sources=(
   components/contact.css
   components/footer.css
   components/mascot.css
-  components/keyboard.css
 )
 
 {

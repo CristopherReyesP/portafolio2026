@@ -13,7 +13,6 @@ if (document.querySelector('[data-learning]')) initLearning();
 if (document.querySelector('[data-article]')) initArticle();
 initCursor();
 initScrollProgress();
-//initKeyboardNav();
 initRevealOnScroll();
 initCounters();
 initCardSpotlight();
