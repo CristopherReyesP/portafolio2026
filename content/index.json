@@ -229,6 +229,25 @@
         "distributed-systems"
       ],
       "source": "content/articles/idempotencia-transferencias-reintentos.md"
+    },
+    {
+      "slug": "timeout-saga-no-compensar-a-ciegas",
+      "type": "article",
+      "title": "Timeout en una Saga: por qué no compensar a ciegas",
+      "category": "Arquitectura",
+      "tags": [
+        "Saga",
+        "Timeouts",
+        "Sistemas distribuidos",
+        "NestJS"
+      ],
+      "status": "published",
+      "created": "2026-09-28",
+      "updated": "2026-09-28",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "content/articles/timeout-saga-no-compensar-a-ciegas.md"
     }
   ]
 }
