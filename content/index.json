@@ -210,6 +210,25 @@
       "updated": "2026-09-26",
       "learning": [],
       "source": "content/notes/oracle-validar-insert-sin-ejecutarlo.md"
+    },
+    {
+      "slug": "idempotencia-transferencias-reintentos",
+      "type": "article",
+      "title": "Idempotencia en transferencias: cómo un reintento no debita dos veces",
+      "category": "Arquitectura",
+      "tags": [
+        "Idempotencia",
+        "Sistemas distribuidos",
+        "NestJS",
+        "Oracle"
+      ],
+      "status": "draft",
+      "created": "2026-09-27",
+      "updated": "2026-09-27",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "content/drafts/idempotencia-transferencias-reintentos.md"
     }
   ]
 }
