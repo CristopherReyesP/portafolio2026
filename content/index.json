@@ -212,6 +212,25 @@
       "source": "content/notes/oracle-validar-insert-sin-ejecutarlo.md"
     },
     {
+      "slug": "canary-por-agente-api-gateway",
+      "type": "article",
+      "title": "Migrar un legacy ruta por ruta: canary por agente en un API Gateway",
+      "category": "Arquitectura",
+      "tags": [
+        "Canary release",
+        "Strangler Fig",
+        "API Gateway",
+        "NestJS"
+      ],
+      "status": "published",
+      "created": "2026-10-12",
+      "updated": "2026-10-12",
+      "learning": [
+        "distributed-systems"
+      ],
+      "source": "content/articles/canary-por-agente-api-gateway.md"
+    },
+    {
       "slug": "idempotencia-transferencias-reintentos",
       "type": "article",
       "title": "Idempotencia en transferencias: cómo un reintento no debita dos veces",

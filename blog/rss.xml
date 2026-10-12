@@ -5,7 +5,15 @@
     <link>https://cristopherreyesp.github.io/portafolio2026/blog/</link>
     <description>Notas de ingeniería: arquitectura, microservicios, bases de datos e IA. Lo que aprendo construyendo sistemas reales.</description>
     <language>es</language>
-    <lastBuildDate>Mon, 28 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Migrar un legacy ruta por ruta: canary por agente en un API Gateway</title>
+      <link>https://cristopherreyesp.github.io/portafolio2026/blog/posts/canary-por-agente-api-gateway.html</link>
+      <description>Un catálogo de rutas en base de datos decide, agente por agente, si cada petición va al legacy o al servicio nuevo. Habilitar o revertir no requiere un nuevo despliegue.</description>
+      <pubDate>Mon, 12 Oct 2026 00:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://cristopherreyesp.github.io/portafolio2026/blog/posts/canary-por-agente-api-gateway.html</guid>
+      <category>Arquitectura</category>
+    </item>
     <item>
       <title>Timeout en una Saga: por qué no compensar a ciegas</title>
       <link>https://cristopherreyesp.github.io/portafolio2026/blog/posts/timeout-saga-no-compensar-a-ciegas.html</link>
