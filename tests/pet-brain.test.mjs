@@ -28,7 +28,8 @@ const articleQuestions = {
   'migrar-monolito-microservicios': [['es', '¿Cómo migrar un monolito?'], ['en', 'How do you migrate a monolith?']],
   'oracle-jobs-automatizacion': [['es', '¿Para qué sirven los jobs de Oracle?'], ['en', 'What are Oracle jobs for?']],
   'claude-code-backend': [['es', '¿Cómo usa Claude Code?'], ['en', 'How does he use Claude Code?']],
-  'agentes-ia-local': [['es', '¿IA local?'], ['en', 'When does local AI make sense?']]
+  'agentes-ia-local': [['es', '¿IA local?'], ['en', 'When does local AI make sense?']],
+  'canary-por-agente-api-gateway': [['es', '¿Qué es un canary release?'], ['en', 'What is a canary release?']]
 };
 
 // Intents returned by master before the blog brain existed (regressions)

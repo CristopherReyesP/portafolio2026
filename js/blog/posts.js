@@ -247,5 +247,47 @@ window.BLOG_POSTS = [
       "es": "Tiene sentido en repositorios privados, análisis de documentos internos, automatización repetitiva, procesamiento offline y tareas donde la privacidad importa. No usaría IA local solo porque «es local»: si una API externa da resultados mucho mejores, cuesta poco y los datos no son sensibles, probablemente sea más práctica. Un enfoque interesante es el híbrido: modelo local para tareas sencillas y modelo remoto para razonamiento complejo.",
       "en": "It makes sense for private repositories, analysis of internal documents, repetitive automation, offline processing and tasks where privacy matters. He would not use local AI just because \"it is local\": if an external API gives much better results, costs little and the data is not sensitive, it is probably more practical. An interesting approach is hybrid: a local model for simple tasks and a remote model for complex reasoning."
     }
+  },
+  {
+    "slug": "canary-por-agente-api-gateway",
+    "type": "article",
+    "title": "Migrar un legacy ruta por ruta: canary por agente en un API Gateway",
+    "excerpt": "Un catálogo de rutas en base de datos decide, agente por agente, si cada petición va al legacy o al servicio nuevo. Habilitar o revertir no requiere un nuevo despliegue.",
+    "category": "Arquitectura",
+    "categoryKey": [
+      "arquitectura",
+      "microservicios",
+      "nestjs"
+    ],
+    "tags": [
+      "Canary release",
+      "Strangler Fig",
+      "API Gateway",
+      "NestJS"
+    ],
+    "date": "2026-10-12",
+    "minutes": 7,
+    "updated": "2026-10-12",
+    "learning": ["distributed-systems"],
+    "relatedCase": "case1-name",
+    "brain": {
+      "keys": [
+        "canary",
+        "canary release",
+        "canario",
+        "strangler*",
+        "catalogo de rutas",
+        "route catalog",
+        "kill switch",
+        "conmutacion",
+        "conmutar",
+        "por agente",
+        "per agent",
+        "sin redeploy",
+        "without redeploy"
+      ],
+      "es": "Un API Gateway en NestJS decide, en cada petición, si va al legacy o al servicio nuevo. Un catálogo de rutas en base de datos marca qué rutas son conmutables y qué agentes están asignados: solo con las tres condiciones (ruta conmutable, destino nuevo y agente asignado) la petición va al servicio nuevo; si falta cualquiera, va al legacy. Es un Strangler Fig con canary por agente, y se habilita o revierte desde un panel sin redeploy. Está en producción.",
+      "en": "A NestJS API Gateway decides, on every request, whether it goes to the legacy system or to the new service. A route catalog in the database marks which routes are switchable and which agents are assigned: only when all three hold (switchable route, new destination and assigned agent) does the request go to the new service; if any is missing, it goes to legacy. It is a Strangler Fig with a per-agent canary, enabled or rolled back from a panel without a redeploy. It is in production."
+    }
   }
 ];
