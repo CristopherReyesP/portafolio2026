@@ -30,10 +30,10 @@ Backend Software Engineer con más de 5 años de experiencia diseñando, desarro
 - Resolución de bugs en producción y optimización de queries en flujos de alto volumen transaccional.
 
 ### Desarrollador Backend Freelance — Independiente
-*Enero 2019 – Febrero 2021 · Remoto*
+*Febrero 2021 – Actualidad · Remoto*
 
-- Diseño y entrega de APIs REST con .NET Core y Node.js para clientes, incluidos clientes internacionales, desde el análisis de requisitos hasta el despliegue en servidor.
-- Gestión del ciclo de vida completo de proyectos concurrentes con entregas a tiempo.
+- Censo de votantes para una campaña municipal en México (Node.js, Express, MongoDB, JWT, Socket.IO, AWS EC2); el cliente me recontrató en 2024.
+- Cobros: sistema de cobros de escritorio vendido a un cliente; un solo .exe con Go, React embebido y SQLite.
 
 ## Habilidades técnicas
 
