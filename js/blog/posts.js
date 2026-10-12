@@ -281,8 +281,6 @@ window.BLOG_POSTS = [
         "kill switch",
         "conmutacion",
         "conmutar",
-        "por agente",
-        "per agent",
         "sin redeploy",
         "without redeploy"
       ],
