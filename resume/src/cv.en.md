@@ -30,10 +30,10 @@ Backend Software Engineer with 5+ years of experience designing, building and de
 - Fixed production bugs and optimized queries in high-volume transactional flows.
 
 ### Freelance Backend Developer — Self-employed
-*January 2019 – February 2021 · Remote*
+*February 2021 – Present · Remote*
 
-- Designed and delivered REST APIs with .NET Core and Node.js for clients, including international clients, from requirements analysis to server deployment.
-- Managed the full lifecycle of concurrent projects and delivered on schedule.
+- Voter census for a municipal election campaign in Mexico (Node.js, Express, MongoDB, JWT, Socket.IO, AWS EC2); the client rehired me in 2024.
+- Cobros: a desktop billing system sold to a client; a single .exe built with Go, embedded React and SQLite.
 
 ## Technical Skills
 

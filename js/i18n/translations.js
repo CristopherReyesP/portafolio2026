@@ -62,7 +62,7 @@ const translations = {
     terminal_exp_current: '<span class="t-str">Actual:</span> <span class="t-response">Backend Software Engineer (Analista Técnico I) @ BANTRAB · Abril 2024 — Presente</span>',
     terminal_exp_focus: '<span class="t-str">Foco:</span> <span class="t-response">18+ microservicios NestJS y .NET para transacciones bancarias</span>',
     terminal_exp_highlight: '<span class="t-str">Destacado:</span> <span class="t-response">Migración de Keycloak v11 → v19 sin downtime</span>',
-    terminal_exp_freelance: '<span class="t-str">Anterior:</span> <span class="t-response">Freelance Backend Developer · Enero 2019 — Febrero 2021</span>',
+    terminal_exp_freelance: '<span class="t-str">También:</span> <span class="t-response">Freelance Backend Developer · Febrero 2021 — Presente</span>',
     terminal_exp_onesolutions: '<span class="t-str">Anterior:</span> <span class="t-response">Software Developer @ OneSolutions · Mayo 2021 — Julio 2021</span>',
     terminal_contact_title: '<span class="t-label">Hablemos de tu equipo:</span>',
     terminal_contact_email: '<span class="t-str">Correo:</span> <span class="t-response">reyescristop@gmail.com</span>',
@@ -163,7 +163,7 @@ const translations = {
         'En resumen: backend confiable para sistemas que no pueden fallar. Hoy lo hace en BANTRAB, con NestJS y .NET.'
       ],
       experience: [
-        'Tiene más de 5 años en sistemas de producción. Desde abril de 2024 es Backend Software Engineer en BANTRAB; antes fue Freelance Backend Developer (2021–2024) y Software Developer en OneSolutions (2021).',
+        'Tiene más de 5 años en sistemas de producción. Desde abril de 2024 es Backend Software Engineer en BANTRAB. Desde 2021 también hace proyectos backend freelance, y en 2021 fue Software Developer en OneSolutions.',
         'Más de 5 años. Los más recientes, en banca: 18+ microservicios NestJS y .NET, una migración de Keycloak sin downtime y 50k registros migrados sin pérdida.'
       ],
       job: [
@@ -443,11 +443,11 @@ const translations = {
     exp2_date: 'Mayo 2021 — Julio 2021',
     exp2_p1: 'Desarrollo y mantenimiento de features para plataforma de gestión empresarial con SQL Server y .NET',
     exp2_p2: 'Resolución de bugs en producción y optimización de queries en workflows de alto volumen transaccional',
-    exp3_date: 'Enero 2019 — Febrero 2021',
-    exp3_company: 'Proyectos independientes · Clientes internacionales',
-    exp3_p1: 'Diseño y entrega de APIs REST con .NET Core y Node.js para clientes internacionales',
-    exp3_p2: 'Gestión del ciclo completo de proyectos desde análisis de requerimientos hasta despliegue',
-    exp3_p3: 'Manejo de múltiples proyectos concurrentes con entrega a tiempo',
+    exp3_date: 'Febrero 2021 — Presente',
+    exp3_company: 'Independiente · Proyectos para clientes',
+    exp3_p1: 'Censo y registro de votantes para una campaña electoral municipal en México: API REST con Node.js, Express y MongoDB, JWT con roles, Socket.IO y despliegue en AWS EC2',
+    exp3_p2: 'El mismo cliente volvió a contratarme en 2024 para una nueva versión del sistema',
+    exp3_p3: 'Cobros: sistema de cobros de escritorio vendido a un cliente, en un solo .exe con Go (arquitectura hexagonal), React embebido y SQLite',
     education_tag: 'Educación',
     education_status: 'Ingeniería en Sistemas — 10.º semestre',
 
@@ -580,7 +580,7 @@ const translations = {
     terminal_exp_current: '<span class="t-str">Current:</span> <span class="t-response">Backend Software Engineer (Technical Analyst I) @ BANTRAB · April 2024 — Present</span>',
     terminal_exp_focus: '<span class="t-str">Focus:</span> <span class="t-response">18+ NestJS and .NET microservices for banking transactions</span>',
     terminal_exp_highlight: '<span class="t-str">Highlight:</span> <span class="t-response">Keycloak v11 → v19 migration with zero downtime</span>',
-    terminal_exp_freelance: '<span class="t-str">Previously:</span> <span class="t-response">Freelance Backend Developer · January 2019 — February 2021</span>',
+    terminal_exp_freelance: '<span class="t-str">Also:</span> <span class="t-response">Freelance Backend Developer · February 2021 — Present</span>',
     terminal_exp_onesolutions: '<span class="t-str">Previously:</span> <span class="t-response">Software Developer @ OneSolutions · May 2021 — July 2021</span>',
     terminal_contact_title: '<span class="t-label">Let\'s talk about your team:</span>',
     terminal_contact_email: '<span class="t-str">Email:</span> <span class="t-response">reyescristop@gmail.com</span>',
@@ -681,7 +681,7 @@ const translations = {
         'In short: backend systems your team can rely on. Right now he does it at BANTRAB, with NestJS and .NET.'
       ],
       experience: [
-        'He has 5+ years in production systems. Since April 2024 he has been a Backend Software Engineer at BANTRAB; before that, Freelance Backend Developer (2021–2024) and Software Developer at OneSolutions (2021).',
+        'He has 5+ years in production systems. Since April 2024 he has been a Backend Software Engineer at BANTRAB. Since 2021 he has also taken on freelance backend projects, and in 2021 he was a Software Developer at OneSolutions.',
         '5+ years. The latest ones in banking: 18+ NestJS and .NET microservices, a zero-downtime Keycloak migration and 50k records migrated with zero loss.'
       ],
       job: [
@@ -961,11 +961,11 @@ const translations = {
     exp2_date: 'May 2021 — July 2021',
     exp2_p1: 'Feature development and maintenance for enterprise management platform with SQL Server and .NET',
     exp2_p2: 'Production bug resolution and query optimization in high-volume transactional workflows',
-    exp3_date: 'January 2019 — February 2021',
-    exp3_company: 'Independent projects · International clients',
-    exp3_p1: 'Design and delivery of REST APIs with .NET Core and Node.js for international clients',
-    exp3_p2: 'Full project lifecycle management from requirements analysis to deployment',
-    exp3_p3: 'Management of multiple concurrent projects with on-time delivery',
+    exp3_date: 'February 2021 — Present',
+    exp3_company: 'Self-employed · Client projects',
+    exp3_p1: 'Voter census and registration for a municipal election campaign in Mexico: REST API with Node.js, Express and MongoDB, JWT with roles, Socket.IO and deployment on AWS EC2',
+    exp3_p2: 'The same client hired me again in 2024 for a new version of the system',
+    exp3_p3: 'Cobros: a desktop billing system sold to a client, shipped as a single .exe built with Go (hexagonal architecture), embedded React and SQLite',
     education_tag: 'Education',
     education_status: 'B.S. Systems Engineering — 10th semester',
 
