@@ -81,53 +81,21 @@ test('every index aria label has a valid translation binding', () => {
   }
 });
 
-test('gallery clicks and language switches keep the selected image alt translated', () => {
-  const galleries = Array.from(index.matchAll(/<div class="project-gallery">([\s\S]*?)<\/div>\s*<\/div>/g), match => {
-    const markup = match[1];
-    const main = element(markup.match(/<img class="gallery-main"[^>]*>/)[0]);
-    const thumbs = Array.from(markup.matchAll(/<button class="gallery-thumb[^>]*>[\s\S]*?<\/button>/g), button => {
-      const thumb = element(button[0].match(/<button[^>]*>/)[0]);
-      const image = element(button[0].match(/<img[^>]*>/)[0]);
-      thumb.querySelector = () => image;
-      return thumb;
-    });
-    return { main, thumbs, querySelector: () => main, querySelectorAll: () => thumbs };
-  });
-  assert.equal(galleries.length, 2);
-  assert.deepEqual(galleries.map(gallery => gallery.thumbs.length), [3, 4]);
-  const images = galleries.flatMap(({ main, thumbs }) => [main, ...thumbs.map(thumb => thumb.querySelector('img'))]);
+test('project thumbnails keep their alt translated', () => {
+  const thumbs = Array.from(index.matchAll(/<img class="project-thumb"[^>]*>/g), match => element(match[0]));
+  assert.equal(thumbs.length, 2);
   const document = {
     documentElement: {}, dispatchEvent() {},
-    querySelectorAll: selector => selector === '.project-gallery' ? galleries : selector === '[data-i18n-alt]' ? images : []
+    querySelectorAll: selector => selector === '[data-i18n-alt]' ? thumbs : []
   };
   const { ctx, translations } = load(document);
-  for (const image of images) {
-    assert.ok(image.dataset.i18nAlt, image.src);
-    assert.equal(image.alt, translations.es[image.dataset.i18nAlt]);
+  for (const thumb of thumbs) {
+    assert.ok(thumb.dataset.i18nAlt, thumb.src);
+    assert.equal(thumb.alt, translations.es[thumb.dataset.i18nAlt]);
   }
-  for (const { main, thumbs } of galleries) {
-    const active = thumbs.find(thumb => thumb.classList.contains('active'));
-    assert.equal(main.dataset.i18nAlt, active.querySelector('img').dataset.i18nAlt);
-  }
-  ctx.initGallery();
-  for (const lang of ['es', 'en']) {
+  for (const lang of ['en', 'es']) {
     ctx.setLang(lang);
-    for (const { main, thumbs } of galleries) {
-      for (const thumb of thumbs) {
-        const image = thumb.querySelector('img');
-        thumb.click();
-        assert.equal(main.src, thumb.dataset.src);
-        assert.equal(main.dataset.i18nAlt, image.dataset.i18nAlt);
-        assert.equal(main.alt, image.alt);
-        for (const candidate of thumbs) assert.equal(candidate.classList.contains('active'), candidate === thumb);
-        for (const nextLang of ['en', 'es', lang]) {
-          ctx.setLang(nextLang);
-          assert.equal(main.src, thumb.dataset.src);
-          assert.equal(main.alt, translations[nextLang][image.dataset.i18nAlt]);
-          assert.equal(image.alt, main.alt);
-        }
-      }
-    }
+    for (const thumb of thumbs) assert.equal(thumb.alt, translations[lang][thumb.dataset.i18nAlt]);
   }
 });
 

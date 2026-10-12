@@ -20,7 +20,6 @@ initCardSpotlight();
 if (!document.body.classList.contains('blog-page')) initActiveNav();
 initSectionRail();
 initMagneticButtons();
-initGallery();
 
 // Initialize particles AFTER first paint (non-blocking)
 var initParticles = function() {

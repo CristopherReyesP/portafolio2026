@@ -1096,9 +1096,8 @@ header nav {
 
 /* === components/projects.css === */
 /* ============================================================
-   OTHER PROJECTS (04): side projects as two secondary cards —
-   label, title, text, stack and actions first, gallery below.
-   The gallery markup is driven by initGallery() in animations.js.
+   OTHER PROJECTS (06): side projects as two compact cards —
+   one small thumbnail beside label, title, text, stack and actions.
    ============================================================ */
 .projects-grid {
   display: grid;
@@ -1178,77 +1177,38 @@ header nav {
 .project-link:hover { color: var(--accent); }
 .project-link svg { flex: none; }
 
-/* Gallery: a small browser-like window, secondary to the text */
-.project-gallery {
-  margin-top: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  background: var(--bg-secondary);
+/* Compact card: one small thumbnail beside the text */
+.project-card--compact {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: start;
+  gap: 18px;
+  padding: 20px;
 }
-.gallery-window { padding: 6px 6px 0; position: relative; }
-.gallery-window::before {
-  content: '';
-  display: block;
-  height: 10px;
-  margin: 2px 4px 6px;
-  background:
-    radial-gradient(circle at 4px 50%, var(--danger) 3px, transparent 3px),
-    radial-gradient(circle at 16px 50%, var(--warning) 3px, transparent 3px),
-    radial-gradient(circle at 28px 50%, var(--success) 3px, transparent 3px);
-  background-repeat: no-repeat;
-}
-.gallery-main {
+.project-body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.project-thumb {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
-  max-height: 220px;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  object-position: top center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   background: var(--surface-elevated);
-  transition: opacity 0.3s;
 }
-.gallery-thumbs { display: flex; border-top: 1px solid var(--border); }
-.gallery-thumb {
-  flex: 1;
-  padding: 0;
-  border: none;
-  border-right: 1px solid var(--border);
-  background: rgb(var(--surface-rgb) / 0.6);
-  position: relative;
-  cursor: pointer;
-}
-.gallery-thumb:last-child { border-right: none; }
-.gallery-thumb img {
-  display: block;
-  width: 100%;
-  height: 44px;
-  object-fit: cover;
-  object-position: top;
-  opacity: 0.4;
-  transition: opacity 0.3s;
-}
-.gallery-thumb:hover img { opacity: 0.7; }
-.gallery-thumb.active img { opacity: 1; }
-.gallery-thumb.active::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent);
-}
+.project-card--compact .project-name { font-size: 16px; }
+.project-card--compact .project-desc { font-size: 12px; line-height: 1.7; }
 
 @media (min-width: 1000px) {
   .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
   .project-card { padding: 20px 18px; }
+  .project-card--compact { grid-template-columns: minmax(0, 1fr); }
+  .project-thumb { aspect-ratio: 16 / 5; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .project-download, .project-link, .stack-tag, .gallery-main, .gallery-thumb img { transition: none; }
+  .project-download, .project-link, .stack-tag { transition: none; }
 }
 
 /* === components/diagrams.css === */
